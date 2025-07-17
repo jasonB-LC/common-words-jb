@@ -1,6 +1,9 @@
 package project.common_words_backend.models.dto;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
 import project.common_words_backend.models.User;
+
+import java.util.List;
 
 public class EBookDTO {
     private int languageID;
@@ -11,11 +14,11 @@ public class EBookDTO {
     private String subject;
     private int readingLevel;
     private String originalPublication;
-    private String category;
+    private List<Integer> categoryIds;
 
     public EBookDTO() {
     }
-    public EBookDTO(int languageID, int userId, String title, String creator, String releaseDate, String subject, int readingLevel, String originalPublication, String category) {
+    public EBookDTO(int languageID, int userId, String title, String creator, String releaseDate, String subject, int readingLevel, String originalPublication, List<Integer> categoryIds) {
         this.languageID = languageID;
         this.userId = userId;
         this.title = title;
@@ -24,7 +27,7 @@ public class EBookDTO {
         this.subject = subject;
         this.readingLevel = readingLevel;
         this.originalPublication = originalPublication;
-        this.category = category;
+        this.categoryIds = categoryIds;
     }
 
     public int getLanguageID() {
@@ -91,12 +94,12 @@ public class EBookDTO {
         this.originalPublication = originalPublication;
     }
 
-    public String getCategory() {
-        return category;
+    public List<Integer> getCategoryIds() {
+        return categoryIds;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setCategoryIds(List<Integer> categoryIds) {
+        this.categoryIds = categoryIds;
     }
 
 

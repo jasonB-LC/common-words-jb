@@ -5,13 +5,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import project.common_words_backend.models.Category;
 import project.common_words_backend.models.EBook;
 import project.common_words_backend.models.User;
 import project.common_words_backend.models.dto.EBookDTO;
 import project.common_words_backend.models.dto.UserDTO;
+import project.common_words_backend.repositories.CategoryRepository;
 import project.common_words_backend.repositories.EBookRepository;
 import project.common_words_backend.repositories.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -23,6 +26,9 @@ public class EBookController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    CategoryRepository categoryRepository;
 
     public EBookController(EBookRepository eBookRepository) {
         this.eBookRepository = eBookRepository;
@@ -42,8 +48,14 @@ public class EBookController {
     public ResponseEntity<?> addNewEBook(@RequestBody EBookDTO eBookData){
         User user = userRepository.findById(eBookData.getUserId())
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + eBookData.getUserId()));
-
-        EBook newEBook = new EBook(eBookData.getLanguageID(), user, eBookData.getTitle(), eBookData.getCreator(), eBookData.getReleaseDate(), eBookData.getSubject(), eBookData.getReadingLevel(), eBookData.getOriginalPublication(), eBookData.getCategory());
+        List<Category> categories = new ArrayList<>();
+        for (int categoryId : eBookData.getCategoryIds()) {
+            Category category = categoryRepository.findById(categoryId).orElse(null);
+            if (category != null) {
+                categories.add(category);
+            }
+        }
+        EBook newEBook = new EBook(eBookData.getLanguageID(), user, eBookData.getTitle(), eBookData.getCreator(), eBookData.getReleaseDate(), eBookData.getSubject(), eBookData.getReadingLevel(), eBookData.getOriginalPublication(), categories);
         eBookRepository.save(newEBook);
         return new ResponseEntity<>(newEBook, HttpStatus.CREATED);
     }

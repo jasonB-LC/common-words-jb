@@ -3,6 +3,8 @@ package project.common_words_backend.models;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class EBook {
     @Id
@@ -24,14 +26,14 @@ public class EBook {
     private int readingLevel;
     private String originalPublication;
 
-//    @ManyToOne
-//    @JsonManagedReference
-    private String category;
+    @ManyToMany
+    @JsonManagedReference
+    private List<Category> categories;
 
     public EBook() {
     }
 
-    public EBook(int languageID, User user, String title, String creator, String releaseDate, String subject, int readingLevel, String originalPublication, String category) {
+    public EBook(int languageID, User user, String title, String creator, String releaseDate, String subject, int readingLevel, String originalPublication, List<Category> categories) {
         this.languageID = languageID;
         this.user = user;
         this.title = title;
@@ -40,7 +42,7 @@ public class EBook {
         this.subject = subject;
         this.readingLevel = readingLevel;
         this.originalPublication = originalPublication;
-        this.category = category;
+        this.categories = categories;
     }
 
     public int getId() {
@@ -115,15 +117,11 @@ public class EBook {
         this.originalPublication = originalPublication;
     }
 
-    public String getCategory() {
-        return category;
+    public List<Category> getCategories() {
+        return categories;
     }
-
-    public void setCategory(String category) {
-        this.category = category;
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
-
-
-
 
 }
