@@ -1,8 +1,11 @@
 package project.common_words_backend.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -11,13 +14,17 @@ public class EBook {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-//    @ManyToOne
-//    @JsonManagedReference
-    private int languageID;
-
     @ManyToOne
-    @JsonManagedReference
+    @JoinColumn(name = "user_id")
+    @JsonBackReference
     private User user;
+
+    @ManyToMany
+    @JsonManagedReference
+    @JoinTable(name = "eBooks_categories", joinColumns = @JoinColumn(name = "eBook_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private List<Category> categories = new ArrayList<>();
+
+    private int languageID;
 
     private String title;
     private String creator;
@@ -25,10 +32,6 @@ public class EBook {
     private String subject;
     private int readingLevel;
     private String originalPublication;
-
-    @ManyToMany
-    @JsonManagedReference
-    private List<Category> categories;
 
     public EBook() {
     }
@@ -53,20 +56,20 @@ public class EBook {
         this.id = id;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public int getLanguageID() {
         return languageID;
     }
 
     public void setLanguageID(int languageID) {
         this.languageID = languageID;
-    }
-
-    public User getUserId() {
-        return user;
-    }
-
-    public void setUserId(User user) {
-        this.user = user;
     }
 
     public String getTitle() {
@@ -120,6 +123,7 @@ public class EBook {
     public List<Category> getCategories() {
         return categories;
     }
+
     public void setCategories(List<Category> categories) {
         this.categories = categories;
     }

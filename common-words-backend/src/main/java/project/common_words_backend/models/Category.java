@@ -12,6 +12,10 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @ManyToMany(mappedBy = "categories")
+    @JsonBackReference
+    private List<EBook> eBooks = new ArrayList<>();
+
     private String name;
 
     public Category() {
@@ -20,12 +24,6 @@ public class Category {
         this.name = name;
     }
 
-    @ManyToMany(mappedBy = "categories")
-    @JsonBackReference
-    private final List<EBook> eBooks = new ArrayList<>();
-    public List<EBook> getEBooks() {
-        return eBooks;
-    }
 
     public int getId() {
         return id;

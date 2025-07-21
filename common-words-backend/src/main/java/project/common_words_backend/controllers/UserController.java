@@ -8,6 +8,8 @@ import project.common_words_backend.models.User;
 import project.common_words_backend.models.dto.UserDTO;
 import project.common_words_backend.repositories.UserRepository;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -17,10 +19,10 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
-//    @GetMapping("")
-//    public List<User> getAllUsers(){
-//        return userRepository.findAll();
-//    }
+    @GetMapping("")
+    public List<User> getAllUsers(){
+        return userRepository.findAll();
+    }
 //
 //    @GetMapping("/{id}")
 //    public User getUser(@PathVariable int id) {
@@ -48,8 +50,8 @@ public class UserController {
 //        return userRepository.save(user);
 //    }
 //
-//    @DeleteMapping("/{id}")
-//    public void deleteItem(@PathVariable int id){
-//        userRepository.deleteById(id);
-//    }
+    @DeleteMapping("/{id}")
+    public void deleteItem(@PathVariable int id){
+        userRepository.deleteById(id);
+    }
 }

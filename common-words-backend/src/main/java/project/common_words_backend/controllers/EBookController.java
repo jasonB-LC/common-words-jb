@@ -30,24 +30,18 @@ public class EBookController {
     @Autowired
     CategoryRepository categoryRepository;
 
-    public EBookController(EBookRepository eBookRepository) {
-        this.eBookRepository = eBookRepository;
+//    public EBookController(EBookRepository eBookRepository) {
+//        this.eBookRepository = eBookRepository;
+//    }
+    @GetMapping("")
+    public ResponseEntity<?> getAllEBooks() {
+        List<EBook> allEBooks = eBookRepository.findAll();
+        return new ResponseEntity<>(allEBooks, HttpStatus.OK); // 200
     }
-//    @GetMapping("")
-//    public List<EBook> getAllItems(){
-//        return eBookRepository.findAll();
-//    }
-//
-//    @GetMapping("/{id}")
-//    public EBook getItem(@PathVariable int id) {
-//        return eBookRepository.findById(id).orElse(null);
-//    }
-
 
     @PostMapping(value="", consumes= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addNewEBook(@RequestBody EBookDTO eBookData){
-        User user = userRepository.findById(eBookData.getUserId())
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + eBookData.getUserId()));
+        User user = userRepository.findById(eBookData.getUserId()).orElse(null);
         List<Category> categories = new ArrayList<>();
         for (int categoryId : eBookData.getCategoryIds()) {
             Category category = categoryRepository.findById(categoryId).orElse(null);
@@ -60,14 +54,24 @@ public class EBookController {
         return new ResponseEntity<>(newEBook, HttpStatus.CREATED);
     }
 
-//    @PutMapping("/{id}")
-//    public EBook updateItem(@PathVariable int id, @RequestBody EBook eBook){
-//        eBook.setId(id);
-//        return eBookRepository.save(eBook);
-//    }
+    @PutMapping(value="/{id}", consumes= MediaType.APPLICATION_JSON_VALUE)
+    public EBook updateEbook(@PathVariable int id, @RequestBody EBookDTO eBookData){
+        User user = userRepository.findById(eBookData.getUserId()).orElse(null);
+        List<Category> categories = new ArrayList<>();
+        for (int categoryId : eBookData.getCategoryIds()) {
+            Category category = categoryRepository.findById(categoryId).orElse(null);
+            if (category != null) {
+                categories.add(category);
+            }
+        }
+        EBook newEBook = new EBook(eBookData.getLanguageID(), user, eBookData.getTitle(), eBookData.getCreator(), eBookData.getReleaseDate(), eBookData.getSubject(), eBookData.getReadingLevel(), eBookData.getOriginalPublication(), categories);
 
-//    @DeleteMapping("/{id}")
-//    public void deleteItem(@PathVariable int id){
-//        eBookRepository.deleteById(id);
-//    }
+        newEBook.setId(id);
+        return eBookRepository.save(newEBook);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteItem(@PathVariable int id){
+        eBookRepository.deleteById(id);
+    }
 }

@@ -1,8 +1,11 @@
 package project.common_words_backend.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,9 +19,17 @@ public class User {
     private String lastName;
     private String password;
 
-    @OneToMany(mappedBy = "user")
-    @JsonBackReference
+    @OneToMany(mappedBy="user")
+    @JsonManagedReference
     private final List<EBook> eBooks = new ArrayList<>();
+
+    @OneToMany(mappedBy="user")
+    @JsonManagedReference
+    private final List<Deck> decks = new ArrayList<>();
+
+//    @OneToMany(mappedBy="user")
+//    @JsonManagedReference
+//    private final List<Deck> decks = new ArrayList<>();
 
     public User() {
     }
@@ -38,6 +49,13 @@ public class User {
         this.id = id;
     }
 
+    public List<EBook> getEBooks() {
+        return eBooks;
+    }
+
+    public List<Deck> getDecks() {
+        return decks;
+    }
     public String getUserName() {
         return userName;
     }
