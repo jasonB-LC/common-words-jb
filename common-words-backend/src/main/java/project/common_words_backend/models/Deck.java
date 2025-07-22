@@ -1,7 +1,11 @@
 package project.common_words_backend.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Deck {
@@ -16,6 +20,10 @@ public class Deck {
     @JsonBackReference
     private User user;
 
+    @OneToMany(mappedBy="deck")
+    @JsonManagedReference
+    private final List<FlashCard> flashCards = new ArrayList<>();
+
     public Deck() {
     }
 
@@ -23,7 +31,9 @@ public class Deck {
         this.name = name;
         this.user = user;
     }
-
+    public List<FlashCard> getFlashCards() {
+        return flashCards;
+    }
     public String getName() {
         return name;
     }
