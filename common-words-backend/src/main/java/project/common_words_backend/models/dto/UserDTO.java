@@ -14,6 +14,7 @@ public class UserDTO {
         this.lastName = lastName;
         this.password = password;
     }
+
     public String getUserName() {
         return userName;
     }

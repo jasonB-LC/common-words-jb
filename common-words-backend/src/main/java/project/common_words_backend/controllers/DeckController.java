@@ -34,6 +34,12 @@ public class DeckController {
         return new ResponseEntity<>(allDecks, HttpStatus.OK); // 200
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getDeckById(@PathVariable int id) {
+        Deck deck = deckRepository.findById(id).orElse(null);
+        return new ResponseEntity<>(deck, HttpStatus.OK); // 200
+    }
+
     @PostMapping(value="", consumes= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addNewDeck(@RequestBody DeckDTO deckData){
         User user = userRepository.findById(deckData.getUserId()).orElse(null);

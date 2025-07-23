@@ -31,6 +31,12 @@ public class FlashCardController {
         return new ResponseEntity<>(allFlashCards, HttpStatus.OK); // 200
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getDeckById(@PathVariable int id) {
+        FlashCard flashCard = flashCardRepository.findById(id).orElse(null);
+        return new ResponseEntity<>(flashCard, HttpStatus.OK); // 200
+    }
+
     @PostMapping(value="", consumes= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addNewFlashCard(@RequestBody FlashCardDTO flashCardData){
         Deck deck = deckRepository.findById(flashCardData.getDeckId()).orElse(null);

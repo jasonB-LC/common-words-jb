@@ -39,6 +39,12 @@ public class EBookController {
         return new ResponseEntity<>(allEBooks, HttpStatus.OK); // 200
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getEBookById(@PathVariable int id) {
+        EBook eBook = eBookRepository.findById(id).orElse(null);
+        return new ResponseEntity<>(eBook, HttpStatus.OK); // 200
+    }
+
     @PostMapping(value="", consumes= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addNewEBook(@RequestBody EBookDTO eBookData){
         User user = userRepository.findById(eBookData.getUserId()).orElse(null);
@@ -55,7 +61,7 @@ public class EBookController {
     }
 
     @PutMapping(value="/{id}", consumes= MediaType.APPLICATION_JSON_VALUE)
-    public EBook updateEbook(@PathVariable int id, @RequestBody EBookDTO eBookData){
+    public ResponseEntity<?> updateEbook(@PathVariable int id, @RequestBody EBookDTO eBookData){
         User user = userRepository.findById(eBookData.getUserId()).orElse(null);
         List<Category> categories = new ArrayList<>();
         for (int categoryId : eBookData.getCategoryIds()) {
@@ -67,7 +73,8 @@ public class EBookController {
         EBook newEBook = new EBook(eBookData.getLanguageID(), user, eBookData.getTitle(), eBookData.getCreator(), eBookData.getReleaseDate(), eBookData.getSubject(), eBookData.getReadingLevel(), eBookData.getOriginalPublication(), categories);
 
         newEBook.setId(id);
-        return eBookRepository.save(newEBook);
+        eBookRepository.save(newEBook);
+        return new ResponseEntity<>(newEBook, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
