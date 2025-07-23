@@ -3,6 +3,7 @@ package project.common_words_backend.models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import project.common_words_backend.models.joins.FlashCard_WordProperties;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +19,9 @@ public class FlashCard {
     @JsonBackReference
     private Deck deck;
 
-//    @ManyToMany
-//    @JsonManagedReference
-//    @JoinTable(name = "flashcards_front_properties", joinColumns = @JoinColumn(name = "flashcard_id"), inverseJoinColumns = @JoinColumn(name = "front_category_id"))
-//    private List<WordPropertyType> properties = new ArrayList<>();
+    @OneToMany(mappedBy = "flashCard")
+    @JsonManagedReference
+    private List<FlashCard_WordProperties> properties = new ArrayList<>();
 
     private int daysUntilDue;
     private int dateOfLastReview;

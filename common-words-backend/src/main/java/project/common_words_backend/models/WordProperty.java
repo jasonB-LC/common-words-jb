@@ -3,12 +3,20 @@ package project.common_words_backend.models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import project.common_words_backend.models.joins.FlashCard_WordProperties;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class WordProperty {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @OneToMany(mappedBy = "wordProperty")
+    @JsonManagedReference
+    private final List<FlashCard_WordProperties> flashcardWordProperties = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "word_property_type_id")
