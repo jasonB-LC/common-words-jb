@@ -3,13 +3,15 @@ package project.common_words_backend.models.dto;
 public class DeckDTO {
     private String name;
     private int userId;
+    private int languageId;
 
     public DeckDTO() {
     }
 
-    public DeckDTO(String name, int userId) {
+    public DeckDTO(String name, int userId, int languageId) {
         this.name = name;
         this.userId = userId;
+        this.languageId = languageId;
     }
 
 
@@ -27,5 +29,12 @@ public class DeckDTO {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public int getLanguageId(){
+        return languageId;
+    }
+    public void setLanguageId(int languageId){
+        this.languageId = languageId;
     }
 }

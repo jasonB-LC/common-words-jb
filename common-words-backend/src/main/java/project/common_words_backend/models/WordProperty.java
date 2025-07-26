@@ -10,6 +10,8 @@ import java.util.List;
 
 @Entity
 public class WordProperty {
+    //WordProperty is a data model for containing and labeling the different elements of a flash card, such as text,
+    // sound, and image links
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

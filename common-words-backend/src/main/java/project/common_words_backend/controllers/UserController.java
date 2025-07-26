@@ -4,17 +4,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import project.common_words_backend.models.Category;
-import project.common_words_backend.models.Deck;
-import project.common_words_backend.models.EBook;
 import project.common_words_backend.models.User;
-import project.common_words_backend.models.dto.EBookDTO;
 import project.common_words_backend.models.dto.UserDTO;
 import project.common_words_backend.repositories.UserRepository;
-
-import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin(origins = "*", maxAge =3600)
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -30,7 +25,7 @@ public class UserController {
         return new ResponseEntity<>(allUsers, HttpStatus.OK); // 200
 }
     @GetMapping("/{id}")
-    public ResponseEntity<?> getDeckById(@PathVariable int id) {
+    public ResponseEntity<?> getUserById(@PathVariable int id) {
         User user = userRepository.findById(id).orElse(null);
         return new ResponseEntity<>(user, HttpStatus.OK); // 200
     }
@@ -43,9 +38,16 @@ public class UserController {
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
+    @PutMapping(value="/{id}", consumes=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> updateUser(@PathVariable int id, @RequestBody UserDTO userData){
+        User newUser = new User(userData.getUserName(), userData.getFirstName(), userData.getLastName(), userData.getPassword());
+        newUser.setId(id);
+        userRepository.save(newUser);
+        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
+    }
 
     @DeleteMapping("/{id}")
-    public void deleteItem(@PathVariable int id){
+    public void deleteUser(@PathVariable int id){
         userRepository.deleteById(id);
     }
 

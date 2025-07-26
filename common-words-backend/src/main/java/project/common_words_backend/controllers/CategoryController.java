@@ -7,24 +7,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.common_words_backend.models.*;
 import project.common_words_backend.models.dto.CategoryDTO;
-import project.common_words_backend.models.dto.DeckDTO;
-import project.common_words_backend.models.dto.EBookDTO;
-import project.common_words_backend.models.dto.LanguageDTO;
 import project.common_words_backend.repositories.CategoryRepository;
-import project.common_words_backend.repositories.DeckRepository;
-import project.common_words_backend.repositories.EBookRepository;
-import project.common_words_backend.repositories.UserRepository;
-
 import java.util.List;
 
+@CrossOrigin(origins = "*", maxAge =50000)
 @RestController
 @RequestMapping("/categories")
 public class CategoryController {
     @Autowired
     CategoryRepository categoryRepository;
-
-    @Autowired
-    EBookRepository eBookRepository;
 
     @GetMapping("")
     public ResponseEntity<?> getAllCategories() {
@@ -33,7 +24,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getCategoryId(@PathVariable int id) {
+    public ResponseEntity<?> getCategoryById(@PathVariable int id) {
         Category category = categoryRepository.findById(id).orElse(null);
         return new ResponseEntity<>(category, HttpStatus.OK); // 200
     }
@@ -46,10 +37,10 @@ public class CategoryController {
         return new ResponseEntity<>(newCategory, HttpStatus.CREATED);
     }
 
-    //Can't imagine needing a put mapping for categories.
+    //No put mapping for categories.
 
     @DeleteMapping("/{id}")
-    public void deleteItem(@PathVariable int id){
+    public void deleteCategory(@PathVariable int id){
         categoryRepository.deleteById(id);
     }
 }

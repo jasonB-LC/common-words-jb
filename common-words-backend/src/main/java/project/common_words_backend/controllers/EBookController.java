@@ -9,14 +9,13 @@ import project.common_words_backend.models.Category;
 import project.common_words_backend.models.EBook;
 import project.common_words_backend.models.User;
 import project.common_words_backend.models.dto.EBookDTO;
-import project.common_words_backend.models.dto.UserDTO;
 import project.common_words_backend.repositories.CategoryRepository;
 import project.common_words_backend.repositories.EBookRepository;
 import project.common_words_backend.repositories.UserRepository;
-
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin(origins = "*", maxAge =3600)
 @RestController
 @RequestMapping("/eBooks")
 public class EBookController {
@@ -30,9 +29,6 @@ public class EBookController {
     @Autowired
     CategoryRepository categoryRepository;
 
-//    public EBookController(EBookRepository eBookRepository) {
-//        this.eBookRepository = eBookRepository;
-//    }
     @GetMapping("")
     public ResponseEntity<?> getAllEBooks() {
         List<EBook> allEBooks = eBookRepository.findAll();
@@ -61,7 +57,7 @@ public class EBookController {
     }
 
     @PutMapping(value="/{id}", consumes= MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> updateEbook(@PathVariable int id, @RequestBody EBookDTO eBookData){
+    public ResponseEntity<?> updateEBook(@PathVariable int id, @RequestBody EBookDTO eBookData){
         User user = userRepository.findById(eBookData.getUserId()).orElse(null);
         List<Category> categories = new ArrayList<>();
         for (int categoryId : eBookData.getCategoryIds()) {
@@ -78,7 +74,7 @@ public class EBookController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteItem(@PathVariable int id){
+    public void deleteEBook(@PathVariable int id){
         eBookRepository.deleteById(id);
     }
 }

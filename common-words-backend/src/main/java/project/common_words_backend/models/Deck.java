@@ -20,14 +20,20 @@ public class Deck {
     @JsonBackReference
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "language_id")
+    @JsonBackReference
+    private Language language;
+
     @OneToMany(mappedBy="deck")
     @JsonManagedReference
     private final List<FlashCard> flashCards = new ArrayList<>();
 
+
     public Deck() {
     }
 
-    public Deck(String name, User user) {
+    public Deck(String name, User user, Language language) {
         this.name = name;
         this.user = user;
     }
@@ -48,6 +54,12 @@ public class Deck {
     }
     public int getId() {
         return id;
+    }
+    public Language getLanguage() {
+        return language;
+    }
+    public void setLanguage(Language language) {
+        this.language = language;
     }
 
     public void setId(int id) {

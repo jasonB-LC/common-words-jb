@@ -7,6 +7,9 @@ import project.common_words_backend.models.WordProperty;
 
 @Entity
 public class FlashCard_WordProperties {
+    //Custom join table for FlashCard and WordProperty. It contains a custom field, "isFront", which allows the front end
+    //to place the word property on the correct side of the card.
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

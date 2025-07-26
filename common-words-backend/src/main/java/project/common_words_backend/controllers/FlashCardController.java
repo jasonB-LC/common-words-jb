@@ -6,16 +6,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.common_words_backend.models.*;
-import project.common_words_backend.models.dto.DeckDTO;
-import project.common_words_backend.models.dto.EBookDTO;
 import project.common_words_backend.models.dto.FlashCardDTO;
 import project.common_words_backend.repositories.DeckRepository;
-import project.common_words_backend.repositories.EBookRepository;
 import project.common_words_backend.repositories.FlashCardRepository;
-
-import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin(origins = "*", maxAge =3600)
 @RestController
 @RequestMapping("/flashCards")
 public class FlashCardController {
@@ -32,7 +28,7 @@ public class FlashCardController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getDeckById(@PathVariable int id) {
+    public ResponseEntity<?> getFlashCardById(@PathVariable int id) {
         FlashCard flashCard = flashCardRepository.findById(id).orElse(null);
         return new ResponseEntity<>(flashCard, HttpStatus.OK); // 200
     }
@@ -56,7 +52,7 @@ public class FlashCardController {
         return new ResponseEntity<>(newFlashCard, HttpStatus.CREATED);
     }
     @DeleteMapping("/{id}")
-    public void deleteItem(@PathVariable int id){
+    public void deleteFlashCard(@PathVariable int id){
         flashCardRepository.deleteById(id);
     }
 }

@@ -11,6 +11,7 @@ import project.common_words_backend.repositories.WordPropertyTypeRepository;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*", maxAge =3600)
 @RestController
 @RequestMapping("/wordPropertyTypes")
 public class WordPropertyTypeController {
@@ -24,7 +25,7 @@ public class WordPropertyTypeController {
     }
 
     @PostMapping(value="", consumes= MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> addNewWordProperty(@RequestBody WordPropertyTypeDTO wordPropertyTypeData){
+    public ResponseEntity<?> addNewWordPropertyType(@RequestBody WordPropertyTypeDTO wordPropertyTypeData){
 
         WordPropertyType newWordPropertyType = new WordPropertyType(wordPropertyTypeData.getName());
         wordPropertyTypeRepository.save(newWordPropertyType);
@@ -32,7 +33,7 @@ public class WordPropertyTypeController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteWordTypeProperty(@PathVariable int id){
+    public void deleteWordPropertyType(@PathVariable int id){
         wordPropertyTypeRepository.deleteById(id);
     }
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ManyToAny;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -12,11 +13,15 @@ public class Language {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @OneToMany(mappedBy="language")
+    @JsonManagedReference
+    private final List<Deck> decks = new ArrayList<>();
+
     private String name;
 
-    @ManyToMany(mappedBy = "languages")
-    @JsonManagedReference
-    private List<WordClass> wordClasses;
+//    @ManyToMany(mappedBy = "languages")
+//    @JsonManagedReference
+//    private List<WordClass> wordClasses;
 
     public Language() {
     }
@@ -32,6 +37,17 @@ public class Language {
     public void setName(String name) {
         this.name = name;
     }
+    public List<Deck> getDecks(){
+        return decks;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    public int getId() {
+        return id;
+    }
+
 }
 
 

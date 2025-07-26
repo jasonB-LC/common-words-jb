@@ -18,6 +18,7 @@ public class WordPropertyType {
     @JsonManagedReference
     private final List<WordProperty> properties = new ArrayList<>();
 
+
     public WordPropertyType() {
     }
 

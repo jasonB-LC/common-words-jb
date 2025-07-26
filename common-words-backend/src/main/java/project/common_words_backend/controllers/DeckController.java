@@ -5,20 +5,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import project.common_words_backend.models.Category;
 import project.common_words_backend.models.Deck;
-import project.common_words_backend.models.EBook;
+import project.common_words_backend.models.Language;
 import project.common_words_backend.models.User;
-import project.common_words_backend.models.dto.CategoryDTO;
 import project.common_words_backend.models.dto.DeckDTO;
-import project.common_words_backend.models.dto.EBookDTO;
-import project.common_words_backend.repositories.CategoryRepository;
 import project.common_words_backend.repositories.DeckRepository;
+import project.common_words_backend.repositories.LanguageRepository;
 import project.common_words_backend.repositories.UserRepository;
-
-import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin(origins = "*", maxAge =3600)
 @RestController
 @RequestMapping("/decks")
 public class DeckController {
@@ -27,6 +23,9 @@ public class DeckController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    LanguageRepository languageRepository;
 
     @GetMapping("")
     public ResponseEntity<?> getAllDecks() {
@@ -43,8 +42,8 @@ public class DeckController {
     @PostMapping(value="", consumes= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addNewDeck(@RequestBody DeckDTO deckData){
         User user = userRepository.findById(deckData.getUserId()).orElse(null);
-
-        Deck newDeck = new Deck(deckData.getName(), user);
+        Language language = languageRepository.findById(deckData.getLanguageId()).orElse(null);
+        Deck newDeck = new Deck(deckData.getName(), user, language);
         deckRepository.save(newDeck);
         return new ResponseEntity<>(newDeck, HttpStatus.CREATED);
     }
@@ -52,8 +51,8 @@ public class DeckController {
     @PutMapping(value="/{id}", consumes= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateDeck(@PathVariable int id, @RequestBody DeckDTO deckData){
         User user = userRepository.findById(deckData.getUserId()).orElse(null);
-
-        Deck newDeck = new Deck(deckData.getName(), user);
+        Language language = languageRepository.findById(deckData.getLanguageId()).orElse(null);
+        Deck newDeck = new Deck(deckData.getName(), user, language);
         newDeck.setId(id);
         deckRepository.save(newDeck);
         return new ResponseEntity<>(newDeck, HttpStatus.CREATED);

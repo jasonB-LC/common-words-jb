@@ -14,9 +14,9 @@ public class WordClass {
 
     private String name;
 
-    @ManyToMany
-    @JsonBackReference
-    private final List<Language> languages = new ArrayList<>();
+//    @ManyToMany
+//    @JsonBackReference
+//    private final List<Language> languages = new ArrayList<>();
 
     public WordClass() {
     }

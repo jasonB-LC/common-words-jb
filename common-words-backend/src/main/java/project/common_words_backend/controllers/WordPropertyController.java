@@ -5,16 +5,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import project.common_words_backend.models.EBook;
 import project.common_words_backend.models.WordProperty;
 import project.common_words_backend.models.WordPropertyType;
 import project.common_words_backend.models.dto.WordPropertyDTO;
-import project.common_words_backend.models.dto.WordPropertyTypeDTO;
 import project.common_words_backend.repositories.WordPropertyRepository;
 import project.common_words_backend.repositories.WordPropertyTypeRepository;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*", maxAge =3600)
 @RestController
 @RequestMapping("/wordProperties")
 public class WordPropertyController {

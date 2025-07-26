@@ -19,7 +19,8 @@ const Main = ({languageData}) => {
     const [isEditing, setEditing] = useState(false);
     const [showDeckTable, setShowDeckTable] = useState(false);
     const [showingPopUp, setShowingPopUp] = useState({showing: false, name: "", id: ""});
-    
+    const [allCategories, setAllCategories] = useState([]);
+
     useEffect(()=>{
         if (localStorage.getItem("data") === null){
             setLocalData(languageData);
@@ -30,15 +31,15 @@ const Main = ({languageData}) => {
 
     }, [])
 
-    useEffect(() => {
-        if (curLanguage.name){
-            data.map((lang) => {
-                if (curLanguage.id == lang.id){
-                    setCurLanguage(lang);
-                }
-            })
+    useEffect(()=>{
+        if (localStorage.getItem("data") === null){
+            setLocalData(languageData);
+            setData(getLocalData());
         }
-    }, [data])
+        setData(getLocalData());
+
+
+    }, [])
 
     useEffect(() => {
         if (curLanguage.name && curDeck.name) {
@@ -132,6 +133,13 @@ const Main = ({languageData}) => {
         )
     })
 
+    const CategoriesJSX = allCategories.map(cat => {
+        return (
+            <div>{cat.name}
+            </div>
+        )
+    })
+
     const removeDeck = (event) =>{
         curLanguage.decks.map((deck) => {
             if (event.target.id == deck.id){
@@ -198,10 +206,28 @@ const Main = ({languageData}) => {
     const addNewDeck = (newDeckName) => {
         if(newDeckName){
             setEditing(false);
-            addDeck(curLanguage.name, newDeckName);
+            let newDeck = { name: newDeckName };
+            saveNewDeck(newDeck)
+            handleSubmit(curLanguage.name, newDeckName);
             setData(getLocalData());
         }
     }
+
+	const saveNewDeck = async deck => {
+		try {
+			await fetch('http://localhost:8080/decks', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'Access-Control-Allow-Origin': '*',
+				},
+				body: JSON.stringify(deck),
+			});
+		} catch (error) {
+			console.error(error.message);
+		}
+		refetch();
+	};
 
     const handleBackToLanguages = () => {
         setCurLanguage({})
@@ -278,20 +304,38 @@ const Main = ({languageData}) => {
         <Quiz wholeDeck={{...curDeck}.list} dueDeck={curDue} handleBackToMenu={handleBackToMenu}/> 
     )
 
+    const chooseLanguageDropdown = (
+        <>
+            <select name="languages" id="languages">
+            <option value="french">French</option>
+            <option value="italian">Italian</option>
+            <option value="spanish">Spanish</option>
+            </select> 
+        </>
+    )
+
     return (
-        <div className="main">
-            {quizStarted 
-                ? quizScreen
-                : <div><span>{showDeckOptions 
-                    ? deckOptionsMenu
-                    : curLanguage.name 
-                        ? chooseDeckMenu 
-                        : chooseLanguageMenu}
-                        </span>
-                </div>
-            }
-            {showingPopUp.showing && <DeletePopUp objectName={showingPopUp.name} eventId={showingPopUp.id} deletionRef={deleteObj} abortRef={showPopUpFalse}/>}
-        </div>
+        <>
+            {/* <button onClick={fetchCategories}>fetch</button> */}
+            <div>
+                {CategoriesJSX}
+            </div>
+            <div className="main">
+                
+                {quizStarted 
+                    ? quizScreen
+                    : <div><span>{showDeckOptions 
+                        ? deckOptionsMenu
+                        : curLanguage.name 
+                            ? chooseDeckMenu 
+                            : chooseLanguageMenu}
+                            </span>
+                    </div>
+                }
+                {showingPopUp.showing && <DeletePopUp objectName={showingPopUp.name} eventId={showingPopUp.id} deletionRef={deleteObj} abortRef={showPopUpFalse}/>}
+            </div>
+        </>
+
     );
 }
 
