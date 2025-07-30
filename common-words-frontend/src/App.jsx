@@ -23,6 +23,7 @@ function App() {
   const [allLanguages, setAllLanguages] = useState([]);
 	const [allDecks, setAllDecks] = useState([]);
   const [curDeck, setCurDeck] =  useState({});
+  const [curDue, setCurDue] = useState([])
 	const [allFlashCards, setAllFlashCards] = useState([]);
   const [curLanguageIndex, setCurLanguageIndex] = useState(2);
   
@@ -31,6 +32,18 @@ function App() {
 
   }, [curLanguageIndex])
   
+  useEffect(() => {
+    if (curDeck.name){
+      console.log("curDeck.name" + curDeck.name)
+        let deckToStudy = curDeck.flashCards.filter((word) => {
+            return wordIsReadyForReview(word);
+        })
+        let dts = deckToStudy.map((card) => {return card})
+        console.log("deckToStudy" + dts)
+        setCurDue(deckToStudy);
+    }
+  }, [curDeck])
+
   const fetchLanguages = async () => {
     let languages = [];
 
@@ -177,7 +190,7 @@ function App() {
           wholeDeck, dueDeck, handleBackToMenu
             <Route path="/" element={<Home allLanguages={allLanguages} allDecks={allDecks}/>} />
             <Route path="/Study" element={<Study curDecksJSX={decksJSX}/>} />
-            <Route path="/Quiz" element={<Quiz wholeDeck={curDeck} dueDeck={curDeck} refetchDecks={refetchDecks}/>} />
+            <Route path="/Quiz" element={<Quiz wholeDeck={curDeck} dueDeck={curDue} refetchDecks={refetchDecks}/>} />
             <Route path="/resources/" element={<Resources />} />
             <Route path="/about/" element={<About />} />
           </Route>

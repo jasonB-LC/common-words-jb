@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router';
 
 const Quiz = ({wholeDeck, dueDeck, refetchDecks}) => {
     const oneDayMS = 86400000;
+    const navigate = useNavigate();
     const cardIsReadyForReview = (card) => {
         let TodaysDate = Date.now();
         let timeElapsedMS = TodaysDate - card.dateOfLastReview;
@@ -13,7 +14,6 @@ const Quiz = ({wholeDeck, dueDeck, refetchDecks}) => {
         return timeElapsedMS > timeUntilNextReviewMS
     };
     
-    const navigate = useNavigate();
     const [curFlashCard, setCurrentFlashCard] = useState();
     const [previousCardIndex, setPreviousCardIndex] = useState(1);
     const [showAnswer, setShowAnswer] = useState(false);
@@ -22,9 +22,9 @@ const Quiz = ({wholeDeck, dueDeck, refetchDecks}) => {
 			return { ...card};
 		})
 	);
+
     const [stillDue, setStillDue] = useState(
-		dueDeck.flashCards.map(card => {
-            console.log("found a card");
+		dueDeck.map(card => {
 			return { ...card};
 		})
     );
@@ -34,14 +34,13 @@ const Quiz = ({wholeDeck, dueDeck, refetchDecks}) => {
     }, []);
 
     useEffect(() => {
-        console.log(stillDue.length);
+        console.log("still due: " + stillDue.length);
         setCurrentFlashCard(getRandomFlashCard());
     }, [stillDue]);
     
     useEffect(() => {
         setShowAnswer(false);
     }, [curFlashCard])
-
 
     const getRandomFlashCard = () =>{
         let num = 0;
