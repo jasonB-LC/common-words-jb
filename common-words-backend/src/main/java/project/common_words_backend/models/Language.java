@@ -1,8 +1,8 @@
 package project.common_words_backend.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import org.hibernate.annotations.ManyToAny;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,11 +13,17 @@ public class Language {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    private String name;
+
     @OneToMany(mappedBy="language")
     @JsonManagedReference
-    private final List<Deck> decks = new ArrayList<>();
+    private final List<EBook> eBooks = new ArrayList<>();
 
-    private String name;
+//    @OneToMany(mappedBy="language")
+//    @JsonBackReference
+//    private final List<Deck> decks = new ArrayList<>();
+
+
 
 //    @ManyToMany(mappedBy = "languages")
 //    @JsonManagedReference
@@ -37,9 +43,9 @@ public class Language {
     public void setName(String name) {
         this.name = name;
     }
-    public List<Deck> getDecks(){
-        return decks;
-    }
+//    public List<Deck> getDecks(){
+//        return decks;
+//    }
 
     public void setId(int id) {
         this.id = id;

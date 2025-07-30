@@ -40,19 +40,15 @@ public class DeckController {
     }
 
     @PostMapping(value="", consumes= MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> addNewDeck(@RequestBody DeckDTO deckData){
-        User user = userRepository.findById(deckData.getUserId()).orElse(null);
-        Language language = languageRepository.findById(deckData.getLanguageId()).orElse(null);
-        Deck newDeck = new Deck(deckData.getName(), user, language);
+    public ResponseEntity<?> addNewDeck(@RequestBody Deck deck){
+        Deck newDeck = new Deck(deck.getName(), deck.getLanguageId());
         deckRepository.save(newDeck);
         return new ResponseEntity<>(newDeck, HttpStatus.CREATED);
     }
 
     @PutMapping(value="/{id}", consumes= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateDeck(@PathVariable int id, @RequestBody DeckDTO deckData){
-        User user = userRepository.findById(deckData.getUserId()).orElse(null);
-        Language language = languageRepository.findById(deckData.getLanguageId()).orElse(null);
-        Deck newDeck = new Deck(deckData.getName(), user, language);
+        Deck newDeck = new Deck(deckData.getName(), deckData.getLanguageId());
         newDeck.setId(id);
         deckRepository.save(newDeck);
         return new ResponseEntity<>(newDeck, HttpStatus.CREATED);

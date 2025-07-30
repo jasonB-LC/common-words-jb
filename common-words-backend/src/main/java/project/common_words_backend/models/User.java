@@ -19,14 +19,6 @@ public class User {
     private String lastName;
     private String password;
 
-    @OneToMany(mappedBy="user")
-    @JsonManagedReference
-    private final List<EBook> eBooks = new ArrayList<>();
-
-    @OneToMany(mappedBy="user")
-    @JsonManagedReference
-    private final List<Deck> decks = new ArrayList<>();
-
 //    @OneToMany(mappedBy="user")
 //    @JsonManagedReference
 //    private final List<Deck> decks = new ArrayList<>();
@@ -49,13 +41,9 @@ public class User {
         this.id = id;
     }
 
-    public List<EBook> getEBooks() {
-        return eBooks;
-    }
-
-    public List<Deck> getDecks() {
-        return decks;
-    }
+//    public List<Deck> getDecks() {
+//        return decks;
+//    }
     public String getUserName() {
         return userName;
     }

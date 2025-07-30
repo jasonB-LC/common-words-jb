@@ -1,7 +1,9 @@
 import {useState, useEffect }from 'react';
-import Quiz from './Quiz';
-import AddItemButton from './AddItemButton';
-import {setLocalData, getLocalData, updateLocalDeck, addLanguage, addDeck, deleteLanguage, deleteDeck} from '../shared/localData.js'
+import Quiz from './Quiz.jsx';
+
+import AddItemButton from './AddItemButton.jsx';
+import {setLocalData, getLocalData, updateLocalDeck, addLanguage, addDeck, deleteLanguage, deleteDeck} from './common/localData.js'
+
 import AddWordForm from './AddWordForm.jsx';
 import VocabTable from './VocabTable.jsx';
 import TraversalButton from './TraversalButton.jsx';
@@ -22,24 +24,13 @@ const Main = ({languageData}) => {
     const [allCategories, setAllCategories] = useState([]);
 
     useEffect(()=>{
-        if (localStorage.getItem("data") === null){
-            setLocalData(languageData);
-            setData(getLocalData());
-        }
-        setData(getLocalData());
-
-
+        setData(languageData);
     }, [])
 
     useEffect(()=>{
-        if (localStorage.getItem("data") === null){
-            setLocalData(languageData);
-            setData(getLocalData());
-        }
-        setData(getLocalData());
-
-
-    }, [])
+        console.log("data imported: ");
+        console.log(data);
+    }, [data])
 
     useEffect(() => {
         if (curLanguage.name && curDeck.name) {
@@ -302,16 +293,6 @@ const Main = ({languageData}) => {
 
     const quizScreen = (
         <Quiz wholeDeck={{...curDeck}.list} dueDeck={curDue} handleBackToMenu={handleBackToMenu}/> 
-    )
-
-    const chooseLanguageDropdown = (
-        <>
-            <select name="languages" id="languages">
-            <option value="french">French</option>
-            <option value="italian">Italian</option>
-            <option value="spanish">Spanish</option>
-            </select> 
-        </>
     )
 
     return (

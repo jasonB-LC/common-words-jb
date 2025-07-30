@@ -15,9 +15,9 @@ public class EBook {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "language_id")
     @JsonBackReference
-    private User user;
+    private Language language;
 
     @ManyToMany
     @JsonManagedReference
@@ -36,9 +36,9 @@ public class EBook {
     public EBook() {
     }
 
-    public EBook(int languageID, User user, String title, String creator, String releaseDate, String subject, int readingLevel, String originalPublication, List<Category> categories) {
-        this.languageID = languageID;
-        this.user = user;
+    public EBook(Language language, String title, String creator, String releaseDate, String subject, int readingLevel, String originalPublication, List<Category> categories) {
+
+        this.language = language;
         this.title = title;
         this.creator = creator;
         this.releaseDate = releaseDate;
@@ -56,12 +56,12 @@ public class EBook {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public Language getLanguage() {
+        return language;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setLanguage(Language language) {
+        this.language = language;
     }
 
     public int getLanguageID() {

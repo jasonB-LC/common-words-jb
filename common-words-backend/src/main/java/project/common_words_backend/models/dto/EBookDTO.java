@@ -18,9 +18,8 @@ public class EBookDTO {
 
     public EBookDTO() {
     }
-    public EBookDTO(int languageID, int userId, String title, String creator, String releaseDate, String subject, int readingLevel, String originalPublication, List<Integer> categoryIds) {
+    public EBookDTO(int languageID, String title, String creator, String releaseDate, String subject, int readingLevel, String originalPublication, List<Integer> categoryIds) {
         this.languageID = languageID;
-        this.userId = userId; // Default value, can be set later
         this.title = title;
         this.creator = creator;
         this.releaseDate = releaseDate;
@@ -30,17 +29,11 @@ public class EBookDTO {
         this.categoryIds = categoryIds;
     }
 
-    public int getUserId() {
-        return userId;
-    }
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-    public int getLanguageID() {
+    public int getLanguageId() {
         return languageID;
     }
 
-    public void setLanguageID(int languageID){
+    public void setLanguageId(int languageID){
         this.languageID = languageID;
     }
 

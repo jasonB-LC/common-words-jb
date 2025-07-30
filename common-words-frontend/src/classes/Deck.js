@@ -1,7 +1,8 @@
 export default class Deck {
-	constructor(id, name, user) {
+	constructor(id, name, languageId, flashCards) {
         	this.id = id;
 		    this.name = name;
-		    this.user = user; 
+			this.languageId = languageId;
+			this.flashCards = flashCards;
     }
 }
