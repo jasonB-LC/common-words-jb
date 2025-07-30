@@ -23,12 +23,12 @@ public class FlashCard {
 //    @JsonManagedReference(value="flashCard-properties")
 //    private List<FlashCard_WordProperties> properties = new ArrayList<>();
 
-    private int daysUntilDue;
-    private int dateOfLastReview;
+    private long daysUntilDue;
+    private long dateOfLastReview;
 
     public FlashCard(){
     }
-    public FlashCard(Deck deck, int daysUntilDue, int dateOfLastReview) {
+    public FlashCard(Deck deck, long daysUntilDue, long dateOfLastReview) {
         this.deck = deck;
         this.daysUntilDue = daysUntilDue;
         this.dateOfLastReview = dateOfLastReview;
@@ -45,16 +45,16 @@ public class FlashCard {
     public void setDeck(Deck deck) {
         this.deck = deck;
     }
-    public int getDaysUntilDue() {
+    public long getDaysUntilDue() {
         return daysUntilDue;
     }
-    public void setDaysUntilDue(int daysUntilDue) {
+    public void setDaysUntilDue(long daysUntilDue) {
         this.daysUntilDue = daysUntilDue;
     }
-    public int getDateOfLastReview() {
+    public long getDateOfLastReview() {
         return dateOfLastReview;
     }
-    public void setDateOfLastReview(int dateOfLastReview) {
+    public void setDateOfLastReview(long dateOfLastReview) {
         this.dateOfLastReview = dateOfLastReview;
     }
 

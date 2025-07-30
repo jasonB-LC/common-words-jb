@@ -4,12 +4,12 @@ import project.common_words_backend.models.Deck;
 
 public class FlashCardDTO {
     private int deckId;
-    private int daysUntilDue;
-    private int dateOfLastReview;
+    private long daysUntilDue;
+    private long dateOfLastReview;
 
     public FlashCardDTO() {
     }
-    public FlashCardDTO(int deckId, int daysUntilDue, int dateOfLastReview) {
+    public FlashCardDTO(int deckId, long daysUntilDue, long dateOfLastReview) {
         this.deckId = deckId;
         this.daysUntilDue = daysUntilDue;
         this.dateOfLastReview = dateOfLastReview;
@@ -20,16 +20,16 @@ public class FlashCardDTO {
     public void setDeckId(int deckId) {
         this.deckId = deckId;
     }
-    public int getDaysUntilDue() {
+    public long getDaysUntilDue() {
         return daysUntilDue;
     }
-    public void setDaysUntilDue(int daysUntilDue) {
+    public void setDaysUntilDue(long daysUntilDue) {
         this.daysUntilDue = daysUntilDue;
     }
-    public int getDateOfLastReview() {
+    public long getDateOfLastReview() {
         return dateOfLastReview;
     }
-    public void setDateOfLastReview(int dateOfLastReview) {
+    public void setDateOfLastReview(long dateOfLastReview) {
         this.dateOfLastReview = dateOfLastReview;
     }
 }

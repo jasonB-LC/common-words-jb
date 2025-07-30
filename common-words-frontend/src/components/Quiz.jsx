@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router';
 const Quiz = ({wholeDeck, dueDeck}) => {
     const navigate = useNavigate();
     const [curFlashCard, setCurrentFlashCard] = useState();
-    const [previousWordIndex, setPreviousWordIndex] = useState(1);
+    const [previousCardIndex, setPreviousCardIndex] = useState(1);
     const [showAnswer, setShowAnswer] = useState(false);
 	const [flashCards, setAllFlashCards] = useState(
 		wholeDeck.flashCards.map(obj => {
@@ -37,7 +37,7 @@ const Quiz = ({wholeDeck, dueDeck}) => {
         if (stillDue.length > 1){
             do{
                 num = getRandomNum(0, stillDue.length - 1);
-            }while(num === previousWordIndex);
+            }while(num === previousCardIndex);
         }
         else if ((stillDue.length > 0)){
             num = 0;
@@ -46,7 +46,7 @@ const Quiz = ({wholeDeck, dueDeck}) => {
             return ""
         }
         
-        setPreviousWordIndex(num);
+        setPreviousCardIndex(num);
         return stillDue[num];
     }
 
@@ -58,7 +58,7 @@ const Quiz = ({wholeDeck, dueDeck}) => {
                 : {
                     ...aWord,
                     dateOfLastReview: Date.now(), 
-                    daysUntilNextReview: 2.0
+                    daysUntilDue: 2.0
                 }
             );
         })
@@ -86,7 +86,7 @@ const Quiz = ({wholeDeck, dueDeck}) => {
                 : {
                     ...aWord,
                     dateOfLastReview: Date.now(), 
-                    daysUntilNextReview: 0.0
+                    daysUntilDue: 0.0
                 }
             );
         })
@@ -122,26 +122,9 @@ const Quiz = ({wholeDeck, dueDeck}) => {
     }
 	const handleSubmit = event => {
 		event.preventDefault();
-		let newDeck = { ...wholeDeck, flashCards: [
-            {
-                "id": 6,
-                "properties": [],
-                "daysUntilDue": 0,
-                "dateOfLastReview": 3
-            },
-            {
-                "id": 7,
-                "properties": [],
-                "daysUntilDue": 0,
-                "dateOfLastReview": 7655
-            },
-            {
-                "id": 16,
-                "properties": [],
-                "daysUntilDue": 0,
-                "dateOfLastReview": 1111
-            }
-        ]};
+		let newDeck = { ...wholeDeck, flashCards: 
+            flashCards
+        };
 		if (!isValid(newDeck)) {
             console.log("not valid")
 			//setHasErrors(true);
