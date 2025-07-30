@@ -15,15 +15,11 @@ public class Deck {
 
     private String name;
 
-//    @ManyToOne
-//    @JoinColumn(name = "language_id")
-//    @JsonManagedReference
     private int languageId;
 
-    @OneToMany(mappedBy="deck")
-    @JsonManagedReference
-    private final List<FlashCard> flashCards = new ArrayList<>();
-
+    @OneToMany(mappedBy="deck", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference(value="deck-flashcard")
+    private List<FlashCard> flashCards;
 
     public Deck() {
     }
@@ -35,6 +31,10 @@ public class Deck {
     public List<FlashCard> getFlashCards() {
         return flashCards;
     }
+    public void setFlashCards(List<FlashCard> flashCards){
+        this.flashCards = flashCards;
+    }
+
     public String getName() {
         return name;
     }

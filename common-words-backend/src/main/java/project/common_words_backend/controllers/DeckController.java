@@ -5,14 +5,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import project.common_words_backend.models.Deck;
-import project.common_words_backend.models.Language;
-import project.common_words_backend.models.User;
+import project.common_words_backend.models.*;
 import project.common_words_backend.models.dto.DeckDTO;
 import project.common_words_backend.repositories.DeckRepository;
 import project.common_words_backend.repositories.LanguageRepository;
 import project.common_words_backend.repositories.UserRepository;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge =3600)
 @RestController
@@ -20,12 +21,6 @@ import java.util.List;
 public class DeckController {
     @Autowired
     DeckRepository deckRepository;
-
-    @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    LanguageRepository languageRepository;
 
     @GetMapping("")
     public ResponseEntity<?> getAllDecks() {
@@ -42,16 +37,48 @@ public class DeckController {
     @PostMapping(value="", consumes= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addNewDeck(@RequestBody Deck deck){
         Deck newDeck = new Deck(deck.getName(), deck.getLanguageId());
-        deckRepository.save(newDeck);
-        return new ResponseEntity<>(newDeck, HttpStatus.CREATED);
+        deckRepository.save(deck);
+        return new ResponseEntity<>(deck, HttpStatus.CREATED);
     }
 
     @PutMapping(value="/{id}", consumes= MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> updateDeck(@PathVariable int id, @RequestBody DeckDTO deckData){
-        Deck newDeck = new Deck(deckData.getName(), deckData.getLanguageId());
-        newDeck.setId(id);
-        deckRepository.save(newDeck);
-        return new ResponseEntity<>(newDeck, HttpStatus.CREATED);
+    public ResponseEntity<?> updateDeck(@PathVariable int id, @RequestBody Deck updatedDeck){
+//        Optional<Deck> existingDeck = deckRepository.findById(id);
+//
+//        Deck newDeck = new Deck(deck.getName(), deck.getLanguageId());
+//        List<FlashCard> flashCards = new ArrayList<>();
+//        for (FlashCard flashCard : deck.getFlashCards()) {
+//            if (flashCard != null) {
+//                flashCard.setDeck(deck); // Set the deck reference
+//                deck.getFlashCards().add(flashCard);
+//            }
+//        }
+//        if (updatedDeck.getFlashCards() != null) {
+//            for (FlashCard flashCard : updatedDeck.getFlashCards()) {
+//
+//            }
+//        }
+//        newDeck.setFlashCards(flashCards);
+//        newDeck.setId(id);
+//        deckRepository.save(newDeck);
+//        return new ResponseEntity<>(newDeck, HttpStatus.CREATED);
+        return deckRepository.findById(id)
+                .map(deck -> {
+                    // Update deck properties
+                    deck.setName(updatedDeck.getName());
+                    deck.setLanguageId(updatedDeck.getLanguageId());
+                    deck.getFlashCards().clear();
+                    if (updatedDeck.getFlashCards() != null) {
+                        for (FlashCard flashCard : updatedDeck.getFlashCards()) {
+                            flashCard.setDeck(deck); // Set the deck reference
+                            deck.getFlashCards().add(flashCard);
+                        }
+                    }
+                    System.out.printf("deck " + deck.getName());
+                    Deck savedDeck = deckRepository.save(deck);
+                    return ResponseEntity.ok(savedDeck);
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")

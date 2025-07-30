@@ -22,7 +22,7 @@ public class WordProperty {
 
     @ManyToOne
     @JoinColumn(name = "word_property_type_id")
-    @JsonBackReference
+    @JsonBackReference(value="wordPropertyType-wordProperty")
     private WordPropertyType wordPropertyType;
 
     private String value;

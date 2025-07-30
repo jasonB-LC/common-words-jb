@@ -6,10 +6,10 @@ import { useNavigate } from 'react-router';
 
 const Quiz = ({wholeDeck, dueDeck}) => {
     const navigate = useNavigate();
-    const [curWord, setCurrentWord] = useState();
+    const [curFlashCard, setCurrentFlashCard] = useState();
     const [previousWordIndex, setPreviousWordIndex] = useState(1);
     const [showAnswer, setShowAnswer] = useState(false);
-	const [allWords, setAllWords] = useState(
+	const [flashCards, setAllFlashCards] = useState(
 		wholeDeck.flashCards.map(obj => {
 			return { ...obj};
 		})
@@ -21,18 +21,18 @@ const Quiz = ({wholeDeck, dueDeck}) => {
     );
 
     useEffect(() => {
-        setCurrentWord(getRandomWord());
+        setCurrentFlashCard(getRandomFlashCard());
     }, []);
 
     useEffect(() => {
-        setCurrentWord(getRandomWord());
+        setCurrentFlashCard(getRandomFlashCard());
     }, [stillDue]);
     
     useEffect(() => {
         setShowAnswer(false);
-    }, [curWord])
+    }, [curFlashCard])
 
-    const getRandomWord = () =>{
+    const getRandomFlashCard = () =>{
         let num = 0;
         if (stillDue.length > 1){
             do{
@@ -51,9 +51,9 @@ const Quiz = ({wholeDeck, dueDeck}) => {
     }
 
     const handleAnswerCorrect = () => {
-        let updatedWords = allWords.map(aWord => {
+        let updatedWords = flashCards.map(aWord => {
             return (
-                aWord.id !== curWord.id 
+                aWord.id !== curFlashCard.id 
                 ? aWord
                 : {
                     ...aWord,
@@ -64,13 +64,13 @@ const Quiz = ({wholeDeck, dueDeck}) => {
         })
         let updatedStillDue = stillDue.map(aWord => {
             return (
-                aWord.id !== curWord.id ? aWord : ""
+                aWord.id !== curFlashCard.id ? aWord : ""
             );
         })
 
         var filteredStillDue = updatedStillDue.filter(Boolean);
         setStillDue(filteredStillDue);
-        setAllWords(updatedWords);
+        setAllFlashCards(updatedWords);
         
     }
 
@@ -79,9 +79,9 @@ const Quiz = ({wholeDeck, dueDeck}) => {
     }
 
     const handleAnswerIncorrect = () => {
-        let updatedWords = allWords.map(aWord => {
+        let updatedWords = flashCards.map(aWord => {
             return (
-                aWord.id !== curWord.id 
+                aWord.id !== curFlashCard.id 
                 ? aWord
                 : {
                     ...aWord,
@@ -91,16 +91,16 @@ const Quiz = ({wholeDeck, dueDeck}) => {
             );
         })
         setAllWords(updatedWords);
-        setCurrentWord(getRandomWord());
+        setCurrentFlashCard(getRandomFlashCard());
     }
 
     // const sendBackDeckInfo = () => {
-    //     handleBackToMenu(allWords);
+    //     handleBackToMenu(flashCards);
     // }
 	const saveDeck = async deck => {
-        console.log("deck.id " + wholeDeck.id);
+        console.log("deck.flashCards " + deck.flashCards);
 		try {
-            console.log(deck);
+            console.log(JSON.stringify(wholeDeck));
 			await fetch('http://localhost:8080/decks/' + wholeDeck.id, {
 				method: 'PUT',
 				headers: {
@@ -122,7 +122,7 @@ const Quiz = ({wholeDeck, dueDeck}) => {
     }
 	const handleSubmit = event => {
 		event.preventDefault();
-		let newDeck = { ...wholeDeck, languageId: 2, flashCards: [
+		let newDeck = { ...wholeDeck, flashCards: [
             {
                 "id": 6,
                 "properties": [],
@@ -152,7 +152,7 @@ const Quiz = ({wholeDeck, dueDeck}) => {
     const quizControl = (
         <div className="quiz-control">
             {!showAnswer
-                ? <div>{curWord && <button onClick={handleShowClicked}>Show</button>}</div>
+                ? <div>{curFlashCard && <button onClick={handleShowClicked}>Show</button>}</div>
                 : <div className="grade-buttons">
                     <button onClick={handleAnswerCorrect}>Correct</button>
                     <button onClick={handleAnswerIncorrect}>Incorrect</button>
@@ -166,7 +166,7 @@ const Quiz = ({wholeDeck, dueDeck}) => {
 
     return (
         <div className="quiz">
-            {curWord ? <Card currentWord={curWord} showAnswer={showAnswer}/> : "All Caught Up"}  
+            {curFlashCard ? <Card currentWord={curFlashCard} showAnswer={showAnswer}/> : "All Caught Up"}  
             {quizControl}
         </div>
     );

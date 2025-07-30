@@ -16,7 +16,7 @@ public class Language {
     private String name;
 
     @OneToMany(mappedBy="language")
-    @JsonManagedReference
+    @JsonManagedReference(value="language-eBooks")
     private final List<EBook> eBooks = new ArrayList<>();
 
 //    @OneToMany(mappedBy="language")

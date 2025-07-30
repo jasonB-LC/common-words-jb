@@ -16,12 +16,12 @@ public class FlashCard {
 
     @ManyToOne
     @JoinColumn(name = "deck_id")
-    @JsonBackReference
+    @JsonBackReference(value="deck-flashcard")
     private Deck deck;
 
-    @OneToMany(mappedBy = "flashCard")
-    @JsonManagedReference
-    private List<FlashCard_WordProperties> properties = new ArrayList<>();
+//    @OneToMany(mappedBy = "flashCard")
+//    @JsonManagedReference(value="flashCard-properties")
+//    private List<FlashCard_WordProperties> properties = new ArrayList<>();
 
     private int daysUntilDue;
     private int dateOfLastReview;

@@ -13,7 +13,7 @@ public class Category {
     private int id;
 
     @ManyToMany(mappedBy = "categories")
-    @JsonBackReference
+    @JsonBackReference(value="eBook-category")
     private List<EBook> eBooks = new ArrayList<>();
 
     private String name;

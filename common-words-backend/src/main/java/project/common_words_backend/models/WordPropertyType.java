@@ -15,7 +15,7 @@ public class WordPropertyType {
     private String name;
 
     @OneToMany(mappedBy="wordPropertyType")
-    @JsonManagedReference
+    @JsonManagedReference(value="wordPropertyType-wordProperty")
     private final List<WordProperty> properties = new ArrayList<>();
 
 

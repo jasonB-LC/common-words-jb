@@ -16,15 +16,15 @@ public class EBook {
 
     @ManyToOne
     @JoinColumn(name = "language_id")
-    @JsonBackReference
+    @JsonBackReference(value="eBook-language")
     private Language language;
 
     @ManyToMany
-    @JsonManagedReference
+    @JsonManagedReference(value="eBook-category")
     @JoinTable(name = "eBooks_categories", joinColumns = @JoinColumn(name = "eBook_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
     private List<Category> categories = new ArrayList<>();
 
-    private int languageID;
+//    private int languageID;
 
     private String title;
     private String creator;
@@ -64,13 +64,13 @@ public class EBook {
         this.language = language;
     }
 
-    public int getLanguageID() {
-        return languageID;
-    }
-
-    public void setLanguageID(int languageID) {
-        this.languageID = languageID;
-    }
+//    public int getLanguageID() {
+//        return languageID;
+//    }
+//
+//    public void setLanguageID(int languageID) {
+//        this.languageID = languageID;
+//    }
 
     public String getTitle() {
         return title;
