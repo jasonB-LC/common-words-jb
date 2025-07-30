@@ -4,19 +4,28 @@ import Card from './common/Card.jsx';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router';
 
-const Quiz = ({wholeDeck, dueDeck}) => {
+const Quiz = ({wholeDeck, dueDeck, refetchDecks}) => {
+    const oneDayMS = 86400000;
+    const cardIsReadyForReview = (card) => {
+        let TodaysDate = Date.now();
+        let timeElapsedMS = TodaysDate - card.dateOfLastReview;
+        let timeUntilNextReviewMS = oneDayMS * card.daysUntilNextReview;
+        return timeElapsedMS > timeUntilNextReviewMS
+    };
+    
     const navigate = useNavigate();
     const [curFlashCard, setCurrentFlashCard] = useState();
     const [previousCardIndex, setPreviousCardIndex] = useState(1);
     const [showAnswer, setShowAnswer] = useState(false);
 	const [flashCards, setAllFlashCards] = useState(
-		wholeDeck.flashCards.map(obj => {
-			return { ...obj};
+		wholeDeck.flashCards.map(card => {
+			return { ...card};
 		})
 	);
     const [stillDue, setStillDue] = useState(
-		dueDeck.flashCards.map(obj => {
-			return { ...obj};
+		dueDeck.flashCards.map(card => {
+            console.log("found a card");
+			return { ...card};
 		})
     );
 
@@ -25,12 +34,14 @@ const Quiz = ({wholeDeck, dueDeck}) => {
     }, []);
 
     useEffect(() => {
+        console.log(stillDue.length);
         setCurrentFlashCard(getRandomFlashCard());
     }, [stillDue]);
     
     useEffect(() => {
         setShowAnswer(false);
     }, [curFlashCard])
+
 
     const getRandomFlashCard = () =>{
         let num = 0;
@@ -51,26 +62,26 @@ const Quiz = ({wholeDeck, dueDeck}) => {
     }
 
     const handleAnswerCorrect = () => {
-        let updatedWords = flashCards.map(aWord => {
+        let updatedCards = flashCards.map(aCard => {
             return (
-                aWord.id !== curFlashCard.id 
-                ? aWord
+                aCard.id !== curFlashCard.id 
+                ? aCard
                 : {
-                    ...aWord,
+                    ...aCard,
                     dateOfLastReview: Date.now(), 
                     daysUntilDue: 2.0
                 }
             );
         })
-        let updatedStillDue = stillDue.map(aWord => {
+        let updatedStillDue = stillDue.map(aCard => {
             return (
-                aWord.id !== curFlashCard.id ? aWord : ""
+                aCard.id !== curFlashCard.id ? aCard : ""
             );
         })
 
         var filteredStillDue = updatedStillDue.filter(Boolean);
         setStillDue(filteredStillDue);
-        setAllFlashCards(updatedWords);
+        setAllFlashCards(updatedCards);
         
     }
 
@@ -79,18 +90,18 @@ const Quiz = ({wholeDeck, dueDeck}) => {
     }
 
     const handleAnswerIncorrect = () => {
-        let updatedWords = flashCards.map(aWord => {
+        let updatedCards = flashCards.map(aCard => {
             return (
-                aWord.id !== curFlashCard.id 
-                ? aWord
+                aCard.id !== curFlashCard.id 
+                ? aCard
                 : {
-                    ...aWord,
+                    ...aCard,
                     dateOfLastReview: Date.now(), 
                     daysUntilDue: 0.0
                 }
             );
         })
-        setAllWords(updatedWords);
+        setAllFlashCards(updatedCards);
         setCurrentFlashCard(getRandomFlashCard());
     }
 
@@ -113,7 +124,7 @@ const Quiz = ({wholeDeck, dueDeck}) => {
 		} catch (error) {
 			console.error(error.message);
 		}
-		//refetch();
+        refetchDecks();
         navigate('/Study');
 
 	};

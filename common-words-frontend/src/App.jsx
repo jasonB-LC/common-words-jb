@@ -15,17 +15,17 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import TraversalButton from "./components/TraversalButton";
 import Quiz from "./components/Quiz";
-import { Link
+import { Link } from "react-router-dom";
 
- } from "react-router-dom";
 function App() {
-      const oneDayMS = 86400000;
+  const oneDayMS = 86400000;
   const [loading, setLoading] = useState(true);
   const [allLanguages, setAllLanguages] = useState([]);
 	const [allDecks, setAllDecks] = useState([]);
   const [curDeck, setCurDeck] =  useState({});
 	const [allFlashCards, setAllFlashCards] = useState([]);
   const [curLanguageIndex, setCurLanguageIndex] = useState(2);
+  
   useEffect(()=>{
     console.log("curLanguageIndex: " + curLanguageIndex);
 
@@ -143,6 +143,12 @@ function App() {
       </div>
     }
   })
+
+  const refetchDecks = () => {
+    console.log("refetching");
+    fetchDecks();
+  }
+    
   const languagesDropdownJSX = allLanguages.map(lang => {
       return (
           <option value={lang.id.toString()}>{lang.name.toString()}</option>
@@ -171,7 +177,7 @@ function App() {
           wholeDeck, dueDeck, handleBackToMenu
             <Route path="/" element={<Home allLanguages={allLanguages} allDecks={allDecks}/>} />
             <Route path="/Study" element={<Study curDecksJSX={decksJSX}/>} />
-            <Route path="/Quiz" element={<Quiz wholeDeck={curDeck} dueDeck={curDeck} />} />
+            <Route path="/Quiz" element={<Quiz wholeDeck={curDeck} dueDeck={curDeck} refetchDecks={refetchDecks}/>} />
             <Route path="/resources/" element={<Resources />} />
             <Route path="/about/" element={<About />} />
           </Route>
