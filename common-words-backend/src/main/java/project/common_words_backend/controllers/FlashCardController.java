@@ -67,8 +67,8 @@ public class FlashCardController {
         flashCardRepository.deleteById(id);
     }
 
-    public void saveUploadedFile(MultipartFile file, String uploadDir) throws IOException {
-        String filePath = uploadDir + File.separator + file.getOriginalFilename();
+    public void saveUploadedFile(MultipartFile file) throws IOException {
+        String filePath = uploadDirectory + File.separator + file.getOriginalFilename();
         file.transferTo(new File(filePath));
     }
 }

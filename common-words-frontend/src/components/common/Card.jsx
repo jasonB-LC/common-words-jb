@@ -9,7 +9,7 @@ const Card = ({currentCard, showAnswer}) => {
                 <div className="answer">
                     <span>answer: </span>
                     <img className="mnemonic-image" src={currentCard.imageUrl}/>
-                    <audio autoPlay src={currentCard.soundfilePath}></audio>
+                    <audio autoPlay src={"http://localhost:8080/files/soundfiles/" + currentCard.soundfilePath}></audio>
                 </div>
 			)}
         </div>

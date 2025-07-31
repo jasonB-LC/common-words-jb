@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useForm, Controller } from "react-hook-form";
 
 const AddWordForm = ({getWordData}) => {
     const navigate = useNavigate();
-
+    const [soundfileInternalPath, setSoundfileInternalPath] = useState("")
     const [formData, setFormData] = useState({
         wordText: "",
         imageUrl: "",
@@ -22,6 +23,7 @@ const AddWordForm = ({getWordData}) => {
     
     const sendData = () =>{
         console.log("text " + formData.wordText);
+
         getWordData(formData);
         navigate("/Study");
 
