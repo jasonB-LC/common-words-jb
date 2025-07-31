@@ -37,7 +37,8 @@ public class FlashCardController {
     public ResponseEntity<?> addNewFlashCard(@RequestBody FlashCardDTO flashCardData){
         Deck deck = deckRepository.findById(flashCardData.getDeckId()).orElse(null);
 
-        FlashCard newFlashCard = new FlashCard(deck, flashCardData.getDaysUntilDue(), flashCardData.getDateOfLastReview());
+        FlashCard newFlashCard = new FlashCard(deck, flashCardData.getDaysUntilDue(), flashCardData.getDateOfLastReview(),
+                flashCardData.getWordText(), flashCardData.getImageUrl(), flashCardData.getSoundfilePath());
         flashCardRepository.save(newFlashCard);
         return new ResponseEntity<>(newFlashCard, HttpStatus.CREATED);
     }
@@ -46,7 +47,8 @@ public class FlashCardController {
     public ResponseEntity<?> updateFlashCard(@PathVariable int id, @RequestBody FlashCardDTO flashCardData){
         Deck deck = deckRepository.findById(flashCardData.getDeckId()).orElse(null);
 
-        FlashCard newFlashCard = new FlashCard(deck, flashCardData.getDaysUntilDue(), flashCardData.getDateOfLastReview());
+        FlashCard newFlashCard = new FlashCard(deck, flashCardData.getDaysUntilDue(), flashCardData.getDateOfLastReview(),
+                flashCardData.getWordText(), flashCardData.getImageUrl(), flashCardData.getSoundfilePath());
         newFlashCard.setId(id);
         flashCardRepository.save(newFlashCard);
         return new ResponseEntity<>(newFlashCard, HttpStatus.CREATED);

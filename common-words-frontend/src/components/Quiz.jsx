@@ -159,7 +159,7 @@ const Quiz = ({wholeDeck, dueDeck, refetchDecks}) => {
 
     return (
         <div className="quiz">
-            {curFlashCard ? <Card currentWord={curFlashCard} showAnswer={showAnswer}/> : "All Caught Up"}  
+            {curFlashCard ? <Card currentCard={curFlashCard} showAnswer={showAnswer}/> : "All Caught Up"}  
             {quizControl}
         </div>
     );

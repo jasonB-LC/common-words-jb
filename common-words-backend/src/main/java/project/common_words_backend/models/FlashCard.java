@@ -25,13 +25,18 @@ public class FlashCard {
 
     private long daysUntilDue;
     private long dateOfLastReview;
-
+    private String wordText;
+    private String imageUrl;
+    private String soundfilePath;
     public FlashCard(){
     }
-    public FlashCard(Deck deck, long daysUntilDue, long dateOfLastReview) {
+    public FlashCard(Deck deck, long daysUntilDue, long dateOfLastReview, String wordText, String imageUrl, String soundfilePath) {
         this.deck = deck;
         this.daysUntilDue = daysUntilDue;
         this.dateOfLastReview = dateOfLastReview;
+        this.wordText = wordText;
+        this.imageUrl = imageUrl;
+        this.soundfilePath = soundfilePath;
     }
     public int getId() {
         return id;
@@ -57,5 +62,22 @@ public class FlashCard {
     public void setDateOfLastReview(long dateOfLastReview) {
         this.dateOfLastReview = dateOfLastReview;
     }
-
+    public String getWordText(){
+        return this.wordText;
+    }
+    public void setWordText(String wordText){
+        this.wordText = wordText;
+    }
+    public String getImageUrl(){
+        return this.imageUrl;
+    }
+    public void setImageUrl(String imageUrl){
+        this.imageUrl = imageUrl;
+    }
+    public String getSoundfilePath(){
+        return this.soundfilePath;
+    }
+    public void setSoundfilePath(String soundfilePath){
+        this.soundfilePath = soundfilePath;
+    }
 }
