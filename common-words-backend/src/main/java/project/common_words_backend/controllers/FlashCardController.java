@@ -10,6 +10,10 @@ import project.common_words_backend.models.dto.FlashCardDTO;
 import project.common_words_backend.repositories.DeckRepository;
 import project.common_words_backend.repositories.FlashCardRepository;
 import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
+import java.io.File;
+import java.io.IOException;
+import org.springframework.beans.factory.annotation.Value;
 
 @CrossOrigin(origins = "*", maxAge =3600)
 @RestController
@@ -20,6 +24,10 @@ public class FlashCardController {
 
     @Autowired
     DeckRepository deckRepository;
+
+    @Value("${app.upload.directory}")
+    private String uploadDirectory;
+    //TODO error handling around directory path
 
     @GetMapping("")
     public ResponseEntity<?> getAllFlashCards() {
@@ -53,8 +61,14 @@ public class FlashCardController {
         flashCardRepository.save(newFlashCard);
         return new ResponseEntity<>(newFlashCard, HttpStatus.CREATED);
     }
+//    @PutMapping(value="/soundfile", consumes=MediaType.)
     @DeleteMapping("/{id}")
     public void deleteFlashCard(@PathVariable int id){
         flashCardRepository.deleteById(id);
+    }
+
+    public void saveUploadedFile(MultipartFile file, String uploadDir) throws IOException {
+        String filePath = uploadDir + File.separator + file.getOriginalFilename();
+        file.transferTo(new File(filePath));
     }
 }

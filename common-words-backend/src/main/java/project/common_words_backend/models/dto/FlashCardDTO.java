@@ -1,5 +1,6 @@
 package project.common_words_backend.models.dto;
 
+import jakarta.persistence.Lob;
 import project.common_words_backend.models.Deck;
 
 public class FlashCardDTO {
@@ -7,7 +8,9 @@ public class FlashCardDTO {
     private long daysUntilDue;
     private long dateOfLastReview;
     private String wordText;
+    @Lob
     private String imageUrl;
+    @Lob
     private String soundfilePath;
 
     public FlashCardDTO() {

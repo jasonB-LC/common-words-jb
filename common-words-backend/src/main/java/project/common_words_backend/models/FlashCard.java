@@ -26,7 +26,9 @@ public class FlashCard {
     private long daysUntilDue;
     private long dateOfLastReview;
     private String wordText;
+    @Lob
     private String imageUrl;
+    @Lob
     private String soundfilePath;
     public FlashCard(){
     }

@@ -91,7 +91,10 @@ function App() {
         let newFlashCard = new FlashCard(
           flashCard.id,
           flashCard.daysUntilDue,
-          flashCard.dateOfLastReview
+          flashCard.dateOfLastReview,
+          flashCard.wordText,
+          flashCard.imageUrl,
+          flashCard.soundfilePath
         );
         flashCards.push(newFlashCard);
       })
