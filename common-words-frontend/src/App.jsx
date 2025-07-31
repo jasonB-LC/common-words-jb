@@ -16,6 +16,7 @@ import Footer from "./components/Footer";
 import TraversalButton from "./components/TraversalButton";
 import Quiz from "./components/Quiz";
 import { Link } from "react-router-dom";
+import AddWordForm from "./components/AddWordForm";
 
 function App() {
   const oneDayMS = 86400000;
@@ -154,11 +155,14 @@ function App() {
         Due: {deck.flashCards.filter((word) => {
             return wordIsReadyForReview(word);
         }).length} 
-        {/* <button className='delete-button' onClick={showPopUpTrue} name={deck.name + " Deck"}  id={deck.id.toString()} disabled={isEditing}>x</button> */}
+        <Link to="/AddWordForm">
+          <button onClick={handleDeckClick} id={deck.id.toString()}>Add Word</button>
+        </Link>        {/* <button className='delete-button' onClick={showPopUpTrue} name={deck.name + " Deck"}  id={deck.id.toString()} disabled={isEditing}>x</button> */}
         </span>
       </div>
     }
   })
+
 
   const refetchDecks = () => {
     console.log("refetching");
@@ -181,6 +185,29 @@ function App() {
       </>
   )
 
+  const addFlashCard = (flashCard) => {
+    setCurDeck({...curDeck, flashCard})
+    saveCurDeck(curDeck);
+  }
+
+  const saveCurDeck = async deck => {
+		try {
+			await fetch('http://localhost:8080/decks/' + curDeck.id, {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+					'Access-Control-Allow-Origin': '*',
+				},
+				body: JSON.stringify(deck),
+			});
+            console.log('http://localhost:8080/decks/' + wholeDeck.id);
+		} catch (error) {
+			console.error(error.message);
+		}
+        refetchDecks();
+        navigate('/Study');
+
+	};
   return (
     <>
       <Router>
@@ -193,6 +220,7 @@ function App() {
           wholeDeck, dueDeck, handleBackToMenu
             <Route path="/" element={<Home allLanguages={allLanguages} allDecks={allDecks}/>} />
             <Route path="/Study" element={<Study curDecksJSX={decksJSX}/>} />
+            <Route path="/AddWordForm" element={<AddWordForm getWordData={addFlashCard}/>} />
             <Route path="/Quiz" element={<Quiz wholeDeck={curDeck} dueDeck={curDue} refetchDecks={refetchDecks}/>} />
             <Route path="/resources/" element={<Resources />} />
             <Route path="/about/" element={<About />} />

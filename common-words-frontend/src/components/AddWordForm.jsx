@@ -1,12 +1,10 @@
 import React, {useState} from 'react';
 
-const AddWordForm = ({getWordData, id}) => {
+const AddWordForm = ({getWordData}) => {
     const [formData, setFormData] = useState({
-        id: id,
-        word: "",
-        definition: "",
-        image: "",
-        soundfile: "",
+        wordText: "",
+        imageUrl: "",
+        soundfilePath: "",
         daysUntilNextReview: 0,
         dateOfLastReview: Date.now()
     })

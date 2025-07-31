@@ -125,7 +125,6 @@ const Quiz = ({wholeDeck, dueDeck, refetchDecks}) => {
 		}
         refetchDecks();
         navigate('/Study');
-
 	};
     const isValid = () => {
         return true;
