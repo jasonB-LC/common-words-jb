@@ -1,6 +1,9 @@
 import React, {useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const AddWordForm = ({getWordData}) => {
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
         wordText: "",
         imageUrl: "",
@@ -18,30 +21,30 @@ const AddWordForm = ({getWordData}) => {
     };
     
     const sendData = () =>{
+        console.log("text " + formData.wordText);
         getWordData(formData);
+        navigate("/Study");
+
     }
 
     const discardEntry = () =>{
         getWordData("");
+        navigate("/Study");
     }
     
     return (
         <form>
             <div className="form-group">
-                <label for="word">Word:</label>
-                <input type="text" name="word" id="word" value={formData.word} onChange={handleChange}/>
+                <label>Word:</label>
+                <input type="text" name="wordText" id="wordText" value={formData.wordText} onChange={handleChange}/>
             </div>
             <div className="form-group">
-                <label for="definition">Definition:</label>
-                <input type="text" name="definition" id="definition" value={formData.definition} onChange={handleChange}/>
+                <label>Image:</label>
+                <input type="text" name="imageUrl" id="imageUrl" value={formData.imageUrl} onChange={handleChange}/>
             </div>
             <div className="form-group">
-                <label for="image">Image:</label>
-                <input type="text" name="image" id="image" value={formData.image} onChange={handleChange}/>
-            </div>
-            <div className="form-group">
-                <label for="soundfile">Soundfile:</label>
-                <input type="text" name="soundfile" id="soundfile" value={formData.soundfile} onChange={handleChange}/>
+                <label>Soundfile:</label>
+                <input type="text" name="soundfilePath" id="soundfilePath" value={formData.soundfilePath} onChange={handleChange}/>
             </div>
 
             <button type="submit" onClick={sendData}>commit</button>

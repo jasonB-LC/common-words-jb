@@ -186,13 +186,25 @@ function App() {
   )
 
   const addFlashCard = (flashCard) => {
-    setCurDeck({...curDeck, flashCard})
-    saveCurDeck(curDeck);
+    event.preventDefault();
+    console.log("flashcard dateOfLastReview " + flashCard.dateOfLastReview)
+    const updatedFlashCards = [...curDeck.flashCards, flashCard];
+    for (let card of updatedFlashCards){
+      console.log("card " + card.wordText)
+    }
+    const newCurDeck = new Deck(curDeck.id, curDeck.name, curDeck.languageId, updatedFlashCards)
+    console.log("curDeck " + curDeck.flashCards);
+    console.log("newCurDeck " + newCurDeck.flashCards);
+    // saveCurDeck(newCurDeck)
+    console.log(curDeck);
+    console.log(newCurDeck);
+    saveCurDeck(newCurDeck);
   }
 
   const saveCurDeck = async deck => {
 		try {
-			await fetch('http://localhost:8080/decks/' + curDeck.id, {
+      console.log("curDeck.id " + deck.id);
+			await fetch('http://localhost:8080/decks/' + deck.id, {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json',
@@ -200,13 +212,11 @@ function App() {
 				},
 				body: JSON.stringify(deck),
 			});
-            console.log('http://localhost:8080/decks/' + wholeDeck.id);
+      console.log('http://localhost:8080/decks/' + deck.id);
 		} catch (error) {
 			console.error(error.message);
 		}
-        refetchDecks();
-        navigate('/Study');
-
+    refetchDecks();
 	};
   return (
     <>
