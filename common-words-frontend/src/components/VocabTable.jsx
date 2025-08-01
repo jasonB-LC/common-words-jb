@@ -4,12 +4,20 @@ import { useNavigate } from 'react-router-dom';
 const VocabTable = ({deck, returnNewData}) => {
     const [tableData, setTableData] = useState();
     const navigate = useNavigate();
+    const [soundfilesToDelete, setSoundfilesToDelete] = useState([]);
     
     const removeRow = (e) =>{
         const table = document.getElementById('vocabList');
         const rows = table.querySelectorAll('tr');
         for (let row of rows){
             if (e.target.id === row.id){
+                for (let column of row.querySelectorAll("td")){
+                    if (column.className === "soundfile-cell"){
+                        setSoundfilesToDelete([...soundfilesToDelete, column.textContent])
+                        console.log("soundfile name: " + column.textContent);
+                    }
+                }
+                deleteSoundfile
                 table.deleteRow(Number(row.rowIndex));
             }
         }
@@ -66,9 +74,30 @@ const VocabTable = ({deck, returnNewData}) => {
             newFlashCards.push(newWord);
         }
         const newDeck = {...deck, flashCards: newFlashCards}
+        for (let file of soundfilesToDelete){
+            deleteSoundfile(file)
+            console.log("file: " + file);
+        }
         returnNewData(newDeck);
         navigate("/Study");
     }  
+
+    const deleteSoundfile = async (soundfile) => {
+        try {
+			const response = await fetch('http://localhost:8080/delete/' + soundfile, {
+				method: 'DELETE',
+				headers: {
+					'Access-Control-Allow-Origin': '*',
+				}
+			});
+            if (response.ok){
+                console.log("delete successful");
+            }
+		} catch (error) {
+            console.log("couldn't delete file:" + soundfile);
+			console.error(error.message);
+		}
+}
 
     const revertChanges = () =>{
         returnNewData(deck);
