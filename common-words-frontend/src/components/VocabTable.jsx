@@ -13,13 +13,12 @@ const VocabTable = ({deck, returnNewData}) => {
         }
     }
 
-    const wordsJSX = deck.map((word, wordKey) => 
+    const wordsJSX = deck.flashCards.map((word, wordKey) => 
         {
             return <tr id={wordKey}>
-                <td name="word"><div contenteditable="true" spellcheck="false">{word.word}</div></td>
-                <td name="definition"><div contenteditable="true" spellcheck="false">{word.definition}</div></td>
-                <td className="image-cell" name="image"><div contenteditable="true" spellcheck="false">{word.image}</div></td>
-                <td className="soundfile-cell" name="soundfile"><div contenteditable="true" spellcheck="false">{word.soundfile}</div></td>
+                <td name="wordText"><div contenteditable="true" spellcheck="false">{word.wordText}</div></td>
+                <td className="image-cell" name="imageUrl"><div contenteditable="true" spellcheck="false">{word.imageUrl}</div></td>
+                <td className="soundfile-cell" name="soundfilePath"><div contenteditable="true" spellcheck="false">{word.soundfilePath}</div></td>
                 <td><button className="final-delete-button-small" onClick={removeRow} id={wordKey}>x</button></td>
             </tr>
         }
@@ -29,7 +28,6 @@ const VocabTable = ({deck, returnNewData}) => {
                         <thead>
                             <tr>
                                 <th>Word</th>
-                                <th>Definition</th>
                                 <th>Image</th>  
                                 <th>Soundfile</th>                         
                             </tr>
@@ -45,11 +43,11 @@ const VocabTable = ({deck, returnNewData}) => {
             return;
         }
         const rows = table.querySelectorAll('tr');
-        const newDeck = [];
+        const newFlashCards = [];
         for (let i = 1; i < rows.length; i++) {
             const cells = rows[i].querySelectorAll('td');
             const newWord = {}
-            for(let key of Object.keys(deck[i-1])){
+            for(let key of Object.keys(deck.flashCards[i-1])){
                 let isMatch = -1;
                 for (let j = 0; j <cells.length; j++){
                     if ( key === cells[j].getAttribute("name")){
@@ -60,11 +58,12 @@ const VocabTable = ({deck, returnNewData}) => {
                     newWord[key] = cells[isMatch].textContent;
                 }
                 else {
-                    newWord[key] = deck[i-1][key];
+                    newWord[key] = deck.flashCards[i-1][key];
                 }
             }
-            newDeck.push(newWord);
+            newFlashCards.push(newWord);
         }
+        const newDeck = {...deck, flashCards: newFlashCards}
         returnNewData(newDeck);
     }  
 

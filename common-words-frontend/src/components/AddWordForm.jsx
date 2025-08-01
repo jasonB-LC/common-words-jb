@@ -50,6 +50,7 @@ const AddWordForm = ({getWordData}) => {
 				body: soundfileFormData,
 			});
             if (response.ok){
+                setSelectedFile(null);
                 getWordData(formData);
                 navigate("/Study");
             }

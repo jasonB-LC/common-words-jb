@@ -17,6 +17,7 @@ import TraversalButton from "./components/TraversalButton";
 import Quiz from "./components/Quiz";
 import { Link } from "react-router-dom";
 import AddWordForm from "./components/AddWordForm";
+import VocabTable from "./components/VocabTable";
 
 function App() {
   const oneDayMS = 86400000;
@@ -230,6 +231,7 @@ function App() {
             <Route path="/" element={<Home allLanguages={allLanguages} allDecks={allDecks}/>} />
             <Route path="/Study" element={<Study curDecksJSX={decksJSX}/>} />
             <Route path="/AddWordForm" element={<AddWordForm getWordData={addFlashCard}/>} />
+            <Route path="/VocabEditTable" element={<VocabTable deck={curDeck} returnNewData={saveCurDeck}/>} />
             <Route path="/Quiz" element={<Quiz wholeDeck={curDeck} dueDeck={curDue} refetchDecks={refetchDecks}/>} />
             <Route path="/resources/" element={<Resources />} />
             <Route path="/about/" element={<About />} />
