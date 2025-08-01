@@ -186,7 +186,6 @@ function App() {
   )
 
   const addFlashCard = (flashCard) => {
-    event.preventDefault();
     console.log("flashcard dateOfLastReview " + flashCard.dateOfLastReview)
     const updatedFlashCards = [...curDeck.flashCards, flashCard];
     for (let card of updatedFlashCards){

@@ -1,13 +1,12 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm, Controller } from "react-hook-form";
 
 const AddWordForm = ({getWordData}) => {
-    const {register, handleSubmit, formState: {errors} } = useForm();
-
-    console.log(errors);
+    const {register, handleSubmit, formState: { isValid} } = useForm({mode: 'onChange'});
+    const [selectedFile, setSelectedFile] = useState(null);
     const navigate = useNavigate();
-    const [soundfileInternalPath, setSoundfileInternalPath] = useState("")
+    const [soundfileUploaded, setSoundfileUploaded] = useState(false);
     const [formData, setFormData] = useState({
         wordText: "",
         imageUrl: "",
@@ -16,6 +15,7 @@ const AddWordForm = ({getWordData}) => {
         dateOfLastReview: Date.now()
     })
 
+    const onSubmit = (data) => {}
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
@@ -23,13 +23,40 @@ const AddWordForm = ({getWordData}) => {
             [name]: value,
         }));
     };
-    
-    const sendData = () =>{
-        console.log("text " + formData.wordText);
 
-        getWordData(formData);
-        navigate("/Study");
+    const handleSoundfileChange = (e) => {
+        setSelectedFile(e.target.files[0]);
+        const { name, value } = e.target;
+        console.log(e.target.files);
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: e.target.files[0].name,
+        }));
+        
+    }
 
+    const sendData = async () =>{
+        const soundfileFormData = new FormData();
+        console.log("selectedFile: ");
+        console.log(selectedFile); 
+        soundfileFormData.append("file", selectedFile);
+        console.log("soundfile form data : " + soundfileFormData)
+        try {
+			const response = await fetch('http://localhost:8080/upload', {
+				method: 'POST',
+				headers: {
+					'Access-Control-Allow-Origin': '*',
+				},
+				body: soundfileFormData,
+			});
+            if (response.ok){
+                getWordData(formData);
+                navigate("/Study");
+            }
+		} catch (error) {
+            console.log("soundfile error:")
+			console.error(error.message);
+		}
     }
 
     const discardEntry = () =>{
@@ -39,23 +66,24 @@ const AddWordForm = ({getWordData}) => {
     
     return (
         <form onSubmit={handleSubmit((data) => {
-            console.log("form hook data: " + data)
+            console.log(data)
         })}>
             <div className="form-group">
                 <label>Word:</label>
-                <input {...register("wordText", { required: "this is required."})} type="text" name="wordText" id="wordText" value={formData.wordText} onChange={handleChange}/>
+                <input {...register("wordText", { required: "this is required"})} type="text" name="wordText" id="wordText" value={formData.wordText} onChange={handleChange}/>
+                {/* <span>{errors.name}</span> */}
             </div>
             <div className="form-group">
                 <label>Image:</label>
-                <input {...register("imageUrl")} type="text" name="imageUrl" id="imageUrl" value={formData.imageUrl} onChange={handleChange}/>
+                <input type="text" name="imageUrl" id="imageUrl" value={formData.imageUrl} onChange={handleChange}/>
             </div>
             <div className="form-group">
                 <label>Soundfile:</label>
-                <input {...register("soundfilePath")} type="text" name="soundfilePath" id="soundfilePath" value={formData.soundfilePath} onChange={handleChange}/>
+                <input type="file" name="soundfilePath" id="soundfilePath" onChange={handleSoundfileChange}/>
             </div>
 
-            {/* <button type="submit" onClick={sendData}>commit</button> */}
-            <button type="submit">commit</button>
+            <button type="submit" onClick={sendData}>commit</button>
+            {/* <button type="submit" onClick={onSubmit}>commit</button> */}
             <button onClick={discardEntry}>back</button>
         </form>
     );

@@ -3,10 +3,7 @@ package project.common_words_backend.controllers;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -14,8 +11,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+@CrossOrigin(origins = "*", maxAge =50000)
 @RestController
-@RequestMapping("/upload/")
+@RequestMapping("/upload")
 public class FileUploadController {
     @Value("${app.upload.directory}")
     private String uploadDirectory;
@@ -23,7 +21,7 @@ public class FileUploadController {
     //TODO give each user their own directory
     @PostMapping
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
-
+        System.out.println(" file " + file);
         try {
             Path uploadPath = Paths.get(uploadDirectory);
             if (!Files.exists(uploadPath)) {
