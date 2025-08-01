@@ -1,8 +1,10 @@
 import {useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const VocabTable = ({deck, returnNewData}) => {
     const [tableData, setTableData] = useState();
-
+    const navigate = useNavigate();
+    
     const removeRow = (e) =>{
         const table = document.getElementById('vocabList');
         const rows = table.querySelectorAll('tr');
@@ -65,10 +67,12 @@ const VocabTable = ({deck, returnNewData}) => {
         }
         const newDeck = {...deck, flashCards: newFlashCards}
         returnNewData(newDeck);
+        navigate("/Study");
     }  
 
     const revertChanges = () =>{
         returnNewData(deck);
+        navigate("/Study");
     }
 
     return (

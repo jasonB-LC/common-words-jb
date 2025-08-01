@@ -146,6 +146,7 @@ function App() {
       console.log("loading in loading, useEffect" + loading);
 	}, [loading]);
 
+ 
   const decksJSX = allDecks.map(deck => {
     if (parseInt(deck.languageId) === parseInt(curLanguageIndex)){
       return <div>
@@ -158,7 +159,11 @@ function App() {
         }).length} 
         <Link to="/AddWordForm">
           <button onClick={handleDeckClick} id={deck.id.toString()}>Add Word</button>
-        </Link>        {/* <button className='delete-button' onClick={showPopUpTrue} name={deck.name + " Deck"}  id={deck.id.toString()} disabled={isEditing}>x</button> */}
+        </Link>        
+        {/* <button className='delete-button' onClick={showPopUpTrue} name={deck.name + " Deck"}  id={deck.id.toString()} disabled={isEditing}>x</button> */}
+        <Link to="/VocabEditTable">
+          <button onClick={handleDeckClick} id={deck.id.toString()}>Edit</button>
+        </Link> 
         </span>
       </div>
     }
