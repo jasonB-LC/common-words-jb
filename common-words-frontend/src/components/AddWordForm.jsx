@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { useForm, Controller } from "react-hook-form";
 
 const AddWordForm = ({getWordData}) => {
+    const {register, handleSubmit, formState: {errors} } = useForm();
+
+    console.log(errors);
     const navigate = useNavigate();
     const [soundfileInternalPath, setSoundfileInternalPath] = useState("")
     const [formData, setFormData] = useState({
@@ -35,21 +38,24 @@ const AddWordForm = ({getWordData}) => {
     }
     
     return (
-        <form>
+        <form onSubmit={handleSubmit((data) => {
+            console.log("form hook data: " + data)
+        })}>
             <div className="form-group">
                 <label>Word:</label>
-                <input type="text" name="wordText" id="wordText" value={formData.wordText} onChange={handleChange}/>
+                <input {...register("wordText", { required: "this is required."})} type="text" name="wordText" id="wordText" value={formData.wordText} onChange={handleChange}/>
             </div>
             <div className="form-group">
                 <label>Image:</label>
-                <input type="text" name="imageUrl" id="imageUrl" value={formData.imageUrl} onChange={handleChange}/>
+                <input {...register("imageUrl")} type="text" name="imageUrl" id="imageUrl" value={formData.imageUrl} onChange={handleChange}/>
             </div>
             <div className="form-group">
                 <label>Soundfile:</label>
-                <input type="text" name="soundfilePath" id="soundfilePath" value={formData.soundfilePath} onChange={handleChange}/>
+                <input {...register("soundfilePath")} type="text" name="soundfilePath" id="soundfilePath" value={formData.soundfilePath} onChange={handleChange}/>
             </div>
 
-            <button type="submit" onClick={sendData}>commit</button>
+            {/* <button type="submit" onClick={sendData}>commit</button> */}
+            <button type="submit">commit</button>
             <button onClick={discardEntry}>back</button>
         </form>
     );
