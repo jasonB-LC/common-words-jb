@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import Study from "./Study";
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
-import StyledLink from "../StyledLink";
+import StyledLink from "../common/StyledLink";
 import { Link } from "react-router-dom";
 import TraversalButton from "../TraversalButton";
 

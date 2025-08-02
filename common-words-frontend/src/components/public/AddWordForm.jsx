@@ -15,7 +15,6 @@ const AddWordForm = ({getWordData}) => {
         dateOfLastReview: Date.now()
     })
 
-    const onSubmit = (data) => {}
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({

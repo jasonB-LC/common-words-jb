@@ -1,4 +1,4 @@
-import StyledLink from '../StyledLink';
+import StyledLink from '../common/StyledLink';
 import { Link } from 'react-router-dom';
 import Header from '../Header';
 import Footer from '../Footer';

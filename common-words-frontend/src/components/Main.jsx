@@ -1,10 +1,10 @@
 import {useState, useEffect }from 'react';
-import Quiz from './Quiz.jsx';
+import Quiz from './public/Quiz.jsx';
 
 import AddItemButton from './AddItemButton.jsx';
 import {setLocalData, getLocalData, updateLocalDeck, addLanguage, addDeck, deleteLanguage, deleteDeck} from './common/localData.js'
 
-import AddWordForm from './AddWordForm.jsx';
+import AddWordForm from './public/AddWordForm.jsx';
 import VocabTable from './VocabTable.jsx';
 import TraversalButton from './TraversalButton.jsx';
 import DeletePopUp from './DeletePopUp.jsx';

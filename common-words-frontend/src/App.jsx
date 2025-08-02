@@ -14,9 +14,9 @@ import { useImmer } from 'use-immer';
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import TraversalButton from "./components/TraversalButton";
-import Quiz from "./components/Quiz";
+import Quiz from "./components/public/Quiz";
 import { Link } from "react-router-dom";
-import AddWordForm from "./components/AddWordForm";
+import AddWordForm from "./components/public/AddWordForm";
 import VocabTable from "./components/VocabTable";
 
 function App() {
