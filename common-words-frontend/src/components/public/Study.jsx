@@ -7,12 +7,17 @@ import {useState, useEffect }from 'react';
 import DeckOptionsDropdown from '../common/DeckOptionsDropdown';
 import { useNavigate } from 'react-router';
 import DeletePopUp from '../DeletePopUp';
+import AddItemButton from '../AddItemButton';
 
-const Study = ({allDecks, curLanguageIndex, handleDeckClick, handleDeckEditClick }) => {
+const Study = ({allDecks, curLanguageIndex, handleDeckClick, handleDeckEditClick, deleteDeck, addDeck}) => {
     const [showingPopUp, setShowingPopUp] = useState({showing: false, name: "", id: ""});
     const oneDayMS = 86400000;
     const [isEditing, setEditing] = useState(false);
     const navigate = useNavigate();
+    useEffect(()=>{
+        console.log('showingPopUp ' + showingPopUp)
+        console.log("isEditing " + isEditing)
+    }, [isEditing])
     // const decksJSX = languageData.map(lang => {
         
     //     if (parseInt(lang.id) === parseInt(curLangId)){
@@ -41,19 +46,10 @@ const Study = ({allDecks, curLanguageIndex, handleDeckClick, handleDeckEditClick
     //             </span>
     //     </div>
     // })
-    const removeDeck = (event) =>{
-        curLanguage.decks.map((deck) => {
-            if (event.target.id == deck.id){
-                deleteDeck(curLanguage.id, deck.id);
-                setData(getLocalData());
-            }
-        })
-    }
-    const deleteObj = (e) => {
-        const nameAndCategory = e.target.name.split(" ");
-        if (nameAndCategory.length > 1){
-            removeDeck(e);
-        }
+
+    const deleteChosen = (e) => {
+        console.log("id " + showingPopUp.id)
+        deleteDeck(showingPopUp.id)
         showPopUpFalse();
 
     }
@@ -88,7 +84,8 @@ const Study = ({allDecks, curLanguageIndex, handleDeckClick, handleDeckEditClick
                     console.log("under editTable");
                     navigate('/VocabEditTable');
                     break;
-                case "delete":
+                case "deleteDeck":
+                    console.log("under delete")
                     showPopUpTrue(deck)
                     break;
             }
@@ -125,8 +122,8 @@ const Study = ({allDecks, curLanguageIndex, handleDeckClick, handleDeckEditClick
             <Link to="/">
                 <button type="button">Back</button>
             </Link>
-            {showingPopUp.showing && <DeletePopUp objectName={showingPopUp.name} eventId={showingPopUp.id} deletionRef={deleteObj} abortRef={showPopUpFalse}/>}
-
+            <AddItemButton text="start new deck" handleNewListItem={addDeck} sendBackEditingStatus={setEditing}/>
+            {showingPopUp.showing && <DeletePopUp objectName={showingPopUp.name} eventId={showingPopUp.id} deletionRef={deleteChosen} abortRef={showPopUpFalse}/>}
         </>
     );
 }

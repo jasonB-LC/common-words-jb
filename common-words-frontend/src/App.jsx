@@ -237,6 +237,48 @@ function App() {
 		}
     refetchDecks();
 	};
+
+  const deleteDeck = async deckId =>{
+    console.log("Id of deck to delete " + deckId)
+		try {
+      console.log("curDeck.id " + deckId);
+			await fetch('http://localhost:8080/decks/' + deckId, {
+				method: 'DELETE',
+				headers: {
+					'Content-Type': 'application/json',
+					'Access-Control-Allow-Origin': '*',
+				}
+			});
+      console.log('http://localhost:8080/decks/' + deckId);
+		} catch (error) {
+			console.error(error.message);
+		}
+    refetchDecks();
+  }
+  const addDeck = async deckName => {
+    let newDeck = new Deck(
+      0,
+      deckName,
+      curLanguageIndex,
+      []
+    )
+		try {
+      console.log("curDeck.id " + deckName);
+			await fetch('http://localhost:8080/decks', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'Access-Control-Allow-Origin': '*',
+				},
+				body: JSON.stringify(newDeck),
+			});
+      console.log('http://localhost:8080/decks/');
+		} catch (error) {
+			console.error(error.message);
+		}
+    refetchDecks();
+	};
+
   return (
     <>
       <Router>
@@ -248,7 +290,7 @@ function App() {
           <Route element={<ProtectedRoutes/>}>
           wholeDeck, dueDeck, handleBackToMenu
             <Route path="/" element={<Home allLanguages={allLanguages} allDecks={allDecks}/>} />
-            <Route path="/Study" element={<Study allDecks={allDecks} curLanguageIndex={curLanguageIndex} handleDeckClick={handleDeckClick} handleDeckEditClick={handleDeckEditClick}/>} />
+            <Route path="/Study" element={<Study allDecks={allDecks} curLanguageIndex={curLanguageIndex} handleDeckClick={handleDeckClick} handleDeckEditClick={handleDeckEditClick} deleteDeck={deleteDeck} addDeck={addDeck}/>} />
             <Route path="/AddWordForm" element={<AddWordForm getWordData={addFlashCard} />} />
             <Route path="/VocabEditTable" element={<VocabTable deck={curDeck} returnNewData={saveCurDeck}/>} />
             <Route path="/Quiz" element={<Quiz wholeDeck={curDeck} dueDeck={curDue} refetchDecks={refetchDecks}/>} />
