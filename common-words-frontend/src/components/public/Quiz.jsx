@@ -5,24 +5,15 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router';
 
 const Quiz = ({wholeDeck, dueDeck, refetchDecks}) => {
-    const oneDayMS = 86400000;
     const navigate = useNavigate();
-    const cardIsReadyForReview = (card) => {
-        let TodaysDate = Date.now();
-        let timeElapsedMS = TodaysDate - card.dateOfLastReview;
-        let timeUntilNextReviewMS = oneDayMS * card.daysUntilNextReview;
-        return timeElapsedMS > timeUntilNextReviewMS
-    };
-    
-    const [curFlashCard, setCurrentFlashCard] = useState();
-    const [previousCardIndex, setPreviousCardIndex] = useState(1);
-    const [showAnswer, setShowAnswer] = useState(false);
-	const [flashCards, setAllFlashCards] = useState(
+    const [flashCards, setAllFlashCards] = useState(
 		wholeDeck.flashCards.map(card => {
 			return { ...card};
 		})
 	);
-
+    const [curFlashCard, setCurrentFlashCard] = useState();
+    const [previousCardIndex, setPreviousCardIndex] = useState(1);
+    const [showAnswer, setShowAnswer] = useState(false);
     const [stillDue, setStillDue] = useState(
 		dueDeck.map(card => {
 			return { ...card};
@@ -34,7 +25,6 @@ const Quiz = ({wholeDeck, dueDeck, refetchDecks}) => {
     }, []);
 
     useEffect(() => {
-        console.log("still due: " + stillDue.length);
         setCurrentFlashCard(getRandomFlashCard());
     }, [stillDue]);
     
@@ -108,9 +98,7 @@ const Quiz = ({wholeDeck, dueDeck, refetchDecks}) => {
     //     handleBackToMenu(flashCards);
     // }
 	const saveDeck = async deck => {
-        console.log("deck.flashCards " + deck.flashCards);
 		try {
-            console.log(JSON.stringify(wholeDeck));
 			await fetch('http://localhost:8080/decks/' + wholeDeck.id, {
 				method: 'PUT',
 				headers: {
@@ -119,7 +107,6 @@ const Quiz = ({wholeDeck, dueDeck, refetchDecks}) => {
 				},
 				body: JSON.stringify(deck),
 			});
-            console.log('http://localhost:8080/decks/' + wholeDeck.id);
 		} catch (error) {
 			console.error(error.message);
 		}
@@ -127,6 +114,7 @@ const Quiz = ({wholeDeck, dueDeck, refetchDecks}) => {
         navigate('/Study');
 	};
     const isValid = () => {
+        //TODO write the logic for isValid
         return true;
     }
 	const handleSubmit = event => {

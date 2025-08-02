@@ -1,4 +1,4 @@
-import StyledLink from './common/StyledLink';
+import StyledLink from './StyledLink';
 import Header from './Header';
 import Footer from './Footer';
 

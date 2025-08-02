@@ -7,7 +7,6 @@ import About from './components/About';
 import { Language, Deck, FlashCard } from './classes/Exports';
 import { useEffect, useState } from "react";
 import Study from "./components/public/Study";
-import Main from "./components/Main";
 import ProtectedRoutes from "./components/admin/ProtectedRoutes";
 import Login from "./components/admin/Login";
 import { useImmer } from 'use-immer';
@@ -16,32 +15,28 @@ import Footer from "./components/Footer";
 import TraversalButton from "./components/TraversalButton";
 import Quiz from "./components/public/Quiz";
 import { Link } from "react-router-dom";
-import AddWordForm from "./components/public/AddWordForm";
+import AddWordForm from "./components/AddWordForm";
 import VocabTable from "./components/VocabTable";
+import DeckOptionsDropdown from "./components/common/DeckOptionsDropdown";
+import { deleteDeck } from "./components/common/localData";
 
 function App() {
   const oneDayMS = 86400000;
   const [loading, setLoading] = useState(true);
   const [allLanguages, setAllLanguages] = useState([]);
+  const [curLanguageIndex, setCurLanguageIndex] = useState(1);
 	const [allDecks, setAllDecks] = useState([]);
+  //To avoid having deeply nested data, we are creating a separate state for decks. allLanguages has a reference id
+  //for the decks that belong to that language.
   const [curDeck, setCurDeck] =  useState({});
   const [curDue, setCurDue] = useState([])
-	const [allFlashCards, setAllFlashCards] = useState([]);
-  const [curLanguageIndex, setCurLanguageIndex] = useState(2);
-  
-  useEffect(()=>{
-    console.log("curLanguageIndex: " + curLanguageIndex);
 
-  }, [curLanguageIndex])
   
-  useEffect(() => {
+  useEffect(() => {//when curDeck updates, cache a deck with only the flashcards that are currently due.
     if (curDeck.name){
-      console.log("curDeck.name" + curDeck.name)
         let deckToStudy = curDeck.flashCards.filter((word) => {
             return wordIsReadyForReview(word);
         })
-        let dts = deckToStudy.map((card) => {return card})
-        console.log("deckToStudy" + dts)
         setCurDue(deckToStudy);
     }
   }, [curDeck])
@@ -119,13 +114,21 @@ function App() {
   };
 
   const handleDeckClick = (event) => {
-      allDecks.map((deck) => {
-          if (event.target.id == deck.id){
-              console.log("deck.name " + deck.name)
-              setCurDeck(deck);
-          }
-      })
-    }
+    allDecks.map((deck) => {
+        if (event.target.id == deck.id){
+          setCurDeck(deck);
+        }
+    })
+  }
+
+  const handleDeckEditClick = (deckId) => {
+    allDecks.map((deck) => {
+        if (deckId == deck.id){
+          setCurDeck(deck);
+        }
+    })
+  }
+
 	useEffect(() => {
 		fetchLanguages();
     fetchDecks();
@@ -146,28 +149,45 @@ function App() {
       console.log("loading in loading, useEffect" + loading);
 	}, [loading]);
 
- 
-  const decksJSX = allDecks.map(deck => {
-    if (parseInt(deck.languageId) === parseInt(curLanguageIndex)){
-      return <div>
-        <Link to="/Quiz">
-          <TraversalButton onClick={handleDeckClick} id={deck.id.toString()} text={deck.name}/>
-        </Link>
-        <span>Total: {deck.flashCards.length}  
-        Due: {deck.flashCards.filter((word) => {
-            return wordIsReadyForReview(word);
-        }).length} 
-        <Link to="/AddWordForm">
-          <button onClick={handleDeckClick} id={deck.id.toString()}>Add Word</button>
-        </Link>        
-        {/* <button className='delete-button' onClick={showPopUpTrue} name={deck.name + " Deck"}  id={deck.id.toString()} disabled={isEditing}>x</button> */}
-        <Link to="/VocabEditTable">
-          <button onClick={handleDeckClick} id={deck.id.toString()}>Edit</button>
-        </Link> 
-        </span>
-      </div>
-    }
-  })
+  // const handleDeckOptionsClick = (deckId, optionSelected) => {
+  //   allDecks.map((deck) => {
+  //       if (deckId == deck.id){
+  //           setCurDeck(deck);
+  //           switch (optionSelected){
+  //             // case addWord:
+  //             //   navigate('/AddWordForm');
+  //             // case edit:
+  //             //   navigate('/VocabEditTable');
+  //             case deleteDeck:
+  //               break;
+  //             default:
+  //               break;
+  //           }
+  //       }
+  //   })
+  // }
+  // const decksJSX = allDecks.map(deck => {
+  //   if (parseInt(deck.languageId) === parseInt(curLanguageIndex)){//We only want the decks from our currently selected language
+  //     return <div>
+  //       <Link to="/Quiz">
+  //         <TraversalButton onClick={handleDeckClick} id={deck.id.toString()} text={deck.name}/>
+  //       </Link>
+  //       <span>Total: {deck.flashCards.length}  
+  //       Due: {deck.flashCards.filter((word) => {
+  //           return wordIsReadyForReview(word);
+  //       }).length} 
+  //       <DeckOptionsDropdown deckId={deck.id.toString()} onClick={handleDeckOptionsClick}/>
+  //       <Link to="/AddWordForm">
+  //         <button onClick={handleDeckClick} id={deck.id.toString()}>Add Word</button>
+  //       </Link>        
+  //       {/* <button className='delete-button' onClick={showPopUpTrue} name={deck.name + " Deck"}  id={deck.id.toString()} disabled={isEditing}>x</button> */}
+  //       <Link to="/VocabEditTable">
+  //         <button onClick={handleDeckClick} id={deck.id.toString()}>Edit</button>
+  //       </Link> 
+  //       </span>
+  //     </div>
+  //   }
+  // })
 
 
   const refetchDecks = () => {
@@ -192,17 +212,11 @@ function App() {
   )
 
   const addFlashCard = (flashCard) => {
-    console.log("flashcard dateOfLastReview " + flashCard.dateOfLastReview)
     const updatedFlashCards = [...curDeck.flashCards, flashCard];
     for (let card of updatedFlashCards){
       console.log("card " + card.wordText)
     }
     const newCurDeck = new Deck(curDeck.id, curDeck.name, curDeck.languageId, updatedFlashCards)
-    console.log("curDeck " + curDeck.flashCards);
-    console.log("newCurDeck " + newCurDeck.flashCards);
-    // saveCurDeck(newCurDeck)
-    console.log(curDeck);
-    console.log(newCurDeck);
     saveCurDeck(newCurDeck);
   }
 
@@ -234,8 +248,8 @@ function App() {
           <Route element={<ProtectedRoutes/>}>
           wholeDeck, dueDeck, handleBackToMenu
             <Route path="/" element={<Home allLanguages={allLanguages} allDecks={allDecks}/>} />
-            <Route path="/Study" element={<Study curDecksJSX={decksJSX}/>} />
-            <Route path="/AddWordForm" element={<AddWordForm getWordData={addFlashCard}/>} />
+            <Route path="/Study" element={<Study allDecks={allDecks} curLanguageIndex={curLanguageIndex} handleDeckClick={handleDeckClick} handleDeckEditClick={handleDeckEditClick}/>} />
+            <Route path="/AddWordForm" element={<AddWordForm getWordData={addFlashCard} />} />
             <Route path="/VocabEditTable" element={<VocabTable deck={curDeck} returnNewData={saveCurDeck}/>} />
             <Route path="/Quiz" element={<Quiz wholeDeck={curDeck} dueDeck={curDue} refetchDecks={refetchDecks}/>} />
             <Route path="/resources/" element={<Resources />} />
