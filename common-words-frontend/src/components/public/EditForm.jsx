@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm, Controller } from "react-hook-form";
 
-const EditForm = ({originalWordText, originalImageUrl, originalSoundFile, getWordData}) => {
+const EditForm = ({originalWord, getWordData}) => {
     const {register, handleSubmit, formState: { errors} } = useForm();
     const [selectedFile, setSelectedFile] = useState(null);
     const navigate = useNavigate();
@@ -75,12 +75,12 @@ const EditForm = ({originalWordText, originalImageUrl, originalSoundFile, getWor
         })}>
             <div className="form-group">
                 <label>Word:</label>
-                <input {...register("wordText", { required: " please enter a word"})} defaultValue={originalWordText} type="text" name="wordText" id="wordText" value={formData.wordText} onChange={handleChange}/>
+                <input {...register("wordText", { required: " please enter a word"})} defaultValue={originalWord.wordText} type="text" name="wordText" id="wordText" value={formData.wordText} onChange={handleChange}/>
                 {errors.wordText && <span>{errors.wordText.message}</span>}
             </div>
             <div className="form-group">
                 <label>Image:</label>
-                <input type="text" name="imageUrl" id="imageUrl" value={formData.imageUrl} defaultValue={originalImageUrl} onChange={handleChange}/>
+                <input type="text" name="imageUrl" id="imageUrl" value={formData.imageUrl} defaultValue={originalWord.ImageUrl} onChange={handleChange}/>
             </div>
             <div className="form-group">
                 <label>Soundfile:</label>
