@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm, Controller } from "react-hook-form";
 
 const AddWordForm = ({getWordData}) => {
-    const {register, handleSubmit, formState: { isValid} } = useForm({mode: 'onChange'});
+    const {register, handleSubmit, formState: { errors} } = useForm();
     const [selectedFile, setSelectedFile] = useState(null);
     const navigate = useNavigate();
     const [soundfileUploaded, setSoundfileUploaded] = useState(false);
@@ -23,6 +23,7 @@ const AddWordForm = ({getWordData}) => {
         }));
     };
 
+    console.log(errors)
     const handleSoundfileChange = (e) => {
         setSelectedFile(e.target.files[0]);
         const { name, value } = e.target;
@@ -41,22 +42,22 @@ const AddWordForm = ({getWordData}) => {
         soundfileFormData.append("file", selectedFile);
         console.log("soundfile form data : " + soundfileFormData)
         try {
-			const response = await fetch('http://localhost:8080/upload', {
-				method: 'POST',
-				headers: {
-					'Access-Control-Allow-Origin': '*',
-				},
-				body: soundfileFormData,
-			});
+            const response = await fetch('http://localhost:8080/upload', {
+                method: 'POST',
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                },
+                body: soundfileFormData,
+            });
             if (response.ok){
                 setSelectedFile(null);
                 getWordData(formData);
                 navigate("/Study");
             }
-		} catch (error) {
+        } catch (error) {
             console.log("soundfile error:")
-			console.error(error.message);
-		}
+            console.error(error.message);
+        }
     }
 
     const discardEntry = () =>{
@@ -64,14 +65,18 @@ const AddWordForm = ({getWordData}) => {
         navigate("/Study");
     }
     
+    const searchForvo = () =>{
+
+    }
+
     return (
         <form onSubmit={handleSubmit((data) => {
             console.log(data)
         })}>
             <div className="form-group">
                 <label>Word:</label>
-                <input {...register("wordText", { required: "this is required"})} type="text" name="wordText" id="wordText" value={formData.wordText} onChange={handleChange}/>
-                {/* <span>{errors.name}</span> */}
+                <input {...register("wordText", { required: " please enter a word"})} type="text" name="wordText" id="wordText" value={formData.wordText} onChange={handleChange}/>
+                {errors.wordText && <span>{errors.wordText.message}</span>}
             </div>
             <div className="form-group">
                 <label>Image:</label>
@@ -80,6 +85,7 @@ const AddWordForm = ({getWordData}) => {
             <div className="form-group">
                 <label>Soundfile:</label>
                 <input type="file" name="soundfilePath" id="soundfilePath" onChange={handleSoundfileChange}/>
+                {selectedFile && <audio controls autoPlay src={URL.createObjectURL(selectedFile)}></audio>}
             </div>
 
             <button type="submit" onClick={sendData}>commit</button>

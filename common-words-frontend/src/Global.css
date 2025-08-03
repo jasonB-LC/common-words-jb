@@ -12,6 +12,30 @@
   --prominent: #009133;
   --prominent-bright: #82ae2a;
 }
+/* HTML: <div class="loader"></div> */
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 85px;
+  height: 25px;
+  --g1:conic-gradient(from  90deg at left   3px top   3px,#0000 90deg,#fff 0);
+  --g2:conic-gradient(from -90deg at bottom 3px right 3px,#0000 90deg,#fff 0);
+  background:var(--g1),var(--g1),var(--g1), var(--g2),var(--g2),var(--g2);
+  background-position: left,center,right;
+  background-repeat: no-repeat;
+  animation: l8 1s infinite;
+}
+@keyframes l8 {
+  0%   {background-size:25px 100%,25px 100%,25px 100%}
+  20%  {background-size:25px 50% ,25px 100%,25px 100%}
+  40%  {background-size:25px 50% ,25px 50% ,25px 100%}
+  60%  {background-size:25px 100%,25px 50% ,25px 50% }
+  80%  {background-size:25px 100%,25px 100%,25px 50% }
+  100% {background-size:25px 100%,25px 100%,25px 100%}
+}
+@keyframes l2 {
+  to {rotate: 1turn}
+}
+
 
 body {
   background-color: var(--light);
@@ -297,7 +321,7 @@ img {
 }
 
 table {
-  max-width: 250px;
+  max-width: 900px;
   @media (width < 720px){
     font-size: 0.5em;
     max-width: 70px;
@@ -395,4 +419,17 @@ footer {
 }
 .dropdown:focus .dropbtn{
   background-color: #f0f8f0;
+}
+iframe {
+  font-size: 1.2em;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  color:#b10000;
+  background-color: #272838;
+}
+
+audio {
+  width: 100px;
+  border-radius: 2px;
+  padding: 10px;
+  background-color: #d47100;
 }

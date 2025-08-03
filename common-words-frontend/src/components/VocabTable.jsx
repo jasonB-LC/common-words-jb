@@ -1,9 +1,12 @@
 import {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
+import SoundfileSelection from './common/SoundfileSelection';
 
 const VocabTable = ({deck, returnNewData}) => {
     const [tableData, setTableData] = useState();
+
     const navigate = useNavigate();
+    const [soundfilesToAdd, setSoundfilesToAdd] = useState([]);
     const [soundfilesToDelete, setSoundfilesToDelete] = useState([]);
     
     const removeRow = (e) =>{
@@ -23,12 +26,41 @@ const VocabTable = ({deck, returnNewData}) => {
         }
     }
 
+    const handleSoundfileChange = (e) => {
+        console.log("here" + e.target.id)
+        const table = document.getElementById('vocabList');
+        const rows = table.querySelectorAll('tr');
+        for (let row of rows){
+            if (e.target.id === row.id){
+                console.log("row " + row.id)
+                for (let column of row.querySelectorAll("td")){
+                    if (column.className === "soundfile-cell"){
+                        column.innerHTML = column.id;
+                        console.log("blah " + column.innerHTML)
+                        console.log("blah " + column.id)
+                        // setSoundfilesToDelete([...soundfilesToDelete, column.textContent])
+                        // console.log("soundfile name: " + column.textContent);
+                    }
+                }
+                deleteSoundfile
+                table.deleteRow(Number(row.rowIndex));
+            }
+        }
+
+    }
     const wordsJSX = deck.flashCards.map((word, wordKey) => 
         {
             return <tr id={wordKey}>
-                <td name="wordText"><div contenteditable="true" spellcheck="false">{word.wordText}</div></td>
-                <td className="image-cell" name="imageUrl"><div contenteditable="true" spellcheck="false">{word.imageUrl}</div></td>
+                <td name="wordText"><div contenteditable="true" spellCheck="false">{word.wordText}</div></td>
+                <td className="image-cell" name="imageUrl"><div contenteditable="true" spellCheck="false">{word.imageUrl}</div></td>
                 <td className="soundfile-cell" name="soundfilePath"><div contenteditable="true" spellcheck="false">{word.soundfilePath}</div></td>
+                {/* <td className="soundfile-cell" name="soundfilePath"><input type="file" name="soundfilePath" id="soundfilePath"/></td> */}
+                <td className="soundfile-cell-selection" name="soundfile-cell-selection" id={word.soundfilePath}>
+                    <input type="file" id={"soundfile" + wordKey} style={{display: "none"}} onChange={handleSoundfileChange} ></input>
+                    <label for={"soundfile" + wordKey} class="custom-file-button">Choose File</label>
+                    <span id="fileDisplayName">No file chosen</span>
+                </td>
+                
                 <td><button className="final-delete-button-small" onClick={removeRow} id={wordKey}>x</button></td>
             </tr>
         }

@@ -13,9 +13,16 @@ const AddItemButton = ({text, handleNewListItem, sendBackEditingStatus}) => {
     const setEditingTrue = () => {
         setIsEditing(true);
     }
-    const setEditingFalse = () => {
+    const saveDeckAndReturn = () => {
+        if (itemName){
+            handleNewListItem(itemName);
+            setItemName("");
+            setIsEditing(false);
+        }
+
+    }
+    const goBack = () => {
         setIsEditing(false);
-        handleNewListItem(itemName);
         setItemName("");
     }
     const handleChange = (e) => {
@@ -25,7 +32,10 @@ const AddItemButton = ({text, handleNewListItem, sendBackEditingStatus}) => {
     return (
         <span >
             {isEditing 
-                ? <span><button className="add-button" onClick={setEditingFalse}>save</button> <input type="text" onChange={handleChange}></input></span>
+                ? <span>
+                        <button onClick={goBack}>back</button>
+                        <button className="add-button" onClick={saveDeckAndReturn}>save</button> <input type="text" onChange={handleChange}></input>
+                    </span>
                 : <span><button className="add-button" onClick={setEditingTrue}>+</button> {text}</span>}
                  
         </span>
