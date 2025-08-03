@@ -78,15 +78,12 @@ const Study = ({allDecks, curLanguageIndex, handleDeckClick, handleDeckEditClick
             handleDeckEditClick(deckId);
             switch (optionSelected){
                 case "addWord":
-                    console.log("under addWord");
                     navigate('/AddWordForm');
                     break;
-                case "edit":
-                    console.log("under editTable");
-                    navigate('/VocabEditTable');
+                case "editList":
+                    navigate('/EditList');
                     break;
                 case "deleteDeck":
-                    console.log("under delete")
                     showPopUpTrue(deck)
                     break;
             }

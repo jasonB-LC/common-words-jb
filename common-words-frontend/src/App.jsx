@@ -5,6 +5,7 @@ import Home from "./components/public/Home";
 import Resources from './components/Resources';
 import About from './components/About';
 import { Language, Deck, FlashCard, EBook } from './classes/Exports';
+
 import { useEffect, useState } from "react";
 import Study from "./components/public/Study";
 import ProtectedRoutes from "./components/admin/ProtectedRoutes";
@@ -20,6 +21,7 @@ import VocabTable from "./components/VocabTable";
 import DeckOptionsDropdown from "./components/common/DeckOptionsDropdown";
 import { deleteDeck } from "./components/common/localData";
 import EBookDisplay from "./components/common/EBookDisplay";
+import DeckEditList from "./components/public/DeckEditList";
 
 function App() {
   const oneDayMS = 86400000;
@@ -256,6 +258,7 @@ function App() {
 		}
     refetchDecks();
   }
+  
   const addDeck = async deckName => {
     let newDeck = new Deck(
       0,
@@ -295,6 +298,7 @@ function App() {
             <Route path="/Read" element={<EBookDisplay />} />
             <Route path="/AddWordForm" element={<AddWordForm getWordData={addFlashCard} />} />
             <Route path="/VocabEditTable" element={<VocabTable deck={curDeck} returnNewData={saveCurDeck}/>} />
+            <Route path="/EditList" element={<DeckEditList deck={curDeck} returnNewData={saveCurDeck}/>} />
             <Route path="/Quiz" element={<Quiz wholeDeck={curDeck} dueDeck={curDue} refetchDecks={refetchDecks}/>} />
             <Route path="/resources/" element={<Resources />} />
             <Route path="/about/" element={<About />} />
