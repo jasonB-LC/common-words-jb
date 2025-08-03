@@ -4,7 +4,7 @@ import './Global.css'
 import Home from "./components/public/Home";
 import Resources from './components/Resources';
 import About from './components/About';
-import { Language, Deck, FlashCard } from './classes/Exports';
+import { Language, Deck, FlashCard, EBook } from './classes/Exports';
 import { useEffect, useState } from "react";
 import Study from "./components/public/Study";
 import ProtectedRoutes from "./components/admin/ProtectedRoutes";
@@ -19,6 +19,7 @@ import AddWordForm from "./components/AddWordForm";
 import VocabTable from "./components/VocabTable";
 import DeckOptionsDropdown from "./components/common/DeckOptionsDropdown";
 import { deleteDeck } from "./components/common/localData";
+import EBookDisplay from "./components/common/EBookDisplay";
 
 function App() {
   const oneDayMS = 86400000;
@@ -291,6 +292,7 @@ function App() {
           wholeDeck, dueDeck, handleBackToMenu
             <Route path="/" element={<Home allLanguages={allLanguages} allDecks={allDecks}/>} />
             <Route path="/Study" element={<Study allDecks={allDecks} curLanguageIndex={curLanguageIndex} handleDeckClick={handleDeckClick} handleDeckEditClick={handleDeckEditClick} deleteDeck={deleteDeck} addDeck={addDeck}/>} />
+            <Route path="/Read" element={<EBookDisplay />} />
             <Route path="/AddWordForm" element={<AddWordForm getWordData={addFlashCard} />} />
             <Route path="/VocabEditTable" element={<VocabTable deck={curDeck} returnNewData={saveCurDeck}/>} />
             <Route path="/Quiz" element={<Quiz wholeDeck={curDeck} dueDeck={curDue} refetchDecks={refetchDecks}/>} />

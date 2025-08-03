@@ -25,10 +25,6 @@ public class FlashCardController {
     @Autowired
     DeckRepository deckRepository;
 
-    @Value("${app.upload.directory}")
-    private String uploadDirectory;
-    //TODO error handling around directory path
-
     @GetMapping("")
     public ResponseEntity<?> getAllFlashCards() {
         List<FlashCard> allFlashCards = flashCardRepository.findAll();
@@ -61,14 +57,9 @@ public class FlashCardController {
         flashCardRepository.save(newFlashCard);
         return new ResponseEntity<>(newFlashCard, HttpStatus.CREATED);
     }
-//    @PutMapping(value="/soundfile", consumes=MediaType.)
+
     @DeleteMapping("/{id}")
     public void deleteFlashCard(@PathVariable int id){
         flashCardRepository.deleteById(id);
-    }
-
-    public void saveUploadedFile(MultipartFile file) throws IOException {
-        String filePath = uploadDirectory + File.separator + file.getOriginalFilename();
-        file.transferTo(new File(filePath));
     }
 }
