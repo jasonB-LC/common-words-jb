@@ -308,18 +308,6 @@ img {
   margin-inline: auto;
 }
 
-.image-cell {
-  max-width: 100px;
-  white-space: nowrap;
-  overflow:hidden;
-}
-
-.soundfile-cell {
-  max-width: 100px;
-  white-space: nowrap;
-  overflow:hidden;
-}
-
 table {
   max-width: 900px;
   @media (width < 720px){
@@ -432,4 +420,15 @@ audio {
   border-radius: 2px;
   padding: 10px;
   background-color: #d47100;
+}
+
+.image-cell {
+  max-width: 1px;
+  white-space: nowrap;
+  overflow:hidden;
+}
+.soundfile-cell {
+  max-width: 1px;
+  white-space: nowrap;
+  overflow:hidden;
 }

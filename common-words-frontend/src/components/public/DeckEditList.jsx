@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
+import EditForm from './EditForm';
 
 const DeckEditList = ({deck, returnNewData}) => {
     const [tableData, setTableData] = useState();
@@ -7,7 +8,8 @@ const DeckEditList = ({deck, returnNewData}) => {
     const navigate = useNavigate();
     const [soundfilesToAdd, setSoundfilesToAdd] = useState([]);
     const [soundfilesToDelete, setSoundfilesToDelete] = useState([]);
-    
+    const [showEditForm, setShowEditForm] = useState(false);
+
     const removeRow = (e) =>{
         const table = document.getElementById('vocabList');
         const rows = table.querySelectorAll('tr');
@@ -47,12 +49,19 @@ const DeckEditList = ({deck, returnNewData}) => {
         }
 
     }
+
+    const editRow = (e) =>{
+        setShowEditForm(true);
+        
+    }
+
     const wordsJSX = deck.flashCards.map((word, wordKey) => 
         {
             return <tr id={wordKey}>
-                <td name="wordText"><div contenteditable="true" spellCheck="false">{word.wordText}</div></td>
-                <td className="image-cell" name="imageUrl"><div contenteditable="true" spellCheck="false">{word.imageUrl}</div></td>
-                <td className="soundfile-cell" name="soundfilePath"><div contenteditable="true" spellcheck="false">{word.soundfilePath}</div></td>
+                <td name="wordText"><div contenteditable="false" spellCheck="false" readonly>{word.wordText}</div></td>
+                <td className="image-cell" name="imageUrl"><div contenteditable="false" spellCheck="false" readonly>{word.imageUrl}</div></td>
+                <td className="soundfile-cell" name="soundfilePath"><div contenteditable="false" spellcheck="false" readonly>{word.soundfilePath}</div></td>
+                <td><button className="edit-row-small" onClick={editRow} id={wordKey}>x</button></td>
                 <td><button className="final-delete-button-small" onClick={removeRow} id={wordKey}>x</button></td>
             </tr>
         }
@@ -130,7 +139,7 @@ const DeckEditList = ({deck, returnNewData}) => {
 
     return (
         <>
-            {tableJSX}
+            {showEditForm ? <EditForm /> : tableJSX}
             <button onClick={submitChanges}>save changes</button>
             <button onClick={revertChanges}>revert</button>
         </>
