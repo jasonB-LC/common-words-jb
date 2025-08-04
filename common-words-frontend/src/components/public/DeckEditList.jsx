@@ -29,7 +29,7 @@ const DeckEditList = ({deck, returnNewDeck, updateFlashCard}) => {
             }
         }
     }
-    const showPopUpTrue = (e) =>{
+    const showPopUpTrue = (e) =>{//toggling deletion popup to true
         let cardText = "";
         flashCards.map((word) => {
             if (parseInt(word.id) === parseInt(e.target.id)){
@@ -41,7 +41,7 @@ const DeckEditList = ({deck, returnNewDeck, updateFlashCard}) => {
         setIsDeleting(true);
     }
 
-    const showPopUpFalse = () => {
+    const showPopUpFalse = () => {//toggling deletion popup to false
         setShowingPopUp({showing: false, name: "", id: ""});
         setIsDeleting(false);
     }
@@ -60,7 +60,7 @@ const DeckEditList = ({deck, returnNewDeck, updateFlashCard}) => {
         }
     }, [currentCardEdited])
 
-    const editRow = (e) =>{
+    const editRow = (e) =>{//user is choosing an existing flashCard to edit.
         flashCards.map((word) => {
             if (parseInt(word.id) === parseInt(e.target.id)){
                 setCurrentCardEdited({"id": word.id, "wordText": word.wordText, "imageUrl": word.imageUrl, "soundfilePath": word.soundfilePath});
@@ -94,6 +94,9 @@ const DeckEditList = ({deck, returnNewDeck, updateFlashCard}) => {
                     </table>
 
     const submitChanges = () =>{
+        //pulling our info from the current table, 
+        //creating a new deck object from that info,
+        //and sending it back to App.jsx to save to the database.
         const table = document.getElementById('vocabList');
         if (!table) {
             return;
@@ -121,7 +124,7 @@ const DeckEditList = ({deck, returnNewDeck, updateFlashCard}) => {
         }
         const newDeck = {...deck, flashCards: newFlashCards}
         for (let file of soundfilesToDelete){
-            deleteSoundfile(file)
+            deleteSoundfile(file)//these are the soundfiles of all the records we've deleted.
         }
         returnNewDeck(newDeck);
         navigate("/Study");

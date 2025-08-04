@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 
 const AddWordForm = ({getWordData}) => {
+    //Form that accepts text, image links, and mp3s from the user and creates a flashCard to add to the current deck
     const {register, handleSubmit, formState: { errors} } = useForm();
     const [selectedFile, setSelectedFile] = useState(null);
     const navigate = useNavigate();
@@ -22,7 +23,7 @@ const AddWordForm = ({getWordData}) => {
         }));
     };
 
-    const handleSoundfileChange = (e) => {
+    const handleSoundfileChange = (e) => {//when user uploads a soundfile, cache the filename and file itself
         setSelectedFile(e.target.files[0]);
         const { name, value } = e.target;
         setFormData((prevData) => ({
@@ -33,6 +34,9 @@ const AddWordForm = ({getWordData}) => {
     }
 
     const sendData = async () =>{
+        //saving the new flashCard to database. 
+        //first we attempt to save soundfile, and if that is successful, we send the
+        //data object to App.jsx to sava to the database.
         const soundfileFormData = new FormData();
         soundfileFormData.append("file", selectedFile);
         try {
@@ -53,7 +57,7 @@ const AddWordForm = ({getWordData}) => {
         }
     }
 
-    const discardEntry = () =>{
+    const discardEntry = () =>{//return to Study screen without saving our card.
         getWordData("");
         navigate("/Study");
     }

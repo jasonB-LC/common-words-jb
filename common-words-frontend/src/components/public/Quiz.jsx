@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router';
 
 const Quiz = ({wholeDeck, dueDeck, refetchDecks}) => {
+    //Page where the flashcard quiz takes place.
     const navigate = useNavigate();
     const [flashCards, setAllFlashCards] = useState(
 		wholeDeck.flashCards.map(card => {
@@ -37,7 +38,7 @@ const Quiz = ({wholeDeck, dueDeck, refetchDecks}) => {
         if (stillDue.length > 1){
             do{
                 num = getRandomNum(0, stillDue.length - 1);
-            }while(num === previousCardIndex);
+            }while(num === previousCardIndex);//we want to make sure we choose a random card that is different than the current card.
         }
         else if ((stillDue.length > 0)){
             num = 0;
@@ -110,24 +111,16 @@ const Quiz = ({wholeDeck, dueDeck, refetchDecks}) => {
         refetchDecks();
         navigate('/Study');
 	};
-    const isValid = () => {
-        //TODO write the logic for isValid
-        return true;
-    }
+
 	const handleSubmit = event => {
 		event.preventDefault();
 		let newDeck = { ...wholeDeck, flashCards: 
             flashCards
         };
-		if (!isValid(newDeck)) {
-            console.log("not valid")
-			//setHasErrors(true);
-		} else {
-			saveDeck(newDeck);
-		}
+		saveDeck(newDeck);
+
 	};
 
-    
     const quizControl = (
         <div className="quiz-control">
             {!showAnswer

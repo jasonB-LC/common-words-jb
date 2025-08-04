@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 
 const EditForm = ({originalWord, updateFlashCard, hideForm}) => {
+    //editing a flashCard that already exists in the database.
     const {register, handleSubmit, formState: { errors} } = useForm();
     const [selectedFile, setSelectedFile] = useState(null);
     const navigate = useNavigate();
