@@ -224,7 +224,7 @@ function App() {
   }
 
   const updateFlashCard = (updatedFlashCard) => {
-    console.log("UPDATING");
+    console.log("UPDATING " + updatedFlashCard.id + "  " + updatedFlashCard.wordText);
     const updatedFlashCards = curDeck.flashCards.map((flashCard) =>{
       if (parseInt(flashCard.id) === parseInt(updatedFlashCard.id)){
         return updatedFlashCard;

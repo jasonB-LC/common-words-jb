@@ -9,7 +9,7 @@ const DeckEditList = ({deck, returnNewData}) => {
     const [soundfilesToAdd, setSoundfilesToAdd] = useState([]);
     const [soundfilesToDelete, setSoundfilesToDelete] = useState([]);
     const [showEditForm, setShowEditForm] = useState(false);
-    const [currentCardEdited, setCurrentCardEdited] = useState({wordId: "", wordText: "", imageUrl: "", soundfilePath: ""})
+    const [currentCardEdited, setCurrentCardEdited] = useState({id: "", wordText: "", imageUrl: "", soundfilePath: ""})
     const [flashCards, setFlashCards] = useState([])
     const removeRow = (e) =>{
         const table = document.getElementById('vocabList');
@@ -67,7 +67,7 @@ const DeckEditList = ({deck, returnNewData}) => {
             console.log("e.target.id " + e.target.id);
             if (parseInt(word.id) === parseInt(e.target.id)){
                 console.log("wordText: " + word.wordText)
-                setCurrentCardEdited({"wordId": word.id, "wordText": word.wordText, "imageUrl": word.imageUrl, "soundfilePath": word.soundfilePath});
+                setCurrentCardEdited({"id": word.id, "wordText": word.wordText, "imageUrl": word.imageUrl, "soundfilePath": word.soundfilePath});
             }
         })
     }

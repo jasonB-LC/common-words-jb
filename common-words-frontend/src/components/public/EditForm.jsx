@@ -8,7 +8,7 @@ const EditForm = ({originalWord, getWordData, hideForm}) => {
     const navigate = useNavigate();
     const [soundfileUploaded, setSoundfileUploaded] = useState(false);
     const [formData, setFormData] = useState({
-        wordId: "",
+        id: "",
         wordText: "",
         imageUrl: "",
         soundfilePath: "",
@@ -20,7 +20,7 @@ const EditForm = ({originalWord, getWordData, hideForm}) => {
         console.log("original word " + originalWord.wordText)
         setFormData(
             {
-                wordId: originalWord.wordId,
+                id: originalWord.id,
                 wordText: originalWord.wordText,
                 imageUrl: originalWord.imageUrl,
                 soundfilePath: originalWord.soundfilePath,
@@ -69,7 +69,9 @@ const EditForm = ({originalWord, getWordData, hideForm}) => {
             });
             if (response.ok){
                 setSelectedFile(null);
-                getWordData(formData);
+                console.log(" formData ");
+                console.log(formData);
+                getWordData({...formData});
 
                 hideForm();
             }
