@@ -13,7 +13,6 @@ import Header from "./components/public/Header";
 import Footer from "./components/public/Footer";
 import Quiz from "./components/public/Quiz";
 import AddWordForm from "./components/public/AddWordForm";
-import EBookDisplay from "./components/common/EBookDisplay";
 import DeckEditList from "./components/public/DeckEditList";
 import DeckChosen from "./components/admin/DeckChosen";
 
@@ -245,7 +244,6 @@ function App() {
           <Route path="/login" element={<Login/>}/>
           <Route element={<ProtectedRoutes/>}>
             <Route path="/" element={<Main/>} />
-            <Route path="/Read" element={<EBookDisplay />} />
             <Route path="/Study" element={<Study allDecks={allDecks} curLanguageIndex={curLanguageIndex} handleDeckClick={handleDeckClick} handleDeckEditClick={handleDeckEditClick} deleteDeck={deleteDeck} addDeck={addDeck}/>} />
             <Route element={<DeckChosen curDeck/>}>
               <Route path="/AddWordForm" element={<AddWordForm getWordData={addFlashCard} />} />
