@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm, Controller } from "react-hook-form";
 
-const EditForm = ({originalWord, getWordData, hideForm}) => {
+const EditForm = ({originalWord, updateFlashCard, hideForm}) => {
     const {register, handleSubmit, formState: { errors} } = useForm();
     const [selectedFile, setSelectedFile] = useState(null);
     const navigate = useNavigate();
@@ -72,7 +72,7 @@ const EditForm = ({originalWord, getWordData, hideForm}) => {
                     setSelectedFile(null);
                     console.log(" formData ");
                     console.log(formData);
-                    getWordData(formData);
+                    updateFlashCard(formData);
 
                     hideForm();
                     navigate('/Study');
@@ -83,7 +83,7 @@ const EditForm = ({originalWord, getWordData, hideForm}) => {
             }
         }
         else{
-            getWordData(formData);
+            updateFlashCard(formData);
             hideForm();
             navigate('/Study');
         }

@@ -1,38 +1,71 @@
 import {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import EditForm from './EditForm';
+import DeletePopUp from '../DeletePopUp';
 
 const DeckEditList = ({deck, returnNewDeck, updateFlashCard}) => {
     const [tableData, setTableData] = useState();
 
     const navigate = useNavigate();
-    const [soundfilesToAdd, setSoundfilesToAdd] = useState([]);
     const [soundfilesToDelete, setSoundfilesToDelete] = useState([]);
     const [showEditForm, setShowEditForm] = useState(false);
     const [currentCardEdited, setCurrentCardEdited] = useState({id: "", wordText: "", imageUrl: "", soundfilePath: ""})
     const [flashCards, setFlashCards] = useState([])
+    const [flashCardsToReturn, setFlashCardsToReturn] = useState([])
+    const [showingPopUp, setShowingPopUp] = useState({showing: false, name: "", id: ""});
+    const [isDeleting, setIsDeleting] = useState(false);
+    useEffect(()=>{
+        console.log('showingPopUp ' + showingPopUp)
+        console.log("isDeleting " + isDeleting)
+    }, [isDeleting])
 
+    
     const removeRow = (e) =>{
+        console.log("e.target.id" + e.target.id)
         const table = document.getElementById('vocabList');
         const rows = table.querySelectorAll('tr');
         for (let row of rows){
+            console.log("row.id" + row.id)
             if (e.target.id === row.id){
+                console.log("row.id" + row.id)
                 for (let column of row.querySelectorAll("td")){
                     if (column.className === "soundfile-cell"){
                         setSoundfilesToDelete([...soundfilesToDelete, column.textContent])
                         console.log("soundfile name: " + column.textContent);
                     }
                 }
-                deleteSoundfile
                 table.deleteRow(Number(row.rowIndex));
+                setCurrentCardEdited({id: "", wordText: "", imageUrl: "", soundfilePath: ""});
+                showPopUpFalse();
+                submitChanges();
             }
         }
     }
+    const showPopUpTrue = (e) =>{
+        let cardText = "";
+        flashCards.map((word) => {
+            if (parseInt(word.id) === parseInt(e.target.id)){
+                cardText = word.wordText;
+            }
+        })
+
+        setShowingPopUp({showing: true, name: cardText, id: e.target.id});
+        setIsDeleting(true);
+    }
+
+    const showPopUpFalse = () => {
+        setShowingPopUp({showing: false, name: "", id: ""});
+        setIsDeleting(false);
+    }
+
     useEffect(() => {
         setFlashCards(deck.flashCards);
     }, [])
+    // useEffect(() => {
+    //     setFlashCardsToReturn(flashCards);
+    // }, [flashCards]);
 
-        useEffect(() => {
+    useEffect(() => {
         setFlashCards(deck.flashCards);
     }, [deck])
 
@@ -66,7 +99,6 @@ const DeckEditList = ({deck, returnNewDeck, updateFlashCard}) => {
     }
 
     const editRow = (e) =>{
-        
         flashCards.map((word) => {
             console.log("word.id " + word.id);
             console.log("e.target.id " + e.target.id);
@@ -84,7 +116,7 @@ const DeckEditList = ({deck, returnNewDeck, updateFlashCard}) => {
                 <td className="image-cell" name="imageUrl"><div contenteditable="false" spellCheck="false" readonly>{word.imageUrl}</div></td>
                 <td className="soundfile-cell" name="soundfilePath"><div contenteditable="false" spellcheck="false" readonly>{word.soundfilePath}</div></td>
                 <td><button className="edit-row-small" onClick={editRow} id={word.id}>edit</button></td>
-                <td><button className="final-delete-button-small" onClick={removeRow} id={word.id}>x</button></td>
+                <td><button className="final-delete-button-small" onClick={showPopUpTrue} id={word.id}>x</button></td>
             </tr>
         }
     )
@@ -167,15 +199,21 @@ const DeckEditList = ({deck, returnNewDeck, updateFlashCard}) => {
         console.log("update")
     }
 
+    const deleteChosen = (e) => {
+        deleteDeck(showingPopUp.id)
+        showPopUpFalse();
+
+    }
     return (
         <>
-            {showEditForm ? <EditForm originalWord={currentCardEdited} getWordData={returnNewData} hideForm={hideForm}/> 
+            {showEditForm ? <EditForm originalWord={currentCardEdited} updateFlashCard={updateFlashCard} hideForm={hideForm}/> 
             : 
                 <div>
                     {tableJSX}
-                    <button onClick={backToStudy}>back</button>
+                    {!isDeleting && <button onClick={submitChanges}>back</button>}
                 </div>
             }
+            {showingPopUp.showing && <DeletePopUp objectName={showingPopUp.name} eventId={showingPopUp.id} deletionRef={removeRow} abortRef={showPopUpFalse}/>}
 
         </>
     );
