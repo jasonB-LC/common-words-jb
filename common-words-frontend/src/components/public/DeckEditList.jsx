@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import EditForm from './EditForm';
-import DeletePopUp from '../DeletePopUp';
+import DeletePopUp from '../common/DeletePopUp';
 
 const DeckEditList = ({deck, returnNewDeck, updateFlashCard}) => {
     const [tableData, setTableData] = useState();

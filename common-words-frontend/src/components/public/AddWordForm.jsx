@@ -1,12 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import {useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 const AddWordForm = ({getWordData}) => {
     const {register, handleSubmit, formState: { errors} } = useForm();
     const [selectedFile, setSelectedFile] = useState(null);
     const navigate = useNavigate();
-    const [soundfileUploaded, setSoundfileUploaded] = useState(false);
     const [formData, setFormData] = useState({
         wordText: "",
         imageUrl: "",
@@ -59,10 +58,6 @@ const AddWordForm = ({getWordData}) => {
         navigate("/Study");
     }
     
-    const searchForvo = () =>{
-
-    }
-
     return (
         <form onSubmit={handleSubmit((data) => {
             console.log(data)

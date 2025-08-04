@@ -1,5 +1,3 @@
-import '../Global.css'
-
 const DeletePopUp = ({objectName, eventId, deletionRef, abortRef}) => {
     return (
         <div className="deletion-pop-up">

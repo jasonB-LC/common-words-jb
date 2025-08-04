@@ -1,13 +1,10 @@
-import StyledLink from '../StyledLink';
 import { Link } from 'react-router-dom';
-import Header from '../Header';
-import Footer from '../Footer';
-import TraversalButton from '../TraversalButton';
+import TraversalButton from '../common/TraversalButton';
 import {useState, useEffect }from 'react';
 import DeckOptionsDropdown from '../common/DeckOptionsDropdown';
 import { useNavigate } from 'react-router';
-import DeletePopUp from '../DeletePopUp';
-import AddItemButton from '../AddItemButton';
+import DeletePopUp from '../common/DeletePopUp';
+import AddItemButton from '../common/AddItemButton';
 import LinkButton from '../common/LinkButton';
 
 const Study = ({allDecks, curLanguageIndex, handleDeckClick, handleDeckEditClick, deleteDeck, addDeck}) => {
@@ -84,11 +81,8 @@ const Study = ({allDecks, curLanguageIndex, handleDeckClick, handleDeckEditClick
 
     return (
         <>
-            <div>{isEditing ? deckEditing : decksJSX}
-            </div>
-            {/* <StyledLink destination="/">{"Home"}</StyledLink> */}
-            <div>{!isEditing && <LinkButton linkPath={"/"} type={"button"} text={"Back"} />}
-            </div>
+            <div>{isEditing ? deckEditing : decksJSX}</div>
+            <div>{!isEditing && <LinkButton linkPath={"/"} type={"button"} text={"Back"} />}</div>
             <AddItemButton text="start new deck" handleNewListItem={addDeck} sendBackEditingStatus={setEditing}/>
             {showingPopUp.showing && <DeletePopUp objectName={showingPopUp.name} eventId={showingPopUp.id} deletionRef={deleteChosen} abortRef={showPopUpFalse}/>}
         </>

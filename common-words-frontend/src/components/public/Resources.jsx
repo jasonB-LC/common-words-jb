@@ -1,11 +1,6 @@
-import StyledLink from './StyledLink';
-import Header from './Header';
-import Footer from './Footer';
-
 const Resources = () => {
     return (
         <>
-            <Header />
             <div className='resources'>
                 <div>Resources</div>
                 <div>
@@ -21,8 +16,6 @@ const Resources = () => {
                     <div>Fun community of language learners. Submit a ticket requesting a pronunciation or translation while helping others on their language learning journey.</div><br></br>
                 </div>
             </div>
-
-            <Footer />
         </>
     );
 }

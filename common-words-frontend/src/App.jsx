@@ -1,9 +1,9 @@
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import './Global.css'
-import Home from "./components/public/Home";
-import Resources from './components/Resources';
-import About from './components/About';
+import Main from "./components/public/Main";
+import Resources from './components/public/Resources';
+import About from './components/public/About';
 import { Language, Deck, FlashCard, EBook } from './classes/Exports';
 
 import { useEffect, useState } from "react";
@@ -11,10 +11,9 @@ import Study from "./components/public/Study";
 import ProtectedRoutes from "./components/admin/ProtectedRoutes";
 import Login from "./components/admin/Login";
 import Header from "./components/Header";
-import Footer from "./components/Footer";
+import Footer from "./components/public/Footer";
 import Quiz from "./components/public/Quiz";
-import AddWordForm from "./components/AddWordForm";
-import VocabTable from "./components/VocabTable";
+import AddWordForm from "./components/public/AddWordForm";
 import EBookDisplay from "./components/common/EBookDisplay";
 import DeckEditList from "./components/public/DeckEditList";
 import DeckChosen from "./components/admin/DeckChosen";
@@ -246,18 +245,19 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login/>}/>
           <Route element={<ProtectedRoutes/>}>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Main/>} />
             <Route path="/Read" element={<EBookDisplay />} />
             <Route path="/Study" element={<Study allDecks={allDecks} curLanguageIndex={curLanguageIndex} handleDeckClick={handleDeckClick} handleDeckEditClick={handleDeckEditClick} deleteDeck={deleteDeck} addDeck={addDeck}/>} />
             <Route element={<DeckChosen curDeck/>}>
               <Route path="/AddWordForm" element={<AddWordForm getWordData={addFlashCard} />} />
-              <Route path="/VocabEditTable" element={<VocabTable deck={curDeck} returnNewData={saveCurDeck}/>} />
               <Route path="/EditList" element={<DeckEditList deck={curDeck} returnNewDeck={saveCurDeck} updateFlashCard={updateFlashCard}/>} />
               <Route path="/Quiz" element={<Quiz wholeDeck={curDeck} dueDeck={curDue} refetchDecks={refetchDecks}/>} />
             </Route>
+
             <Route path="/resources/" element={<Resources />} />
             <Route path="/about/" element={<About />} />
           </Route>
+
         </Routes>}
         <Footer />
       </Router>
