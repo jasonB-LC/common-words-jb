@@ -14,7 +14,7 @@ const Study = ({allDecks, curLanguageIndex, handleDeckClick, handleDeckEditClick
     const navigate = useNavigate();
 
     useEffect (() => {
-
+        
     }, [])
 
     const deleteChosen = (e) => {

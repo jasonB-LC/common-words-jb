@@ -126,6 +126,8 @@ const Quiz = ({wholeDeck, dueDeck, refetchDecks}) => {
 			saveDeck(newDeck);
 		}
 	};
+
+    
     const quizControl = (
         <div className="quiz-control">
             {!showAnswer

@@ -45,10 +45,6 @@ const EditForm = ({originalWord, updateFlashCard, hideForm}) => {
         
     }
 
-    const handleCommit = () => {
-
-    }
-
     const sendData = async () =>{
         if (selectedFile){
             const soundfileFormData = new FormData();
@@ -79,14 +75,6 @@ const EditForm = ({originalWord, updateFlashCard, hideForm}) => {
         }
     }
 
-    const discardEntry = () =>{
-        navigate("/Study");
-    }
-    
-    const searchForvo = () =>{
-
-    }
-
     return (
         <form onSubmit={handleSubmit((data) => {
             console.log(data)
@@ -104,12 +92,10 @@ const EditForm = ({originalWord, updateFlashCard, hideForm}) => {
             <div className="form-group">
                 <label>Soundfile:</label>
                 <input type="file" name="soundfilePath" id="soundfilePath" onChange={handleSoundfileChange}/>
-                {/* {selectedFile && <audio controls autoPlay src={URL.createObjectURL(selectedFile)}></audio>} */}
                 <span>Replace? </span><audio controls src={"http://localhost:8080/files/soundfiles/" + formData.soundfilePath}></audio>
             </div>
 
             <button type="submit" onClick={sendData}>commit</button>
-            {/* <button type="submit" onClick={onSubmit}>commit</button> */}
             <button onClick={hideForm}>back</button>
         </form>
     );
