@@ -37,7 +37,7 @@ function App() {
     }
   }, [curDeck])
 
-  const fetchLanguages = async () => {
+  const fetchLanguages = async () => {//fetching all languages from back end
     let languages = [];
 
     let response;
@@ -62,7 +62,7 @@ function App() {
     setAllLanguages(languages);
   }
 
-  const fetchDecks = async () => {
+  const fetchDecks = async () => {//fetching all decks from back end
     let decks = [];
 
     let response;
@@ -100,14 +100,14 @@ function App() {
     setAllDecks(decks);
   };
 
-  const wordIsReadyForReview = (word) => {
+  const wordIsReadyForReview = (word) => {//boolean function used to populate the deck of cards that are due to be reviewed.
       let TodaysDate = Date.now();
       let timeElapsedMS = TodaysDate - word.dateOfLastReview;
       let timeUntilNextReviewMS = oneDayMS * word.daysUntilDue;
       return timeElapsedMS > timeUntilNextReviewMS
   };
 
-  const handleDeckClick = (event) => {
+  const handleDeckClick = (event) => {//responds to user's choice of deck
     allDecks.map((deck) => {
         if (event.target.id == deck.id){
           setCurDeck(deck);
@@ -115,7 +115,7 @@ function App() {
     })
   }
 
-  const handleDeckEditClick = (deckId) => {
+  const handleDeckEditClick = (deckId) => {//setting the current deck to prepare it to be edited
     allDecks.map((deck) => {
         if (deckId == deck.id){
           setCurDeck(deck);
@@ -138,9 +138,6 @@ function App() {
 		}
 	}, [allLanguages, allDecks]);
 
-	useEffect(() => {
-	}, [loading]);
-
   const refetchDecks = () => {
     fetchDecks();
   }
@@ -151,7 +148,7 @@ function App() {
       )
   });
   
-  const chooseLanguageDropdown = (
+  const chooseLanguageDropdown = (//for setting the current language
       <>
           <label>
               <select name="languages" id="languageDropDown" value={curLanguageIndex} onChange={e => setCurLanguageIndex(e.target.value)}>
@@ -181,7 +178,7 @@ function App() {
     saveCurDeck(newCurDeck);
   }
 
-  const saveCurDeck = async deck => {
+  const saveCurDeck = async deck => {//saving our currently updated deck to our database
 		try {
 			await fetch('http://localhost:8080/decks/' + deck.id, {
 				method: 'PUT',
@@ -197,7 +194,7 @@ function App() {
     refetchDecks();
 	};
 
-  const deleteDeck = async deckId =>{
+  const deleteDeck = async deckId =>{//delete a deck from the database
 		try {
 			await fetch('http://localhost:8080/decks/' + deckId, {
 				method: 'DELETE',
@@ -212,7 +209,7 @@ function App() {
     refetchDecks();
   }
   
-  const addDeck = async deckName => {
+  const addDeck = async deckName => {//add a new deck to the database
     let newDeck = new Deck(
       0,
       deckName,
@@ -250,11 +247,9 @@ function App() {
               <Route path="/EditList" element={<DeckEditList deck={curDeck} returnNewDeck={saveCurDeck} updateFlashCard={updateFlashCard}/>} />
               <Route path="/Quiz" element={<Quiz wholeDeck={curDeck} dueDeck={curDue} refetchDecks={refetchDecks}/>} />
             </Route>
-
             <Route path="/resources/" element={<Resources />} />
             <Route path="/about/" element={<About />} />
           </Route>
-
         </Routes>}
         <Footer />
       </Router>
