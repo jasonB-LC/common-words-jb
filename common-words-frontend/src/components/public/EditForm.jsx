@@ -54,30 +54,38 @@ const EditForm = ({originalWord, getWordData, hideForm}) => {
     }
 
     const sendData = async () =>{
-        const soundfileFormData = new FormData();
-        console.log("selectedFile: ");
-        console.log(selectedFile); 
-        soundfileFormData.append("file", selectedFile);
-        console.log("soundfile form data : " + soundfileFormData)
-        try {
-            const response = await fetch('http://localhost:8080/upload', {
-                method: 'POST',
-                headers: {
-                    'Access-Control-Allow-Origin': '*',
-                },
-                body: soundfileFormData,
-            });
-            if (response.ok){
-                setSelectedFile(null);
-                console.log(" formData ");
-                console.log(formData);
-                getWordData({...formData});
+        if (selectedFile){
+            const soundfileFormData = new FormData();
+            console.log("selectedFile: ");
+            console.log(selectedFile); 
+            soundfileFormData.append("file", selectedFile);
+            console.log("soundfile form data : " + soundfileFormData)
+            try {
+                const response = await fetch('http://localhost:8080/upload', {
+                    method: 'POST',
+                    headers: {
+                        'Access-Control-Allow-Origin': '*',
+                    },
+                    body: soundfileFormData,
+                });
+                if (response.ok){
+                    setSelectedFile(null);
+                    console.log(" formData ");
+                    console.log(formData);
+                    getWordData(formData);
 
-                hideForm();
+                    hideForm();
+                    navigate('/Study');
+                }
+            } catch (error) {
+                console.log("soundfile error:")
+                console.error(error.message);
             }
-        } catch (error) {
-            console.log("soundfile error:")
-            console.error(error.message);
+        }
+        else{
+            getWordData(formData);
+            hideForm();
+            navigate('/Study');
         }
     }
 

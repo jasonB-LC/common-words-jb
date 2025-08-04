@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import EditForm from './EditForm';
 
-const DeckEditList = ({deck, returnNewData}) => {
+const DeckEditList = ({deck, returnNewDeck, updateFlashCard}) => {
     const [tableData, setTableData] = useState();
 
     const navigate = useNavigate();
@@ -11,6 +11,7 @@ const DeckEditList = ({deck, returnNewData}) => {
     const [showEditForm, setShowEditForm] = useState(false);
     const [currentCardEdited, setCurrentCardEdited] = useState({id: "", wordText: "", imageUrl: "", soundfilePath: ""})
     const [flashCards, setFlashCards] = useState([])
+
     const removeRow = (e) =>{
         const table = document.getElementById('vocabList');
         const rows = table.querySelectorAll('tr');
@@ -30,6 +31,10 @@ const DeckEditList = ({deck, returnNewData}) => {
     useEffect(() => {
         setFlashCards(deck.flashCards);
     }, [])
+
+        useEffect(() => {
+        setFlashCards(deck.flashCards);
+    }, [deck])
 
     useEffect(() => {
         if (currentCardEdited.wordText){
@@ -72,7 +77,7 @@ const DeckEditList = ({deck, returnNewData}) => {
         })
     }
 
-    const wordsJSX = deck.flashCards.map((word) => 
+    const wordsJSX = flashCards.map((word) => 
         {
             return <tr id={word.id}>
                 <td name="wordText"><div contenteditable="false" spellCheck="false" readonly>{word.wordText}</div></td>
@@ -128,7 +133,7 @@ const DeckEditList = ({deck, returnNewData}) => {
             deleteSoundfile(file)
             console.log("file: " + file);
         }
-        returnNewData(newDeck);
+        returnNewDeck(newDeck);
         navigate("/Study");
     }  
 

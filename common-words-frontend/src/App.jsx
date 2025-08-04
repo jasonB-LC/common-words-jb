@@ -22,6 +22,7 @@ import DeckOptionsDropdown from "./components/common/DeckOptionsDropdown";
 import { deleteDeck } from "./components/common/localData";
 import EBookDisplay from "./components/common/EBookDisplay";
 import DeckEditList from "./components/public/DeckEditList";
+import DeckChosen from "./components/admin/DeckChosen";
 
 function App() {
   const oneDayMS = 86400000;
@@ -310,14 +311,16 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login/>}/>
           <Route element={<ProtectedRoutes/>}>
-          wholeDeck, dueDeck, handleBackToMenu
             <Route path="/" element={<Home allLanguages={allLanguages} allDecks={allDecks}/>} />
-            <Route path="/Study" element={<Study allDecks={allDecks} curLanguageIndex={curLanguageIndex} handleDeckClick={handleDeckClick} handleDeckEditClick={handleDeckEditClick} deleteDeck={deleteDeck} addDeck={addDeck}/>} />
             <Route path="/Read" element={<EBookDisplay />} />
-            <Route path="/AddWordForm" element={<AddWordForm getWordData={addFlashCard} />} />
-            <Route path="/VocabEditTable" element={<VocabTable deck={curDeck} returnNewData={saveCurDeck}/>} />
-            <Route path="/EditList" element={<DeckEditList deck={curDeck} returnNewData={updateFlashCard}/>} />
-            <Route path="/Quiz" element={<Quiz wholeDeck={curDeck} dueDeck={curDue} refetchDecks={refetchDecks}/>} />
+            <Route path="/Study" element={<Study allDecks={allDecks} curLanguageIndex={curLanguageIndex} handleDeckClick={handleDeckClick} handleDeckEditClick={handleDeckEditClick} deleteDeck={deleteDeck} addDeck={addDeck}/>} />
+            <Route element={<DeckChosen curDeck/>}>
+              <Route path="/AddWordForm" element={<AddWordForm getWordData={addFlashCard} />} />
+              <Route path="/VocabEditTable" element={<VocabTable deck={curDeck} returnNewData={saveCurDeck}/>} />
+              <Route path="/EditList" element={<DeckEditList deck={curDeck} returnNewDeck={saveCurDeck} updateFlashCard={updateFlashCard}/>} />
+              <Route path="/Quiz" element={<Quiz wholeDeck={curDeck} dueDeck={curDue} refetchDecks={refetchDecks}/>} />
+            </Route>
+
             <Route path="/resources/" element={<Resources />} />
             <Route path="/about/" element={<About />} />
           </Route>

@@ -27,7 +27,8 @@ const AddWordForm = ({getWordData}) => {
     const handleSoundfileChange = (e) => {
         setSelectedFile(e.target.files[0]);
         const { name, value } = e.target;
-        console.log(e.target.files);
+        console.log("ADDING FILEEEE")
+        console.log(e.target.files[0]);
         setFormData((prevData) => ({
             ...prevData,
             [name]: e.target.files[0].name,
@@ -81,6 +82,7 @@ const AddWordForm = ({getWordData}) => {
             <div className="form-group">
                 <label>Image:</label>
                 <input type="text" name="imageUrl" id="imageUrl" value={formData.imageUrl} onChange={handleChange}/>
+                <img className="mnemonic-image" src={formData.imageUrl}/>
             </div>
             <div className="form-group">
                 <label>Soundfile:</label>

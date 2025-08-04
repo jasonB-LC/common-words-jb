@@ -15,6 +15,10 @@ const Study = ({allDecks, curLanguageIndex, handleDeckClick, handleDeckEditClick
     const oneDayMS = 86400000;
     const [isEditing, setEditing] = useState(false);
     const navigate = useNavigate();
+
+    useEffect (() => {
+
+    }, [])
     useEffect(()=>{
         console.log('showingPopUp ' + showingPopUp)
         console.log("isEditing " + isEditing)
