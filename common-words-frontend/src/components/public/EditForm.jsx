@@ -2,12 +2,13 @@ import React, {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm, Controller } from "react-hook-form";
 
-const EditForm = ({originalWord, getWordData}) => {
+const EditForm = ({originalWord, getWordData, hideForm}) => {
     const {register, handleSubmit, formState: { errors} } = useForm();
     const [selectedFile, setSelectedFile] = useState(null);
     const navigate = useNavigate();
     const [soundfileUploaded, setSoundfileUploaded] = useState(false);
     const [formData, setFormData] = useState({
+        wordId: "",
         wordText: "",
         imageUrl: "",
         soundfilePath: "",
@@ -15,6 +16,19 @@ const EditForm = ({originalWord, getWordData}) => {
         dateOfLastReview: Date.now()
     })
 
+    useEffect (() => {
+        console.log("original word " + originalWord.wordText)
+        setFormData(
+            {
+                wordId: originalWord.wordId,
+                wordText: originalWord.wordText,
+                imageUrl: originalWord.imageUrl,
+                soundfilePath: originalWord.soundfilePath,
+                daysUntilNextReview: 0,
+                dateOfLastReview: Date.now()
+            }
+        )
+    }, [])
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
@@ -35,6 +49,10 @@ const EditForm = ({originalWord, getWordData}) => {
         
     }
 
+    const handleCommit = () => {
+
+    }
+
     const sendData = async () =>{
         const soundfileFormData = new FormData();
         console.log("selectedFile: ");
@@ -52,7 +70,8 @@ const EditForm = ({originalWord, getWordData}) => {
             if (response.ok){
                 setSelectedFile(null);
                 getWordData(formData);
-                navigate("/Study");
+
+                hideForm();
             }
         } catch (error) {
             console.log("soundfile error:")
@@ -61,7 +80,6 @@ const EditForm = ({originalWord, getWordData}) => {
     }
 
     const discardEntry = () =>{
-        getWordData("");
         navigate("/Study");
     }
     
@@ -75,22 +93,24 @@ const EditForm = ({originalWord, getWordData}) => {
         })}>
             <div className="form-group">
                 <label>Word:</label>
-                <input {...register("wordText", { required: " please enter a word"})} defaultValue={originalWord.wordText} type="text" name="wordText" id="wordText" value={formData.wordText} onChange={handleChange}/>
+                <input {...register("wordText", { required: " please enter a word"})} type="text" name="wordText" id="wordText" value={formData.wordText} onChange={handleChange}/>
                 {errors.wordText && <span>{errors.wordText.message}</span>}
             </div>
             <div className="form-group">
                 <label>Image:</label>
-                <input type="text" name="imageUrl" id="imageUrl" value={formData.imageUrl} defaultValue={originalWord.ImageUrl} onChange={handleChange}/>
+                <input type="text" name="imageUrl" id="imageUrl" value={formData.imageUrl} onChange={handleChange}/>
+                <img className="mnemonic-image" src={formData.imageUrl}/>
             </div>
             <div className="form-group">
                 <label>Soundfile:</label>
                 <input type="file" name="soundfilePath" id="soundfilePath" onChange={handleSoundfileChange}/>
-                {selectedFile && <audio controls autoPlay src={URL.createObjectURL(selectedFile)}></audio>}
+                {/* {selectedFile && <audio controls autoPlay src={URL.createObjectURL(selectedFile)}></audio>} */}
+                <span>Replace? </span><audio controls src={"http://localhost:8080/files/soundfiles/" + formData.soundfilePath}></audio>
             </div>
 
             <button type="submit" onClick={sendData}>commit</button>
             {/* <button type="submit" onClick={onSubmit}>commit</button> */}
-            <button onClick={discardEntry}>back</button>
+            <button onClick={hideForm}>back</button>
         </form>
     );
 }

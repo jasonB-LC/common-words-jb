@@ -223,6 +223,24 @@ function App() {
     saveCurDeck(newCurDeck);
   }
 
+  const updateFlashCard = (updatedFlashCard) => {
+    console.log("UPDATING");
+    const updatedFlashCards = curDeck.flashCards.map((flashCard) =>{
+      if (parseInt(flashCard.id) === parseInt(updatedFlashCard.id)){
+        return updatedFlashCard;
+      }
+      else {
+        return flashCard;
+      }
+    })
+
+    for (let card of updatedFlashCards){
+      console.log("card " + card.wordText)
+    }
+    const newCurDeck = new Deck(curDeck.id, curDeck.name, curDeck.languageId, updatedFlashCards)
+    saveCurDeck(newCurDeck);
+  }
+
   const saveCurDeck = async deck => {
 		try {
       console.log("curDeck.id " + deck.id);
@@ -298,7 +316,7 @@ function App() {
             <Route path="/Read" element={<EBookDisplay />} />
             <Route path="/AddWordForm" element={<AddWordForm getWordData={addFlashCard} />} />
             <Route path="/VocabEditTable" element={<VocabTable deck={curDeck} returnNewData={saveCurDeck}/>} />
-            <Route path="/EditList" element={<DeckEditList deck={curDeck} returnNewData={saveCurDeck}/>} />
+            <Route path="/EditList" element={<DeckEditList deck={curDeck} returnNewData={updateFlashCard}/>} />
             <Route path="/Quiz" element={<Quiz wholeDeck={curDeck} dueDeck={curDue} refetchDecks={refetchDecks}/>} />
             <Route path="/resources/" element={<Resources />} />
             <Route path="/about/" element={<About />} />

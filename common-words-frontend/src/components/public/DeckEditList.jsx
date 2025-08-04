@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import EditForm from './EditForm';
 
@@ -9,7 +9,8 @@ const DeckEditList = ({deck, returnNewData}) => {
     const [soundfilesToAdd, setSoundfilesToAdd] = useState([]);
     const [soundfilesToDelete, setSoundfilesToDelete] = useState([]);
     const [showEditForm, setShowEditForm] = useState(false);
-    const [currentCardEdited, setCurrentCardEdited] = useState({wordText: "", imageUrl: "", soundfilePath: ""})
+    const [currentCardEdited, setCurrentCardEdited] = useState({wordId: "", wordText: "", imageUrl: "", soundfilePath: ""})
+    const [flashCards, setFlashCards] = useState([])
     const removeRow = (e) =>{
         const table = document.getElementById('vocabList');
         const rows = table.querySelectorAll('tr');
@@ -26,6 +27,15 @@ const DeckEditList = ({deck, returnNewData}) => {
             }
         }
     }
+    useEffect(() => {
+        setFlashCards(deck.flashCards);
+    }, [])
+
+    useEffect(() => {
+        if (currentCardEdited.wordText){
+            setShowEditForm(true);
+        }
+    }, [currentCardEdited])
 
     const handleSoundfileChange = (e) => {
         console.log("here" + e.target.id)
@@ -51,13 +61,15 @@ const DeckEditList = ({deck, returnNewData}) => {
     }
 
     const editRow = (e) =>{
-        setShowEditForm(true);
-        const dummy = deck.flashCards.map((word) => {
-            if (word.id === e.target.id){
-                setCurrentCardEdited({"wordText": word.wordText, "imageUrl": word.imageUrl, "soundfilePath": word.soundfilePath});
+        
+        flashCards.map((word) => {
+            console.log("word.id " + word.id);
+            console.log("e.target.id " + e.target.id);
+            if (parseInt(word.id) === parseInt(e.target.id)){
+                console.log("wordText: " + word.wordText)
+                setCurrentCardEdited({"wordId": word.id, "wordText": word.wordText, "imageUrl": word.imageUrl, "soundfilePath": word.soundfilePath});
             }
         })
-
     }
 
     const wordsJSX = deck.flashCards.map((word) => 
@@ -95,7 +107,7 @@ const DeckEditList = ({deck, returnNewData}) => {
         for (let i = 1; i < rows.length; i++) {
             const cells = rows[i].querySelectorAll('td');
             const newWord = {}
-            for(let key of Object.keys(deck.flashCards[i-1])){
+            for(let key of Object.keys(flashCards[i-1])){
                 let isMatch = -1;
                 for (let j = 0; j <cells.length; j++){
                     if ( key === cells[j].getAttribute("name")){
@@ -106,7 +118,7 @@ const DeckEditList = ({deck, returnNewData}) => {
                     newWord[key] = cells[isMatch].textContent;
                 }
                 else {
-                    newWord[key] = deck.flashCards[i-1][key];
+                    newWord[key] = flashCards[i-1][key];
                 }
             }
             newFlashCards.push(newWord);
@@ -137,16 +149,29 @@ const DeckEditList = ({deck, returnNewData}) => {
 		}
 }
 
-    const revertChanges = () =>{
-        returnNewData(deck);
+    const backToStudy = () =>{
+        // returnNewData(deck);
         navigate("/Study");
+    }
+
+    const hideForm = () =>{
+        setShowEditForm(false);
+    } 
+    
+    const updateWordData = () => {
+        console.log("update")
     }
 
     return (
         <>
-            {showEditForm ? <EditForm originalWord={currentCardEdited}/> : tableJSX}
-            <button onClick={submitChanges}>save changes</button>
-            <button onClick={revertChanges}>revert</button>
+            {showEditForm ? <EditForm originalWord={currentCardEdited} getWordData={returnNewData} hideForm={hideForm}/> 
+            : 
+                <div>
+                    {tableJSX}
+                    <button onClick={backToStudy}>back</button>
+                </div>
+            }
+
         </>
     );
 }
