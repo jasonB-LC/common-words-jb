@@ -10,38 +10,7 @@ import StyledLink from "../StyledLink";
 import { Link } from "react-router-dom";
 import TraversalButton from "../TraversalButton";
 
-const Home = ({allLanguages, allDecks}) => {
-    const oneDayMS = 86400000;
-    
-    const [branchChosen, setBranchChosen] = useState(false);
-
-    const handleDeckClick = (event) => {
-        console.log(event);
-    }
-    const wordIsReadyForReview = (word) => {
-        let TodaysDate = Date.now();
-        let timeElapsedMS = TodaysDate - word.dateOfLastReview;
-        let timeUntilNextReviewMS = oneDayMS * word.daysUntilDue;
-        return timeElapsedMS > timeUntilNextReviewMS
-    };
-    // const decksJSX2 = allDecks.map(deck => {
-    //     return <div>
-    //         <TraversalButton onClick={handleDeckClick} id={deck.id.toString()} text={deck.name}/>
-    //         <span>Total: {deck.flashCards.length}  
-    //         Due: {deck.flashCards.filter((word) => {
-    //             return wordIsReadyForReview(word);
-    //         }).length} 
-    //         {/* <button className='delete-button' onClick={showPopUpTrue} name={deck.name + " Deck"}  id={deck.id.toString()} disabled={isEditing}>x</button> */}
-    //         </span>
-    //     </div>
-    // })
-
-    const handleStudyClick = (event) => {
-        setBranchChosen(true);
-    }
-    const handleBack = (event) => {
-        setBranchChosen(false);
-    }
+const Home = () => {
     return (
         <>
             <div>

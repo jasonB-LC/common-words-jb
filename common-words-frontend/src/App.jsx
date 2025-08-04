@@ -10,16 +10,11 @@ import { useEffect, useState } from "react";
 import Study from "./components/public/Study";
 import ProtectedRoutes from "./components/admin/ProtectedRoutes";
 import Login from "./components/admin/Login";
-import { useImmer } from 'use-immer';
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import TraversalButton from "./components/TraversalButton";
 import Quiz from "./components/public/Quiz";
-import { Link } from "react-router-dom";
 import AddWordForm from "./components/AddWordForm";
 import VocabTable from "./components/VocabTable";
-import DeckOptionsDropdown from "./components/common/DeckOptionsDropdown";
-import { deleteDeck } from "./components/common/localData";
 import EBookDisplay from "./components/common/EBookDisplay";
 import DeckEditList from "./components/public/DeckEditList";
 import DeckChosen from "./components/admin/DeckChosen";
@@ -56,7 +51,6 @@ function App() {
       data = await response.json();
       
     } catch (error) {
-      console.error(error.message);
       setLoading(false);
     }
 
@@ -82,7 +76,6 @@ function App() {
       data = await response.json();
       
     } catch (error) {
-      console.error(error.message);
       setLoading(false);
     }
 
@@ -146,56 +139,12 @@ function App() {
 		) {
 			setLoading(false);
 		}
-    console.log("loading in allLanguages, useEffect" + loading);
 	}, [allLanguages, allDecks]);
 
 	useEffect(() => {
-      console.log("loading in loading, useEffect" + loading);
 	}, [loading]);
 
-  // const handleDeckOptionsClick = (deckId, optionSelected) => {
-  //   allDecks.map((deck) => {
-  //       if (deckId == deck.id){
-  //           setCurDeck(deck);
-  //           switch (optionSelected){
-  //             // case addWord:
-  //             //   navigate('/AddWordForm');
-  //             // case edit:
-  //             //   navigate('/VocabEditTable');
-  //             case deleteDeck:
-  //               break;
-  //             default:
-  //               break;
-  //           }
-  //       }
-  //   })
-  // }
-  // const decksJSX = allDecks.map(deck => {
-  //   if (parseInt(deck.languageId) === parseInt(curLanguageIndex)){//We only want the decks from our currently selected language
-  //     return <div>
-  //       <Link to="/Quiz">
-  //         <TraversalButton onClick={handleDeckClick} id={deck.id.toString()} text={deck.name}/>
-  //       </Link>
-  //       <span>Total: {deck.flashCards.length}  
-  //       Due: {deck.flashCards.filter((word) => {
-  //           return wordIsReadyForReview(word);
-  //       }).length} 
-  //       <DeckOptionsDropdown deckId={deck.id.toString()} onClick={handleDeckOptionsClick}/>
-  //       <Link to="/AddWordForm">
-  //         <button onClick={handleDeckClick} id={deck.id.toString()}>Add Word</button>
-  //       </Link>        
-  //       {/* <button className='delete-button' onClick={showPopUpTrue} name={deck.name + " Deck"}  id={deck.id.toString()} disabled={isEditing}>x</button> */}
-  //       <Link to="/VocabEditTable">
-  //         <button onClick={handleDeckClick} id={deck.id.toString()}>Edit</button>
-  //       </Link> 
-  //       </span>
-  //     </div>
-  //   }
-  // })
-
-
   const refetchDecks = () => {
-    console.log("refetching");
     fetchDecks();
   }
     
@@ -217,15 +166,11 @@ function App() {
 
   const addFlashCard = (flashCard) => {
     const updatedFlashCards = [...curDeck.flashCards, flashCard];
-    for (let card of updatedFlashCards){
-      console.log("card " + card.wordText)
-    }
     const newCurDeck = new Deck(curDeck.id, curDeck.name, curDeck.languageId, updatedFlashCards)
     saveCurDeck(newCurDeck);
   }
 
   const updateFlashCard = (updatedFlashCard) => {
-    console.log("UPDATING " + updatedFlashCard.id + "  " + updatedFlashCard.wordText);
     const updatedFlashCards = curDeck.flashCards.map((flashCard) =>{
       if (parseInt(flashCard.id) === parseInt(updatedFlashCard.id)){
         return updatedFlashCard;
@@ -235,16 +180,12 @@ function App() {
       }
     })
 
-    for (let card of updatedFlashCards){
-      console.log("card " + card.wordText)
-    }
     const newCurDeck = new Deck(curDeck.id, curDeck.name, curDeck.languageId, updatedFlashCards)
     saveCurDeck(newCurDeck);
   }
 
   const saveCurDeck = async deck => {
 		try {
-      console.log("curDeck.id " + deck.id);
 			await fetch('http://localhost:8080/decks/' + deck.id, {
 				method: 'PUT',
 				headers: {
@@ -253,7 +194,6 @@ function App() {
 				},
 				body: JSON.stringify(deck),
 			});
-      console.log('http://localhost:8080/decks/' + deck.id);
 		} catch (error) {
 			console.error(error.message);
 		}
@@ -261,9 +201,7 @@ function App() {
 	};
 
   const deleteDeck = async deckId =>{
-    console.log("Id of deck to delete " + deckId)
 		try {
-      console.log("curDeck.id " + deckId);
 			await fetch('http://localhost:8080/decks/' + deckId, {
 				method: 'DELETE',
 				headers: {
@@ -271,7 +209,6 @@ function App() {
 					'Access-Control-Allow-Origin': '*',
 				}
 			});
-      console.log('http://localhost:8080/decks/' + deckId);
 		} catch (error) {
 			console.error(error.message);
 		}
@@ -286,7 +223,6 @@ function App() {
       []
     )
 		try {
-      console.log("curDeck.id " + deckName);
 			await fetch('http://localhost:8080/decks', {
 				method: 'POST',
 				headers: {
@@ -295,7 +231,6 @@ function App() {
 				},
 				body: JSON.stringify(newDeck),
 			});
-      console.log('http://localhost:8080/decks/');
 		} catch (error) {
 			console.error(error.message);
 		}
@@ -311,7 +246,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login/>}/>
           <Route element={<ProtectedRoutes/>}>
-            <Route path="/" element={<Home allLanguages={allLanguages} allDecks={allDecks}/>} />
+            <Route path="/" element={<Home />} />
             <Route path="/Read" element={<EBookDisplay />} />
             <Route path="/Study" element={<Study allDecks={allDecks} curLanguageIndex={curLanguageIndex} handleDeckClick={handleDeckClick} handleDeckEditClick={handleDeckEditClick} deleteDeck={deleteDeck} addDeck={addDeck}/>} />
             <Route element={<DeckChosen curDeck/>}>
@@ -320,11 +255,9 @@ function App() {
               <Route path="/EditList" element={<DeckEditList deck={curDeck} returnNewDeck={saveCurDeck} updateFlashCard={updateFlashCard}/>} />
               <Route path="/Quiz" element={<Quiz wholeDeck={curDeck} dueDeck={curDue} refetchDecks={refetchDecks}/>} />
             </Route>
-
             <Route path="/resources/" element={<Resources />} />
             <Route path="/about/" element={<About />} />
           </Route>
-
         </Routes>}
         <Footer />
       </Router>

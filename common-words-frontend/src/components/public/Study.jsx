@@ -19,41 +19,8 @@ const Study = ({allDecks, curLanguageIndex, handleDeckClick, handleDeckEditClick
     useEffect (() => {
 
     }, [])
-    useEffect(()=>{
-        console.log('showingPopUp ' + showingPopUp)
-        console.log("isEditing " + isEditing)
-    }, [isEditing])
-    // const decksJSX = languageData.map(lang => {
-        
-    //     if (parseInt(lang.id) === parseInt(curLangId)){
-    //         console.log( "lang.id" + lang.id)
-    //         return lang.decks.map(deck => {
-    //             return <div>
-    //                     <TraversalButton onClick={handleDeckClick} id={deck.id.toString()} text={deck.name} isEditing={isEditing}/>
-    //                     <span>Total: {deck.flashCards.length}  
-    //                     Due: {deck.flashCards.filter((word) => {
-    //                         return wordIsReadyForReview(word);
-    //                     }).length} 
-    //                     {/* <button className='delete-button' onClick={showPopUpTrue} name={deck.name + " Deck"}  id={deck.id.toString()} disabled={isEditing}>x</button> */}
-    //                     </span>
-    //             </div>
-    //         })
-    //     }
-    // })
-    // const decksJSX2 = getCurDecks().map(deck => {
-    //     return <div>
-    //             <TraversalButton onClick={handleDeckClick} text={deck.name} isEditing={isEditing}/>
-    //             <span>Total: {deck.flashCards.length}  
-    //             Due: {deck.flashCards.filter((word) => {
-    //                 return wordIsReadyForReview(word);
-    //             }).length} 
-    //             {/* <button className='delete-button' onClick={showPopUpTrue} name={deck.name + " Deck"}  id={deck.id.toString()} disabled={isEditing}>x</button> */}
-    //             </span>
-    //     </div>
-    // })
 
     const deleteChosen = (e) => {
-        console.log("id " + showingPopUp.id)
         deleteDeck(showingPopUp.id)
         showPopUpFalse();
 
@@ -76,7 +43,6 @@ const Study = ({allDecks, curLanguageIndex, handleDeckClick, handleDeckEditClick
     };
 
   const handleDeckOptionsClick = (deckId, optionSelected) => {
-    console.log("deckId " + deckId + "   optionSelected " + optionSelected)
     allDecks.map((deck) => {
         if (deckId == deck.id){
             handleDeckEditClick(deckId);

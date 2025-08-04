@@ -14,24 +14,15 @@ const DeckEditList = ({deck, returnNewDeck, updateFlashCard}) => {
     const [flashCardsToReturn, setFlashCardsToReturn] = useState([])
     const [showingPopUp, setShowingPopUp] = useState({showing: false, name: "", id: ""});
     const [isDeleting, setIsDeleting] = useState(false);
-    useEffect(()=>{
-        console.log('showingPopUp ' + showingPopUp)
-        console.log("isDeleting " + isDeleting)
-    }, [isDeleting])
 
-    
     const removeRow = (e) =>{
-        console.log("e.target.id" + e.target.id)
         const table = document.getElementById('vocabList');
         const rows = table.querySelectorAll('tr');
         for (let row of rows){
-            console.log("row.id" + row.id)
             if (e.target.id === row.id){
-                console.log("row.id" + row.id)
                 for (let column of row.querySelectorAll("td")){
                     if (column.className === "soundfile-cell"){
                         setSoundfilesToDelete([...soundfilesToDelete, column.textContent])
-                        console.log("soundfile name: " + column.textContent);
                     }
                 }
                 table.deleteRow(Number(row.rowIndex));
@@ -75,35 +66,9 @@ const DeckEditList = ({deck, returnNewDeck, updateFlashCard}) => {
         }
     }, [currentCardEdited])
 
-    const handleSoundfileChange = (e) => {
-        console.log("here" + e.target.id)
-        const table = document.getElementById('vocabList');
-        const rows = table.querySelectorAll('tr');
-        for (let row of rows){
-            if (e.target.id === row.id){
-                console.log("row " + row.id)
-                for (let column of row.querySelectorAll("td")){
-                    if (column.className === "soundfile-cell"){
-                        column.innerHTML = column.id;
-                        console.log("blah " + column.innerHTML)
-                        console.log("blah " + column.id)
-                        // setSoundfilesToDelete([...soundfilesToDelete, column.textContent])
-                        // console.log("soundfile name: " + column.textContent);
-                    }
-                }
-                deleteSoundfile
-                table.deleteRow(Number(row.rowIndex));
-            }
-        }
-
-    }
-
     const editRow = (e) =>{
         flashCards.map((word) => {
-            console.log("word.id " + word.id);
-            console.log("e.target.id " + e.target.id);
             if (parseInt(word.id) === parseInt(e.target.id)){
-                console.log("wordText: " + word.wordText)
                 setCurrentCardEdited({"id": word.id, "wordText": word.wordText, "imageUrl": word.imageUrl, "soundfilePath": word.soundfilePath});
             }
         })
@@ -163,7 +128,6 @@ const DeckEditList = ({deck, returnNewDeck, updateFlashCard}) => {
         const newDeck = {...deck, flashCards: newFlashCards}
         for (let file of soundfilesToDelete){
             deleteSoundfile(file)
-            console.log("file: " + file);
         }
         returnNewDeck(newDeck);
         navigate("/Study");
@@ -177,33 +141,15 @@ const DeckEditList = ({deck, returnNewDeck, updateFlashCard}) => {
 					'Access-Control-Allow-Origin': '*',
 				}
 			});
-            if (response.ok){
-                console.log("delete successful");
-            }
 		} catch (error) {
-            console.log("couldn't delete file:" + soundfile);
 			console.error(error.message);
 		}
 }
 
-    const backToStudy = () =>{
-        // returnNewData(deck);
-        navigate("/Study");
-    }
-
     const hideForm = () =>{
         setShowEditForm(false);
     } 
-    
-    const updateWordData = () => {
-        console.log("update")
-    }
 
-    const deleteChosen = (e) => {
-        deleteDeck(showingPopUp.id)
-        showPopUpFalse();
-
-    }
     return (
         <>
             {showEditForm ? <EditForm originalWord={currentCardEdited} updateFlashCard={updateFlashCard} hideForm={hideForm}/> 

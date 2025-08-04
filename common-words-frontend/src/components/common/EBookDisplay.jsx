@@ -28,18 +28,6 @@ const EBookDisplay = () => {
         } catch (error) {
             console.error(error.message);
         }
-        
-        console.log(data);
-    // addEventListener("mouseup", (event) => { })
-    // const handleMouseUp = () => {
-    //     console.log("mouse up")
-    //     const selection = window.getSelection();
-    //     if (selection && selection.toString().length > 0) {
-    //       setSelectedText(selection.toString());
-    //     } else {
-    //       setSelectedText(''); // Clear if nothing is selected
-    //     }
-    // };
 }
     return (
         <div>

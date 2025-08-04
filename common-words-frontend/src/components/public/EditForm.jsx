@@ -17,7 +17,6 @@ const EditForm = ({originalWord, updateFlashCard, hideForm}) => {
     })
 
     useEffect (() => {
-        console.log("original word " + originalWord.wordText)
         setFormData(
             {
                 id: originalWord.id,
@@ -37,11 +36,9 @@ const EditForm = ({originalWord, updateFlashCard, hideForm}) => {
         }));
     };
 
-    console.log(errors)
     const handleSoundfileChange = (e) => {
         setSelectedFile(e.target.files[0]);
         const { name, value } = e.target;
-        console.log(e.target.files);
         setFormData((prevData) => ({
             ...prevData,
             [name]: e.target.files[0].name,
@@ -56,10 +53,7 @@ const EditForm = ({originalWord, updateFlashCard, hideForm}) => {
     const sendData = async () =>{
         if (selectedFile){
             const soundfileFormData = new FormData();
-            console.log("selectedFile: ");
-            console.log(selectedFile); 
             soundfileFormData.append("file", selectedFile);
-            console.log("soundfile form data : " + soundfileFormData)
             try {
                 const response = await fetch('http://localhost:8080/upload', {
                     method: 'POST',
@@ -70,15 +64,12 @@ const EditForm = ({originalWord, updateFlashCard, hideForm}) => {
                 });
                 if (response.ok){
                     setSelectedFile(null);
-                    console.log(" formData ");
-                    console.log(formData);
                     updateFlashCard(formData);
 
                     hideForm();
                     navigate('/Study');
                 }
             } catch (error) {
-                console.log("soundfile error:")
                 console.error(error.message);
             }
         }

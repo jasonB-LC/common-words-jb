@@ -23,12 +23,9 @@ const AddWordForm = ({getWordData}) => {
         }));
     };
 
-    console.log(errors)
     const handleSoundfileChange = (e) => {
         setSelectedFile(e.target.files[0]);
         const { name, value } = e.target;
-        console.log("ADDING FILEEEE")
-        console.log(e.target.files[0]);
         setFormData((prevData) => ({
             ...prevData,
             [name]: e.target.files[0].name,
@@ -38,10 +35,7 @@ const AddWordForm = ({getWordData}) => {
 
     const sendData = async () =>{
         const soundfileFormData = new FormData();
-        console.log("selectedFile: ");
-        console.log(selectedFile); 
         soundfileFormData.append("file", selectedFile);
-        console.log("soundfile form data : " + soundfileFormData)
         try {
             const response = await fetch('http://localhost:8080/upload', {
                 method: 'POST',
@@ -56,7 +50,6 @@ const AddWordForm = ({getWordData}) => {
                 navigate("/Study");
             }
         } catch (error) {
-            console.log("soundfile error:")
             console.error(error.message);
         }
     }
