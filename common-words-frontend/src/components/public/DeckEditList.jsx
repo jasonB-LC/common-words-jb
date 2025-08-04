@@ -4,14 +4,11 @@ import EditForm from './EditForm';
 import DeletePopUp from '../common/DeletePopUp';
 
 const DeckEditList = ({deck, returnNewDeck, updateFlashCard}) => {
-    const [tableData, setTableData] = useState();
-
     const navigate = useNavigate();
     const [soundfilesToDelete, setSoundfilesToDelete] = useState([]);
     const [showEditForm, setShowEditForm] = useState(false);
     const [currentCardEdited, setCurrentCardEdited] = useState({id: "", wordText: "", imageUrl: "", soundfilePath: ""})
     const [flashCards, setFlashCards] = useState([])
-    const [flashCardsToReturn, setFlashCardsToReturn] = useState([])
     const [showingPopUp, setShowingPopUp] = useState({showing: false, name: "", id: ""});
     const [isDeleting, setIsDeleting] = useState(false);
 
@@ -52,9 +49,6 @@ const DeckEditList = ({deck, returnNewDeck, updateFlashCard}) => {
     useEffect(() => {
         setFlashCards(deck.flashCards);
     }, [])
-    // useEffect(() => {
-    //     setFlashCardsToReturn(flashCards);
-    // }, [flashCards]);
 
     useEffect(() => {
         setFlashCards(deck.flashCards);

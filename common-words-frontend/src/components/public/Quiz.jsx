@@ -94,9 +94,6 @@ const Quiz = ({wholeDeck, dueDeck, refetchDecks}) => {
         setCurrentFlashCard(getRandomFlashCard());
     }
 
-    // const sendBackDeckInfo = () => {
-    //     handleBackToMenu(flashCards);
-    // }
 	const saveDeck = async deck => {
 		try {
 			await fetch('http://localhost:8080/decks/' + wholeDeck.id, {

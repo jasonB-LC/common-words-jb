@@ -4,13 +4,12 @@ import './Global.css'
 import Main from "./components/public/Main";
 import Resources from './components/public/Resources';
 import About from './components/public/About';
-import { Language, Deck, FlashCard, EBook } from './classes/Exports';
-
+import { Language, Deck, FlashCard } from './classes/Exports';
 import { useEffect, useState } from "react";
 import Study from "./components/public/Study";
 import ProtectedRoutes from "./components/admin/ProtectedRoutes";
 import Login from "./components/admin/Login";
-import Header from "./components/Header";
+import Header from "./components/public/Header";
 import Footer from "./components/public/Footer";
 import Quiz from "./components/public/Quiz";
 import AddWordForm from "./components/public/AddWordForm";

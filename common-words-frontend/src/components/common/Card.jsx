@@ -1,9 +1,4 @@
-import  {React,useEffect, useState} from 'react';
-import {useForm} from 'react-hook-form';
-
 const Card = ({currentCard, showAnswer}) => {
-    
-    
     return (
         <div className="card">
             {<span className="word">Question: {currentCard.wordText}</span>}

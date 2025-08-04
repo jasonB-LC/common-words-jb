@@ -2,9 +2,6 @@ import React, { useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 
 const EBookDisplay = () => {
-    const utf8Text = "Hello, world! Привет, мир! こんにちは、世界！"; // Example UTF-8 string
-    const [eBook, setEBook] = useState();
-    const [selectedText, setSelectedText] = useState('');
     useEffect(() => {
         fetchEBook();
     }, []);
