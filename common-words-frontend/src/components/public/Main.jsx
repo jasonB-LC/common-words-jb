@@ -9,9 +9,6 @@ const Main = ({allLanguages, curLanguage, setLanguage, addLanguage}) => {
     useEffect (() => {
         setCurLanguageIndex(curLanguage);
     }, [])
-    useEffect (() => {
-        console.log("newLanguage " + newLanguage);
-    }, [newLanguage])
 
     const showLanguageInput = () => {
         setShowAddLanguageInput(!showAddLanguageInput);

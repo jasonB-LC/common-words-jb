@@ -128,7 +128,6 @@ function App() {
     fetchDecks();
 	}, []);
 
-
 	useEffect(() => {
 		if (
 			allLanguages.length > 0 &&
@@ -141,13 +140,12 @@ function App() {
   const refetchDecks = () => {
     fetchDecks();
   }
-  
+
   const refetchLanguages = () => {
     fetchLanguages();
     fetchDecks();
   }
   const setLanguage = (e) => {
-    console.log("e.target.value " + e.target.value);
     setCurLanguageIndex(e.target.value)
   }
 
