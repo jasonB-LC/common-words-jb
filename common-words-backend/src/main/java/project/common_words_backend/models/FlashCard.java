@@ -19,10 +19,6 @@ public class FlashCard {
     @JsonBackReference(value="deck-flashcard")
     private Deck deck;
 
-//    @OneToMany(mappedBy = "flashCard")
-//    @JsonManagedReference(value="flashCard-properties")
-//    private List<FlashCard_WordProperties> properties = new ArrayList<>();
-
     private long daysUntilDue;
     private long dateOfLastReview;
     private String wordText;

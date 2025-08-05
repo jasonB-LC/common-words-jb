@@ -10,10 +10,6 @@ import project.common_words_backend.models.dto.FlashCardDTO;
 import project.common_words_backend.repositories.DeckRepository;
 import project.common_words_backend.repositories.FlashCardRepository;
 import java.util.List;
-import org.springframework.web.multipart.MultipartFile;
-import java.io.File;
-import java.io.IOException;
-import org.springframework.beans.factory.annotation.Value;
 
 @CrossOrigin(origins = "*", maxAge =3600)
 @RestController

@@ -43,25 +43,6 @@ public class DeckController {
 
     @PutMapping(value="/{id}", consumes= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateDeck(@PathVariable int id, @RequestBody Deck updatedDeck){
-//        Optional<Deck> existingDeck = deckRepository.findById(id);
-//
-//        Deck newDeck = new Deck(deck.getName(), deck.getLanguageId());
-//        List<FlashCard> flashCards = new ArrayList<>();
-//        for (FlashCard flashCard : deck.getFlashCards()) {
-//            if (flashCard != null) {
-//                flashCard.setDeck(deck); // Set the deck reference
-//                deck.getFlashCards().add(flashCard);
-//            }
-//        }
-//        if (updatedDeck.getFlashCards() != null) {
-//            for (FlashCard flashCard : updatedDeck.getFlashCards()) {
-//
-//            }
-//        }
-//        newDeck.setFlashCards(flashCards);
-//        newDeck.setId(id);
-//        deckRepository.save(newDeck);
-//        return new ResponseEntity<>(newDeck, HttpStatus.CREATED);
         return deckRepository.findById(id)
                 .map(deck -> {
                     // Update deck properties

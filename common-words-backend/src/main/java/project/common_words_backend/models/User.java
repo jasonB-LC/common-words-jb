@@ -19,10 +19,6 @@ public class User {
     private String lastName;
     private String password;
 
-//    @OneToMany(mappedBy="user")
-//    @JsonManagedReference
-//    private final List<Deck> decks = new ArrayList<>();
-
     public User() {
     }
 
@@ -41,9 +37,6 @@ public class User {
         this.id = id;
     }
 
-//    public List<Deck> getDecks() {
-//        return decks;
-//    }
     public String getUserName() {
         return userName;
     }
@@ -75,15 +68,6 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
-//    @Override
-//    public String toString() {
-//        return "'" + userName + " " + firstName + ' ' + lastName;
-//    }
-//
-//    public String toHtml() {
-//        return "<p style='font-weight: bold;'>" + userName + ", " + firstName + " " + lastName + "</p>";
-//    }
 
 
 }

@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import project.common_words_backend.models.Deck;
 import project.common_words_backend.models.Language;
 import project.common_words_backend.models.dto.LanguageDTO;
 import project.common_words_backend.repositories.LanguageRepository;

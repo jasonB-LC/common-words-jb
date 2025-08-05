@@ -19,16 +19,6 @@ public class Language {
     @JsonManagedReference(value="language-eBooks")
     private final List<EBook> eBooks = new ArrayList<>();
 
-//    @OneToMany(mappedBy="language")
-//    @JsonBackReference
-//    private final List<Deck> decks = new ArrayList<>();
-
-
-
-//    @ManyToMany(mappedBy = "languages")
-//    @JsonManagedReference
-//    private List<WordClass> wordClasses;
-
     public Language() {
     }
 

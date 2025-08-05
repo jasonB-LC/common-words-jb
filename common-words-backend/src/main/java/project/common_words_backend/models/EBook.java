@@ -64,14 +64,6 @@ public class EBook {
         this.language = language;
     }
 
-//    public int getLanguageID() {
-//        return languageID;
-//    }
-//
-//    public void setLanguageID(int languageID) {
-//        this.languageID = languageID;
-//    }
-
     public String getTitle() {
         return title;
     }

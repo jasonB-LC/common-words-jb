@@ -1,8 +1,5 @@
 package project.common_words_backend.models.dto;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
-import project.common_words_backend.models.User;
-
 import java.util.List;
 
 public class EBookDTO {

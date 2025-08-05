@@ -16,8 +16,6 @@ import java.nio.file.Paths;
 public class FileDeleteController {
     @Value("${app.upload.directory}")
     private String uploadDirectory;
-    //TODO error handling around directory path
-    //TODO give each user their own directory
 
     @DeleteMapping("/{filePath}")
     public boolean handleFileDelete(@PathVariable String filePath) throws IOException {

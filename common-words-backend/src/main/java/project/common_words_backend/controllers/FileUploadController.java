@@ -17,8 +17,7 @@ import java.nio.file.Paths;
 public class FileUploadController {
     @Value("${app.upload.directory}")
     private String uploadDirectory;
-    //TODO error handling around directory path
-    //TODO give each user their own directory
+
     @PostMapping
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
         System.out.println(" file " + file);

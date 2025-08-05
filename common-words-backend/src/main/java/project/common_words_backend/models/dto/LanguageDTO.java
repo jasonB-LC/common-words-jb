@@ -10,10 +10,4 @@ public class LanguageDTO {
     public void setName(String name) {
         this.name = name;
     }
-
-//    @JoinTable(
-//            name = "Employee_Project",
-//            joinColumns = { @JoinColumn(name = "employee_id") },
-//            inverseJoinColumns = { @JoinColumn(name = "project_id") }
-//    )
 }
