@@ -141,22 +141,15 @@ function App() {
   const refetchDecks = () => {
     fetchDecks();
   }
-    
-  const languagesDropdownJSX = allLanguages.map(lang => {
-      return (
-          <option value={lang.id.toString()}>{lang.name.toString()}</option>
-      )
-  });
   
-  const chooseLanguageDropdown = (//for setting the current language
-      <>
-          <label>
-              <select name="languages" id="languageDropDown" value={curLanguageIndex} onChange={e => setCurLanguageIndex(e.target.value)}>
-                  {languagesDropdownJSX}
-              </select> 
-          </label>
-      </>
-  )
+  const refetchLanguages = () => {
+    fetchLanguages();
+    fetchDecks();
+  }
+  const setLanguage = (e) => {
+    console.log("e.target.value " + e.target.value);
+    setCurLanguageIndex(e.target.value)
+  }
 
   const addFlashCard = (flashCard) => {
     const updatedFlashCards = [...curDeck.flashCards, flashCard];
@@ -209,6 +202,26 @@ function App() {
     refetchDecks();
   }
   
+  const addLanguage = async languageName => {//add a new deck to the database
+    let newLanguage = new Deck(
+      0,
+      languageName
+    )
+		try {
+			await fetch('http://localhost:8080/languages', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'Access-Control-Allow-Origin': '*',
+				},
+				body: JSON.stringify(newLanguage),
+			});
+		} catch (error) {
+			console.error(error.message);
+		}
+    refetchLanguages();
+	};
+  
   const addDeck = async deckName => {//add a new deck to the database
     let newDeck = new Deck(
       0,
@@ -235,12 +248,11 @@ function App() {
     <>
       <Router>
         <Header />
-        <div>{chooseLanguageDropdown}</div>
         {!loading &&
         <Routes>
           <Route path="/login" element={<Login/>}/>
           <Route element={<ProtectedRoutes/>}>
-            <Route path="/" element={<Main/>} />
+            <Route path="/" element={<Main allLanguages={allLanguages} curLanguageIndex={curLanguageIndex} setLanguage={setLanguage} addLanguage={addLanguage}/>} />
             <Route path="/Study" element={<Study allDecks={allDecks} curLanguageIndex={curLanguageIndex} handleDeckClick={handleDeckClick} handleDeckEditClick={handleDeckEditClick} deleteDeck={deleteDeck} addDeck={addDeck}/>} />
             <Route element={<DeckChosen curDeck/>}>
               <Route path="/AddWordForm" element={<AddWordForm getWordData={addFlashCard} />} />
