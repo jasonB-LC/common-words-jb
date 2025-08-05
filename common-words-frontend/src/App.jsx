@@ -48,18 +48,22 @@ function App() {
       data = await response.json();
       
     } catch (error) {
+        console.log("error " + error);
       setLoading(false);
     }
 
-    data.forEach(language => {
+    if (data.length !== 0){
+      data.forEach(language => {
       let newLanguage = new Language(
         language.id,
         language.name,
       )
       languages.push(newLanguage);
-    });
+      });
 
-    setAllLanguages(languages);
+      setAllLanguages(languages);
+    }
+
   }
 
   const fetchDecks = async () => {//fetching all decks from back end
@@ -76,28 +80,31 @@ function App() {
       setLoading(false);
     }
 
-    data.forEach(deck => {
-      let flashCards = [];
-      deck.flashCards.forEach(flashCard => {
-        let newFlashCard = new FlashCard(
-          flashCard.id,
-          flashCard.daysUntilDue,
-          flashCard.dateOfLastReview,
-          flashCard.wordText,
-          flashCard.imageUrl,
-          flashCard.soundfilePath
-        );
-        flashCards.push(newFlashCard);
+    if (data.length !== 0){
+      data.forEach(deck => {
+        let flashCards = [];
+        deck.flashCards.forEach(flashCard => {
+          let newFlashCard = new FlashCard(
+            flashCard.id,
+            flashCard.daysUntilDue,
+            flashCard.dateOfLastReview,
+            flashCard.wordText,
+            flashCard.imageUrl,
+            flashCard.soundfilePath
+          );
+          flashCards.push(newFlashCard);
+        })
+        let newDeck = new Deck(
+          deck.id,
+          deck.name,
+          deck.languageId,
+          flashCards
+        )
+        decks.push(newDeck);
       })
-      let newDeck = new Deck(
-        deck.id,
-        deck.name,
-        deck.languageId,
-        flashCards
-      )
-      decks.push(newDeck);
-    })
-    setAllDecks(decks);
+      setAllDecks(decks);
+    }
+
   };
 
   const wordIsReadyForReview = (word) => {//boolean function used to populate the deck of cards that are due to be reviewed.
@@ -126,6 +133,10 @@ function App() {
 	useEffect(() => {
 		fetchLanguages();
     fetchDecks();
+
+    if (!allLanguages.length > 0 && !allDecks.length > 0){
+      setLoading(false);
+    }
 	}, []);
 
 	useEffect(() => {

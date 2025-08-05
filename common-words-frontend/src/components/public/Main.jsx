@@ -32,16 +32,16 @@ const Main = ({allLanguages, curLanguage, setLanguage, addLanguage}) => {
     const chooseLanguageDropdown = (//for setting the current language
         <>
             <label>
-                <select name="languages" id="languageDropDown" value={curLanguageIndex} onChange={setLanguage}>
+                {allLanguages && <select name="languages" id="languageDropDown" value={curLanguageIndex} onChange={setLanguage}>
                     {languagesDropdownJSX}
-                </select> 
+                </select> }
                 <button onClick={showLanguageInput}>{showAddLanguageInput ? "close" : "add language"}</button>
                 {showAddLanguageInput && 
-                    <>
-                    <form>
-                       <input type="text" value={newLanguage} onChange={handleChange}/> <button type="submit" onClick={handleLanguageSubmit}>submit</button>
-                    </form>
-                    </>
+                    <div className="InputWordForm">
+                        <form>
+                        <input type="text" value={newLanguage} onChange={handleChange}/> <button type="submit" onClick={handleLanguageSubmit}>submit</button>
+                        </form>
+                    </div>
                 }
             </label>
         </>

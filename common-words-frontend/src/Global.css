@@ -14,27 +14,6 @@
 }
 /* HTML: <div class="loader"></div> */
 /* HTML: <div class="loader"></div> */
-.loader {
-  width: 85px;
-  height: 25px;
-  --g1:conic-gradient(from  90deg at left   3px top   3px,#0000 90deg,#fff 0);
-  --g2:conic-gradient(from -90deg at bottom 3px right 3px,#0000 90deg,#fff 0);
-  background:var(--g1),var(--g1),var(--g1), var(--g2),var(--g2),var(--g2);
-  background-position: left,center,right;
-  background-repeat: no-repeat;
-  animation: l8 1s infinite;
-}
-@keyframes l8 {
-  0%   {background-size:25px 100%,25px 100%,25px 100%}
-  20%  {background-size:25px 50% ,25px 100%,25px 100%}
-  40%  {background-size:25px 50% ,25px 50% ,25px 100%}
-  60%  {background-size:25px 100%,25px 50% ,25px 50% }
-  80%  {background-size:25px 100%,25px 100%,25px 50% }
-  100% {background-size:25px 100%,25px 100%,25px 100%}
-}
-@keyframes l2 {
-  to {rotate: 1turn}
-}
 
 
 body {
@@ -302,6 +281,7 @@ img {
   max-width: 70%;
   max-height: 40%;
   justify-content: center;
+  align-items: center;
 }
 
 .wrapper {
@@ -327,16 +307,26 @@ tr:nth-child(even) {
 }
 
 form {
-  display: grid;
+  display: flex;
   gap: 0.5rem;
   font-family: "Lato";
+  max-width: 100px;
 
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   @media (width < 720px){
-
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 }
 
 label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-transform: uppercase;
   font-size: 1rem;
   padding: 1em;
@@ -432,4 +422,11 @@ audio {
   max-width: 1px;
   white-space: nowrap;
   overflow:hidden;
+}
+
+.AddWordForm {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
