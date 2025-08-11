@@ -1,6 +1,10 @@
+import Buffer from "../common/Buffer";
+
 const Resources = () => {
     return (
-        <>
+        <div className="page-container">
+            <Buffer></Buffer>
+            <div className="center-content">
             <div className='resources'>
                 <div>Resources</div>
                 <div>
@@ -16,7 +20,9 @@ const Resources = () => {
                     <div>Fun community of language learners. Submit a ticket requesting a pronunciation or translation while helping others on their language learning journey.</div><br></br>
                 </div>
             </div>
-        </>
+            </div>
+            <Buffer></Buffer>
+        </div>
     );
 }
 

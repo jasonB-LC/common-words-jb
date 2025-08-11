@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router';
 import DeletePopUp from '../common/DeletePopUp';
 import AddItemButton from '../common/AddItemButton';
 import LinkButton from '../common/LinkButton';
+import Buffer from '../common/Buffer';
 
 const Study = ({allDecks, curLanguageIndex, handleDeckClick, handleDeckEditClick, deleteDeck, addDeck}) => {
     const [showingPopUp, setShowingPopUp] = useState({showing: false, name: "", id: ""});
@@ -59,33 +60,35 @@ const Study = ({allDecks, curLanguageIndex, handleDeckClick, handleDeckEditClick
   }
     const decksJSX = allDecks.map(deck => {
     if (parseInt(deck.languageId) === parseInt(curLanguageIndex)){//We only want the decks from our currently selected language
-        return <div>
+        return <div className="language-button-row">
             <Link to="/Quiz">
                 <TraversalButton onClick={handleDeckClick} id={deck.id.toString()} text={deck.name}/>
             </Link>
-            <span>Total: {deck.flashCards.length}  
+            <div className="deck-info">Total: {deck.flashCards.length + " "}  
                 Due: {deck.flashCards.filter((word) => {
                     return wordIsReadyForReview(word);
                 }).length} 
                 <DeckOptionsDropdown deckId={deck.id.toString()} onClick={handleDeckOptionsClick}/>       
-                {/* <button className='delete-button' onClick={showPopUpTrue} name={deck.name + " Deck"}  id={deck.id.toString()} disabled={isEditing}>x</button> */}
-
-            </span>
             </div>
+        </div>
         }
     })
 
     const deckEditing = (
-        <div>editing</div>
+        <div>{!showingPopUp.showing && "Give your deck a name: "}</div>
     );
 
     return (
-        <>
-            <div>{isEditing ? deckEditing : decksJSX}</div>
-            <div>{!isEditing && <LinkButton linkPath={"/"} type={"button"} text={"Back"} />}</div>
+        <div className="page-container">
+            <Buffer></Buffer>
+            <div className="center-content">
             <AddItemButton text="start new deck" handleNewListItem={addDeck} sendBackEditingStatus={setEditing}/>
-            {showingPopUp.showing && <DeletePopUp objectName={showingPopUp.name} eventId={showingPopUp.id} deletionRef={deleteChosen} abortRef={showPopUpFalse}/>}
-        </>
+                <div>{isEditing ? deckEditing : decksJSX}</div>
+                <div>{!isEditing && <LinkButton linkPath={"/"} type={"button"} text={"Back"} />}</div>
+                {showingPopUp.showing && <DeletePopUp objectName={showingPopUp.name} eventId={showingPopUp.id} deletionRef={deleteChosen} abortRef={showPopUpFalse}/>}
+            </div>
+            <Buffer></Buffer>
+        </div>
     );
 }
 

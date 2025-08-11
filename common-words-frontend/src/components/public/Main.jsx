@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Buffer from "../common/Buffer";
+import AddLanguageForm from "../common/AddLanguageForm";
 
 const Main = ({allLanguages, curLanguage, setLanguage, addLanguage}) => {
     const [showAddLanguageInput, setShowAddLanguageInput] = useState(false)
@@ -11,9 +13,11 @@ const Main = ({allLanguages, curLanguage, setLanguage, addLanguage}) => {
     }, [])
 
     const showLanguageInput = () => {
-        setShowAddLanguageInput(!showAddLanguageInput);
+        setShowAddLanguageInput(true);
     }
-    
+    const hideLanguageInput = () => {
+        setShowAddLanguageInput(false);
+    }
     const languagesDropdownJSX = allLanguages.map(lang => {
         return (
             <option value={lang.id.toString()}>{lang.name.toString()}</option>
@@ -29,37 +33,35 @@ const Main = ({allLanguages, curLanguage, setLanguage, addLanguage}) => {
         setShowAddLanguageInput(false);
     }
 
-    const chooseLanguageDropdown = (//for setting the current language
-        <>
-            <label>
-                {allLanguages && <select name="languages" id="languageDropDown" value={curLanguageIndex} onChange={setLanguage}>
+
+    const chooseLanguageDropdown = (//for setting the current language            
+            <label class="add-language-label">
+                {allLanguages && !showAddLanguageInput && <select className ="language-dropdown" name="languages" id="languageDropDown" value={curLanguageIndex} onChange={setLanguage}>
                     {languagesDropdownJSX}
                 </select> }
-                <button onClick={showLanguageInput}>{showAddLanguageInput ? "close" : "add language"}</button>
-                {showAddLanguageInput && 
-                    <div className="InputWordForm">
-                        <form>
-                        <input type="text" value={newLanguage} onChange={handleChange}/> <button type="submit" onClick={handleLanguageSubmit}>submit</button>
-                        </form>
-                    </div>
-                }
+                {allLanguages && !showAddLanguageInput && <button className="addLanguage" onClick={showLanguageInput}>+</button>}
+                {showAddLanguageInput && <AddLanguageForm newLanguage={newLanguage} handleChange={handleChange} handleLanguageSubmit={handleLanguageSubmit} handleLanguageBack={hideLanguageInput}/>}
             </label>
-        </>
+
     )
 
     return (
-        <>
+        <div className="page-container">
+            <Buffer></Buffer>
+            <div className="center-content">
             {chooseLanguageDropdown}
-            <div>
-                Welcome to common words.
+                <div>
+                    Welcome to common words.
+                </div>
+                <div>
+                    On the study page, you can add new cards to the existing decks, or create your own. Have fun!
+                </div>
+                <Link to="/Study">
+                    <button type="button">Study</button>
+                </Link>
             </div>
-            <div>
-                On the study page, you can add new cards to the existing decks, or create your own. Have fun!
-            </div>
-            <Link to="/Study">
-                <button type="button">Study</button>
-            </Link>
-        </>
+            <Buffer></Buffer>
+        </div>
     );
 }
 

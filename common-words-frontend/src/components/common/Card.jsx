@@ -1,10 +1,9 @@
 const Card = ({currentCard, showAnswer}) => {
     return (
         <div className="card">
-            {<span className="word">Question: {currentCard.wordText}</span>}
+            {<span className="word">{currentCard.wordText}</span>}
 			{showAnswer && (
                 <div className="answer">
-                    <span>answer: </span>
                     <img className="mnemonic-image" src={currentCard.imageUrl}/>
                     <audio autoPlay src={"http://localhost:8080/files/soundfiles/" + currentCard.soundfilePath}></audio>
                 </div>

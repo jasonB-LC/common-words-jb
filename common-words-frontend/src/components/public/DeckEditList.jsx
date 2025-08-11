@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import EditForm from './EditForm';
 import DeletePopUp from '../common/DeletePopUp';
+import Buffer from '../common/Buffer';
 
 const DeckEditList = ({deck, returnNewDeck, updateFlashCard}) => {
     const navigate = useNavigate();
@@ -148,7 +149,9 @@ const DeckEditList = ({deck, returnNewDeck, updateFlashCard}) => {
     } 
 
     return (
-        <>
+        <div className="page-container">
+            <Buffer></Buffer>
+            <div className="center-content">
             {showEditForm ? <EditForm originalWord={currentCardEdited} updateFlashCard={updateFlashCard} hideForm={hideForm}/> 
             : 
                 <div>
@@ -158,7 +161,9 @@ const DeckEditList = ({deck, returnNewDeck, updateFlashCard}) => {
             }
             {showingPopUp.showing && <DeletePopUp objectName={showingPopUp.name} eventId={showingPopUp.id} deletionRef={removeRow} abortRef={showPopUpFalse}/>}
 
-        </>
+            </div>
+            <Buffer></Buffer>
+        </div>
     );
 }
 

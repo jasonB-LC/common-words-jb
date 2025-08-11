@@ -67,25 +67,40 @@ const AddWordForm = ({getWordData}) => {
             <form onSubmit={handleSubmit((data) => {
                 console.log(data)
             })}>
-                <div className="form-group">
-                    <label>Word:</label>
-                    <input {...register("wordText", { required: " please enter a word"})} type="text" name="wordText" id="wordText" value={formData.wordText} onChange={handleChange}/>
-                    {errors.wordText && <span>{errors.wordText.message}</span>}
+                <div className="addWordColumn">
+                    <div className="form-row">
+                        <label>Word:</label>
+                        <input {...register("wordText", { required: " please enter a word"})} type="text" name="wordText" id="wordText" value={formData.wordText} onChange={handleChange}/>
+                        {errors.wordText && <span>{errors.wordText.message}</span>}
+                    </div>
+                    <div className="form-row">
+                        <label>Image:</label>
+                        <input type="text" name="imageUrl" id="imageUrl" value={formData.imageUrl} onChange={handleChange}/>
+                        <img className="mnemonic-image" src={formData.imageUrl}/>
+                    </div>
+                    <div className="form-row">
+                        <label>Soundfile:</label>
+                        <input type="file" name="soundfilePath" id="soundfilePath" onChange={handleSoundfileChange}/>
+                        {selectedFile && <audio controls autoPlay src={URL.createObjectURL(selectedFile)}></audio>}
+                    </div>
+                    <div className="form-row">
+                        <button type="submit" onClick={sendData}>commit</button>
+                        <button onClick={discardEntry}>back</button>
+                    </div>
                 </div>
-                <div className="form-group">
-                    <label>Image:</label>
-                    <input type="text" name="imageUrl" id="imageUrl" value={formData.imageUrl} onChange={handleChange}/>
-                    <img className="mnemonic-image" src={formData.imageUrl}/>
-                </div>
-                <div className="form-group">
-                    <label>Soundfile:</label>
-                    <input type="file" name="soundfilePath" id="soundfilePath" onChange={handleSoundfileChange}/>
-                    {selectedFile && <audio controls autoPlay src={URL.createObjectURL(selectedFile)}></audio>}
-                </div>
+                {/* <div className="addWordColumn">
+                    <div className="form-row">
+                        {errors.wordText && <span>{errors.wordText.message}</span>}
+                    </div>
+                    <div className="form-row">
+                        <img className="mnemonic-image" src={formData.imageUrl}/>
+                    </div>
+                    <div className="form-row">
+                        {selectedFile && <audio controls autoPlay src={URL.createObjectURL(selectedFile)}></audio>}
+                    </div>
+                </div> */}
 
-                <button type="submit" onClick={sendData}>commit</button>
-                {/* <button type="submit" onClick={onSubmit}>commit</button> */}
-                <button onClick={discardEntry}>back</button>
+
             </form>
         </div>
 

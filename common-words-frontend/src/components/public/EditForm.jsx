@@ -77,28 +77,43 @@ const EditForm = ({originalWord, updateFlashCard, hideForm}) => {
     }
 
     return (
-        <form onSubmit={handleSubmit((data) => {
-            console.log(data)
-        })}>
-            <div className="form-group">
-                <label>Word:</label>
-                <input {...register("wordText", { required: " please enter a word"})} type="text" name="wordText" id="wordText" value={formData.wordText} onChange={handleChange}/>
-                {errors.wordText && <span>{errors.wordText.message}</span>}
-            </div>
-            <div className="form-group">
-                <label>Image:</label>
-                <input type="text" name="imageUrl" id="imageUrl" value={formData.imageUrl} onChange={handleChange}/>
-                <img className="mnemonic-image" src={formData.imageUrl}/>
-            </div>
-            <div className="form-group">
-                <label>Soundfile:</label>
-                <input type="file" name="soundfilePath" id="soundfilePath" onChange={handleSoundfileChange}/>
-                <span>Replace? </span><audio controls src={"http://localhost:8080/files/soundfiles/" + formData.soundfilePath}></audio>
-            </div>
+        <div className="AddWordForm">
+            <form onSubmit={handleSubmit((data) => {
+                console.log(data)
+            })}>
+                <div className="addWordColumn">
+                    <div className="form-row">
+                        <label>Word:</label>
+                        <input {...register("wordText", { required: " please enter a word"})} type="text" name="wordText" id="wordText" value={formData.wordText} onChange={handleChange}/>
+                    </div>
+                    <div className="form-row">
+                        <label>Image:</label>
+                        <input type="text" name="imageUrl" id="imageUrl" value={formData.imageUrl} onChange={handleChange}/>
+                    </div>
+                    <div className="form-row">
+                        <label>Soundfile:</label>
+                        <input type="file" name="soundfilePath" id="soundfilePath" onChange={handleSoundfileChange}/>   
+                    </div>
+                    <div className="form-row">
+                        <button type="submit" onClick={sendData}>commit</button>
+                        <button onClick={hideForm}>back</button>
+                    </div>
+                </div>
+                <div className="addWordColumn">
+                    <div className="form-row">
+                        {errors.wordText && <span>{errors.wordText.message}</span>}
+                    </div>
+                    <div className="form-row">
+                        <img className="mnemonic-image" src={formData.imageUrl}/>
+                    </div>
+                    <div className="form-row">
+                        <span>Replace? </span><audio controls src={"http://localhost:8080/files/soundfiles/" + formData.soundfilePath}></audio>
+                    </div>
+                </div>
+            </form>
+        </div>
 
-            <button type="submit" onClick={sendData}>commit</button>
-            <button onClick={hideForm}>back</button>
-        </form>
+
     );
 }
 

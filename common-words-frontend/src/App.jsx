@@ -20,7 +20,7 @@ function App() {
   const oneDayMS = 86400000;
   const [loading, setLoading] = useState(true);
   const [allLanguages, setAllLanguages] = useState([]);
-  const [curLanguageIndex, setCurLanguageIndex] = useState(1);
+  const [curLanguageIndex, setCurLanguageIndex] = useState(2);
 	const [allDecks, setAllDecks] = useState([]);
   //To avoid having deeply nested data, we are creating a separate state for decks. allLanguages has a reference id
   //for the decks that belong to that language.

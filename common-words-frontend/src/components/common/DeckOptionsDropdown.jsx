@@ -8,8 +8,8 @@ const DeckOptionsDropdown = ({deckId, onClick}) => {
 
     return (
         <>
-            <label>
-                <select name="deckOptions" id={deckId} value={optionSelected} onChange={e => setOptionSelected(e.target.value)}>
+            <label className="deck-options-label">
+                <select className ="deck-options" name="deckOptions" id={deckId} value={optionSelected} onChange={e => setOptionSelected(e.target.value)}>
                     <option value="" selected>options</option>
                     <option value="addWord">add word</option>
                     <option value="editList">edit list</option>

@@ -2,19 +2,17 @@
   --dark: #272838;
   --dark-pale: #4a4b54;
   --light: #f6eedf;
-  --light-pale: #f1e4c8;
+  --light-pale: #e7dbc1;
   --white: #f5f6ff;
   --grey: #bcbdc5;
   --mid: #004e81;
   --highlight: #EFA00B;
+  --highlight-lighter: #ffb52c;
   --delete: #fe2727;
   --delete-hover: #b10000;
   --prominent: #009133;
   --prominent-bright: #82ae2a;
 }
-/* HTML: <div class="loader"></div> */
-/* HTML: <div class="loader"></div> */
-
 
 body {
   background-color: var(--light);
@@ -278,7 +276,7 @@ img {
 
 .mnemonic-image {
   display: flex;
-  max-width: 70%;
+  max-width: 30%;
   max-height: 40%;
   justify-content: center;
   align-items: center;
@@ -360,45 +358,6 @@ footer {
   display: inline-block;
 }
 
-/* Dropdown Content (Hidden by Default) */
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 80px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-/* Links inside the dropdown */
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-.dropdown-content button {
-  color: black;
-  background-color: #f9f9f9;;
-  padding: 6px 6px;
-  text-decoration: none;
-  display: block;
-}
-/* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: #f1f1f1}
-.dropdown-content button:hover {background-color: #f1f1f1}
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
-/* Change the background color of the dropdown button when the dropdown content is shown */
-.dropdown:hover .dropbtn {
-  background-color: #3e8e41;
-}
-.dropdown:focus .dropbtn{
-  background-color: #f0f8f0;
-}
 iframe {
   font-size: 1.2em;
   font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -413,13 +372,17 @@ audio {
   background-color: #d47100;
 }
 
+.list-text {
+  white-space: nowrap;
+  max-width: max-content;
+}
 .image-cell {
-  max-width: 1px;
   white-space: nowrap;
   overflow:hidden;
+  max-width: 30px;
 }
 .soundfile-cell {
-  max-width: 1px;
+  max-width: 30px;
   white-space: nowrap;
   overflow:hidden;
 }
@@ -429,4 +392,97 @@ audio {
   justify-content: center;
   flex-direction: column;
   align-items: center;
+}
+
+.addLanguage {
+  color:  var(--highlight);
+  background-color: var(--dark);
+  font-size: 1em;
+  padding: 5px 5px 5px 5px;
+  margin: 5px;
+}
+
+.addLanguage:hover {
+  color:  var(--highlight-lighter);
+  background-color: var(--dark-pale);
+  font-size: 1em;
+  padding: 5px 5px 5px 5px;
+  margin: 5px;
+}
+
+.add-language-label  {
+  justify-content: left;
+  flex-direction: row;
+}
+
+.buffer {
+  width: 10%;
+  height: 100%
+}
+
+.buffer:empty {
+  /* background-color: var(--highlight-lighter); */
+  visibility: hidden;
+}
+
+.page-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+}
+
+.center-content {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.language-submit {
+  display: flex;
+  color:  var(--white);
+  background-color: var(--dark);
+  font-size: 1em;
+  padding: 5px 5px 5px 5px;
+  margin: 5px;
+}
+
+.language-input {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.input-word-form {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.language-button-row {
+  background-color:var(--light-pale);
+  outline-style: solid;
+  outline-color: var(--mid);
+  padding: 5px 5px 5px 5px;
+  margin: 10px;
+  border-radius: 3px;
+  display: flex;
+  align-items: space-between;
+  flex-direction: row;
+}
+
+.deck-options {
+  color:var(--dark);
+  background-color: var(--dar);
+  border-radius: 5px;
+  width: 70px;
+  margin: 2px;
+
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
 }
