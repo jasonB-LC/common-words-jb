@@ -60,7 +60,7 @@ const Study = ({allDecks, curLanguageIndex, handleDeckClick, handleDeckEditClick
   }
     const decksJSX = allDecks.map(deck => {
     if (parseInt(deck.languageId) === parseInt(curLanguageIndex)){//We only want the decks from our currently selected language
-        return <div className="language-button-row">
+        return <div key={deck.languageId} className="language-button-row">
             <Link to="/Quiz">
                 <TraversalButton onClick={handleDeckClick} id={deck.id.toString()} text={deck.name}/>
             </Link>

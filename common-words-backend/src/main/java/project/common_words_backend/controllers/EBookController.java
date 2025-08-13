@@ -5,16 +5,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import project.common_words_backend.models.Category;
 import project.common_words_backend.models.EBook;
 import project.common_words_backend.models.Language;
-import project.common_words_backend.models.User;
 import project.common_words_backend.models.dto.EBookDTO;
-import project.common_words_backend.repositories.CategoryRepository;
 import project.common_words_backend.repositories.EBookRepository;
 import project.common_words_backend.repositories.LanguageRepository;
-import project.common_words_backend.repositories.UserRepository;
-import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge =3600)
@@ -27,9 +22,6 @@ public class EBookController {
 
     @Autowired
     LanguageRepository languageRepository;
-
-    @Autowired
-    CategoryRepository categoryRepository;
 
     @GetMapping("")
     public ResponseEntity<?> getAllEBooks() {
@@ -46,14 +38,8 @@ public class EBookController {
     @PostMapping(value="", consumes= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addNewEBook(@RequestBody EBookDTO eBookData){
         Language language = languageRepository.findById(eBookData.getLanguageId()).orElse(null);
-        List<Category> categories = new ArrayList<>();
-        for (int categoryId : eBookData.getCategoryIds()) {
-            Category category = categoryRepository.findById(categoryId).orElse(null);
-            if (category != null) {
-                categories.add(category);
-            }
-        }
-        EBook newEBook = new EBook(language,  eBookData.getTitle(), eBookData.getCreator(), eBookData.getReleaseDate(), eBookData.getSubject(), eBookData.getReadingLevel(), eBookData.getOriginalPublication(), categories);
+
+        EBook newEBook = new EBook(language,  eBookData.getTitle(), eBookData.getCreator(), eBookData.getReleaseDate(), eBookData.getSubject(), eBookData.getReadingLevel(), eBookData.getOriginalPublication());
         eBookRepository.save(newEBook);
         return new ResponseEntity<>(newEBook, HttpStatus.CREATED);
     }
@@ -61,14 +47,8 @@ public class EBookController {
     @PutMapping(value="/{id}", consumes= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateEBook(@PathVariable int id, @RequestBody EBookDTO eBookData){
         Language language = languageRepository.findById(eBookData.getLanguageId()).orElse(null);
-        List<Category> categories = new ArrayList<>();
-        for (int categoryId : eBookData.getCategoryIds()) {
-            Category category = categoryRepository.findById(categoryId).orElse(null);
-            if (category != null) {
-                categories.add(category);
-            }
-        }
-        EBook newEBook = new EBook(language, eBookData.getTitle(), eBookData.getCreator(), eBookData.getReleaseDate(), eBookData.getSubject(), eBookData.getReadingLevel(), eBookData.getOriginalPublication(), categories);
+
+        EBook newEBook = new EBook(language, eBookData.getTitle(), eBookData.getCreator(), eBookData.getReleaseDate(), eBookData.getSubject(), eBookData.getReadingLevel(), eBookData.getOriginalPublication());
 
         newEBook.setId(id);
         eBookRepository.save(newEBook);

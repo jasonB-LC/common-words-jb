@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import EditForm from './EditForm';
 import DeletePopUp from '../common/DeletePopUp';
@@ -12,7 +12,7 @@ const DeckEditList = ({deck, returnNewDeck, updateFlashCard}) => {
     const [flashCards, setFlashCards] = useState([])
     const [showingPopUp, setShowingPopUp] = useState({showing: false, name: "", id: ""});
     const [isDeleting, setIsDeleting] = useState(false);
-
+    
     const removeRow = (e) =>{
         const table = document.getElementById('vocabList');
         const rows = table.querySelectorAll('tr');
@@ -48,9 +48,21 @@ const DeckEditList = ({deck, returnNewDeck, updateFlashCard}) => {
     }
 
     useEffect(() => {
-        setFlashCards(deck.flashCards);
+        if (!deck){
+            navigate('/Study');
+        }
+        else {
+            setFlashCards(deck.flashCards);
+        }
+        
     }, [])
 
+    useMemo(() => {
+        if (!deck){
+            navigate('/Study');
+        }
+    }, [deck])
+    
     useEffect(() => {
         setFlashCards(deck.flashCards);
     }, [deck])
@@ -71,7 +83,7 @@ const DeckEditList = ({deck, returnNewDeck, updateFlashCard}) => {
 
     const wordsJSX = flashCards.map((word) => 
         {
-            return <tr id={word.id}>
+            return <tr key={word.id} id={word.id}>
                 <td name="wordText"><div contenteditable="false" spellCheck="false" readonly>{word.wordText}</div></td>
                 <td className="image-cell" name="imageUrl"><div contenteditable="false" spellCheck="false" readonly>{word.imageUrl}</div></td>
                 <td className="soundfile-cell" name="soundfilePath"><div contenteditable="false" spellcheck="false" readonly>{word.soundfilePath}</div></td>

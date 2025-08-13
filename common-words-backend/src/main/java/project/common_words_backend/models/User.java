@@ -1,13 +1,6 @@
 package project.common_words_backend.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-
-import java.awt.print.Book;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class User {

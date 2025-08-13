@@ -6,14 +6,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.common_words_backend.models.*;
-import project.common_words_backend.models.dto.DeckDTO;
 import project.common_words_backend.repositories.DeckRepository;
-import project.common_words_backend.repositories.LanguageRepository;
-import project.common_words_backend.repositories.UserRepository;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge =3600)
 @RestController

@@ -20,7 +20,7 @@ const Main = ({allLanguages, curLanguage, setLanguage, addLanguage}) => {
     }
     const languagesDropdownJSX = allLanguages.map(lang => {
         return (
-            <option value={lang.id.toString()}>{lang.name.toString()}</option>
+            <option key={lang.id} value={lang.id.toString()}>{lang.name.toString()}</option>
         )
     });
 
@@ -35,7 +35,7 @@ const Main = ({allLanguages, curLanguage, setLanguage, addLanguage}) => {
 
 
     const chooseLanguageDropdown = (//for setting the current language            
-            <label class="add-language-label">
+            <label className="add-language-label">
                 {allLanguages && !showAddLanguageInput && <select className ="language-dropdown" name="languages" id="languageDropDown" value={curLanguageIndex} onChange={setLanguage}>
                     {languagesDropdownJSX}
                 </select> }
