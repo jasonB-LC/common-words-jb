@@ -3,6 +3,8 @@ package project.common_words_backend.models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class EBook {
     @Id
@@ -15,26 +17,29 @@ public class EBook {
     private Language language;
 
 //    private int languageID;
-
+    @Column(columnDefinition = "LONGTEXT")
+    private String text;
     private String title;
     private String creator;
     private String releaseDate;
     private String subject;
     private int readingLevel;
     private String originalPublication;
-
+    private Integer categoryId;
     public EBook() {
     }
 
-    public EBook(Language language, String title, String creator, String releaseDate, String subject, int readingLevel, String originalPublication) {
+    public EBook(Language language, String text, String title, String creator, String releaseDate, String subject, int readingLevel, String originalPublication, int categoryId) {
 
         this.language = language;
+        this.text = text;
         this.title = title;
         this.creator = creator;
         this.releaseDate = releaseDate;
         this.subject = subject;
         this.readingLevel = readingLevel;
         this.originalPublication = originalPublication;
+        this.categoryId = categoryId;
     }
 
     public int getId() {
@@ -52,6 +57,10 @@ public class EBook {
     public void setLanguage(Language language) {
         this.language = language;
     }
+
+    public String getText() { return text; }
+
+    public void setText(String text)  { this.text = text; }
 
     public String getTitle() {
         return title;
@@ -99,5 +108,11 @@ public class EBook {
 
     public void setOriginalPublication(String originalPublication) {
         this.originalPublication = originalPublication;
+    }
+
+    public int getCategoryId() { return categoryId; }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 }

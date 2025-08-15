@@ -12,6 +12,11 @@ const Main = ({allLanguages, curLanguage, setLanguage, addLanguage}) => {
         setCurLanguageIndex(curLanguage);
     }, [])
 
+    const updateLanguage = (e) => {
+        setLanguage(e); //TODO: Dropdown has a mind of it's own, doesn't remember curLanguage when returning to main
+                        //Maybe this will fix itself when I update the style with a custom dropdown.
+        setCurLanguageIndex(e.target.value);
+    }
     const showLanguageInput = () => {
         setShowAddLanguageInput(true);
     }
@@ -36,7 +41,7 @@ const Main = ({allLanguages, curLanguage, setLanguage, addLanguage}) => {
 
     const chooseLanguageDropdown = (//for setting the current language            
             <label className="add-language-label">
-                {allLanguages && !showAddLanguageInput && <select className ="language-dropdown" name="languages" id="languageDropDown" value={curLanguageIndex} onChange={setLanguage}>
+                {allLanguages && !showAddLanguageInput && <select className ="language-dropdown" name="languages" id="languageDropDown" value={curLanguageIndex} onChange={updateLanguage}>
                     {languagesDropdownJSX}
                 </select> }
                 {allLanguages && !showAddLanguageInput && <button className="addLanguage" onClick={showLanguageInput}>+</button>}
@@ -56,6 +61,9 @@ const Main = ({allLanguages, curLanguage, setLanguage, addLanguage}) => {
                 <div>
                     On the study page, you can add new cards to the existing decks, or create your own. Have fun!
                 </div>
+                <Link to="/Read">
+                    <button type="button">Read</button>
+                </Link>
                 <Link to="/Study">
                     <button type="button">Study</button>
                 </Link>

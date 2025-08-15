@@ -4,7 +4,7 @@ import './Global.css'
 import Main from "./components/public/Main";
 import Resources from './components/public/Resources';
 import About from './components/public/About';
-import { Language, Deck, FlashCard } from './classes/Exports';
+import { Language, Deck, FlashCard, EBook } from './classes/Exports';
 import { useEffect, useState } from "react";
 import Study from "./components/public/Study";
 import ProtectedRoutes from "./components/admin/ProtectedRoutes";
@@ -15,19 +15,21 @@ import Quiz from "./components/public/Quiz";
 import AddWordForm from "./components/public/AddWordForm";
 import DeckEditList from "./components/public/DeckEditList";
 import DeckChosen from "./components/admin/DeckChosen";
+import Read from "./components/public/Read";
+import EBookDisplay from "./components/public/EBookDisplay";
 
 function App() {
   const oneDayMS = 86400000;
   const [loading, setLoading] = useState(true);
   const [allLanguages, setAllLanguages] = useState([]);
-  const [curLanguageIndex, setCurLanguageIndex] = useState(2);
+  const [curLanguageIndex, setCurLanguageIndex] = useState(1);
 	const [allDecks, setAllDecks] = useState([]);
+  const [allEBooks, setAllEBooks] = useState(null);///TODO: remove this
   //To avoid having deeply nested data, we are creating a separate state for decks. allLanguages has a reference id
   //for the decks that belong to that language.
   const [curDeck, setCurDeck] =  useState({});
   const [curDue, setCurDue] = useState([])
 
-  
   useEffect(() => {//when curDeck updates, cache a deck with only the flashcards that are currently due.
     if (curDeck.name){
         let deckToStudy = curDeck.flashCards.filter((word) => {
@@ -37,6 +39,13 @@ function App() {
     }
   }, [curDeck])
 
+  useEffect(() => {
+    if (allEBooks !== null){
+      setLoading(false);
+      //setText(getEBookById(1).text);
+
+    }
+  }, [allEBooks]);
   const fetchLanguages = async () => {//fetching all languages from back end
     let languages = [];
 
@@ -63,7 +72,6 @@ function App() {
 
       setAllLanguages(languages);
     }
-
   }
 
   const fetchDecks = async () => {//fetching all decks from back end
@@ -107,6 +115,41 @@ function App() {
 
   };
 
+  const fetchEBooks = async () => {//fetching eBook by id ///TODO: load eBook by id
+  let eBooks = [];
+
+  let response;
+  let data;
+  
+  try {
+    response = await fetch('http://localhost:8080/eBooks');
+    data = await response.json();
+    
+  } catch (error) {
+      console.log("error " + error);
+      setLoading(false);
+  }
+
+  if (data.length !== 0){
+    data.forEach(eBook => {
+    let newEBook = new EBook(
+      eBook.id,
+      eBook.languageID,
+      eBook.text,
+      eBook.title,
+      eBook.creator,
+      eBook.releaseDate,
+      eBook.subject,
+      eBook.readingLevel,
+      eBook.originalPublication,
+      eBook.categories,
+    )
+    eBooks.push(newEBook);
+    });
+
+    setAllEBooks(eBooks);
+  }
+}
   const wordIsReadyForReview = (word) => {//boolean function used to populate the deck of cards that are due to be reviewed.
       let TodaysDate = Date.now();
       let timeElapsedMS = TodaysDate - word.dateOfLastReview;
@@ -262,6 +305,7 @@ function App() {
           <Route path="/login" element={<Login/>}/>
           <Route element={<ProtectedRoutes/>}>
             <Route path="/" element={<Main allLanguages={allLanguages} curLanguageIndex={curLanguageIndex} setLanguage={setLanguage} addLanguage={addLanguage}/>} />
+            <Route path="/Read" element={<Read />} />
             <Route path="/Study" element={<Study allDecks={allDecks} curLanguageIndex={curLanguageIndex} handleDeckClick={handleDeckClick} handleDeckEditClick={handleDeckEditClick} deleteDeck={deleteDeck} addDeck={addDeck}/>} />
             <Route element={<DeckChosen curDeck/>}>
               <Route path="/AddWordForm" element={<AddWordForm getWordData={addFlashCard} />} />

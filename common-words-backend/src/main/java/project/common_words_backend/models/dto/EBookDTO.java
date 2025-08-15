@@ -1,29 +1,34 @@
 package project.common_words_backend.models.dto;
 
+import jakarta.persistence.Column;
+
 import java.util.List;
 
 public class EBookDTO {
     private int languageID;
     private int userId;
+    @Column(columnDefinition = "MEDIUMTEXT")
+    private String text;
     private String title;
     private String creator;
     private String releaseDate;
     private String subject;
     private int readingLevel;
     private String originalPublication;
-    private List<Integer> categoryIds;
+    private int categoryId;
 
     public EBookDTO() {
     }
-    public EBookDTO(int languageID, String title, String creator, String releaseDate, String subject, int readingLevel, String originalPublication, List<Integer> categoryIds) {
+    public EBookDTO(int languageID, String text, String title, String creator, String releaseDate, String subject, int readingLevel, String originalPublication, int categoryId) {
         this.languageID = languageID;
+        this.text = text;
         this.title = title;
         this.creator = creator;
         this.releaseDate = releaseDate;
         this.subject = subject;
         this.readingLevel = readingLevel;
         this.originalPublication = originalPublication;
-        this.categoryIds = categoryIds;
+        this.categoryId = categoryId;
     }
 
     public int getLanguageId() {
@@ -33,6 +38,10 @@ public class EBookDTO {
     public void setLanguageId(int languageID){
         this.languageID = languageID;
     }
+
+    public String getText() { return text; }
+
+    public void setText(String text)  { this.text = text; }
 
     public String getTitle() {
         return title;
@@ -82,11 +91,11 @@ public class EBookDTO {
         this.originalPublication = originalPublication;
     }
 
-    public List<Integer> getCategoryIds() {
-        return categoryIds;
+    public int getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategoryIds(List<Integer> categoryIds) {
-        this.categoryIds = categoryIds;
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 }
