@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 
 @CrossOrigin(origins = "*", maxAge =50000)
 @RestController
-@RequestMapping("/delete")
+@RequestMapping("/api/delete")
 public class FileDeleteController {
     @Value("${app.upload.directory}")
     private String uploadDirectory;

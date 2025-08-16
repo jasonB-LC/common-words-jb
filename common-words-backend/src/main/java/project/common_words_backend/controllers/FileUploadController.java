@@ -13,7 +13,7 @@ import java.nio.file.Paths;
 
 @CrossOrigin(origins = "*", maxAge =50000)
 @RestController
-@RequestMapping("/upload")
+@RequestMapping("/api/upload")
 public class FileUploadController {
     @Value("${app.upload.directory}")
     private String uploadDirectory;

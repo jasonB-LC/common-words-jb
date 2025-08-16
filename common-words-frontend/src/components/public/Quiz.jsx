@@ -97,7 +97,7 @@ const Quiz = ({wholeDeck, dueDeck, refetchDecks}) => {
 
 	const saveDeck = async deck => {
 		try {
-			await fetch('http://localhost:8080/api/decks/' + wholeDeck.id, {
+			await fetch('/api/decks/' + wholeDeck.id, {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json',

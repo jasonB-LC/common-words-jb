@@ -53,7 +53,7 @@ function App() {
     let data;
     
     try {
-      response = await fetch('http://localhost:8080/api/languages');
+      response = await fetch('/api/languages');
       data = await response.json();
       
     } catch (error) {
@@ -81,7 +81,7 @@ function App() {
     let data;
     
     try {
-      response = await fetch('http://localhost:8080/api/decks');
+      response = await fetch('/api/decks');
       data = await response.json();
       
     } catch (error) {
@@ -122,7 +122,7 @@ function App() {
   let data;
   
   try {
-    response = await fetch('http://localhost:8080/api/eBooks');
+    response = await fetch('/api/eBooks');
     data = await response.json();
     
   } catch (error) {
@@ -225,7 +225,7 @@ function App() {
 
   const saveCurDeck = async deck => {//saving our currently updated deck to our database
 		try {
-			await fetch('http://localhost:8080/api/decks/' + deck.id, {
+			await fetch('/api/decks/' + deck.id, {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json',
@@ -241,7 +241,7 @@ function App() {
 
   const deleteDeck = async deckId =>{//delete a deck from the database
 		try {
-			await fetch('http://localhost:8080/api/decks/' + deckId, {
+			await fetch('/api/decks/' + deckId, {
 				method: 'DELETE',
 				headers: {
 					'Content-Type': 'application/json',
@@ -260,7 +260,7 @@ function App() {
       languageName
     )
 		try {
-			await fetch('http://localhost:8080/api/languages', {
+			await fetch('/api/languages', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -282,7 +282,7 @@ function App() {
       []
     )
 		try {
-			await fetch('http://localhost:8080/api/decks', {
+			await fetch('/api/decks', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

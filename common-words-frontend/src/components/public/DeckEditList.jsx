@@ -145,7 +145,7 @@ const DeckEditList = ({deck, returnNewDeck, updateFlashCard}) => {
 
     const deleteSoundfile = async (soundfile) => {
         try {
-			const response = await fetch('http://localhost:8080/delete/' + soundfile, {
+			const response = await fetch('http://localhost:8080/api/delete/' + soundfile, {
 				method: 'DELETE',
 				headers: {
 					'Access-Control-Allow-Origin': '*',

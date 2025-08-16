@@ -52,7 +52,7 @@ const EditForm = ({originalWord, updateFlashCard, hideForm}) => {
             const soundfileFormData = new FormData();
             soundfileFormData.append("file", selectedFile);
             try {
-                const response = await fetch('http://localhost:8080/upload', {
+                const response = await fetch('/api/upload', {
                     method: 'POST',
                     headers: {
                         'Access-Control-Allow-Origin': '*',
