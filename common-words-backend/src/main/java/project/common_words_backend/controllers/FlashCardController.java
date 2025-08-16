@@ -13,7 +13,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge =3600)
 @RestController
-@RequestMapping("/flashCards")
+@RequestMapping("/api/flashCards")
 public class FlashCardController {
     @Autowired
     FlashCardRepository flashCardRepository;

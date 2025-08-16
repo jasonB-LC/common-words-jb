@@ -13,7 +13,7 @@ const Read = () => {
         let data;
         
         try {
-            response = await fetch('http://localhost:8080/eBooks');
+            response = await fetch('http://localhost:8080/api/eBooks');
             data = await response.json();
             
             } catch (error) {
@@ -54,7 +54,7 @@ const Read = () => {
         1
     )
         try {
-            await fetch('http://localhost:8080/eBooks', {
+            await fetch('http://localhost:8080/api/eBooks', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

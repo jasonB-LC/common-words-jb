@@ -16,7 +16,7 @@ public class FileDeleteController {
 
     @DeleteMapping("/{filePath}")
     public boolean handleFileDelete(@PathVariable String filePath) throws IOException {
-        Path path = Paths.get(uploadDirectory + "/"  + filePath);
+        Path path = Paths.get(uploadDirectory + "/soundfiles/"  + filePath);
         if (Files.exists(path)) {
             Files.delete(path); // Deletes the file
             System.out.printf("file " + filePath + " deleted");

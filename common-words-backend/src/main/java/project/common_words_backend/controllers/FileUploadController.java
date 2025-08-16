@@ -22,7 +22,7 @@ public class FileUploadController {
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
         System.out.println(" file " + file);
         try {
-            Path uploadPath = Paths.get(uploadDirectory);
+            Path uploadPath = Paths.get(uploadDirectory + "/soundfiles");
             if (!Files.exists(uploadPath)) {
                 Files.createDirectories(uploadPath);
             }

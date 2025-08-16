@@ -19,6 +19,7 @@ public class StaticResourceConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:8080/**", "http://localhost:5173/**") // Specify allowed origins// Apply CORS to all endpoints
                 .allowedHeaders("*") // Allow all headers (or specify specific headers)
+                .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .maxAge(3600); // Cache preflight requests for 1 hour
     }
 }

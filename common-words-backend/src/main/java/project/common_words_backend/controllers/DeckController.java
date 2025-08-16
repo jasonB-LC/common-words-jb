@@ -11,7 +11,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge =3600)
 @RestController
-@RequestMapping("/decks")
+@RequestMapping("/api/decks")
 public class DeckController {
     @Autowired
     DeckRepository deckRepository;

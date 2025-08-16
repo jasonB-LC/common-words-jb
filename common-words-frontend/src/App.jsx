@@ -53,7 +53,7 @@ function App() {
     let data;
     
     try {
-      response = await fetch('http://localhost:8080/languages');
+      response = await fetch('http://localhost:8080/api/languages');
       data = await response.json();
       
     } catch (error) {
@@ -81,7 +81,7 @@ function App() {
     let data;
     
     try {
-      response = await fetch('http://localhost:8080/decks');
+      response = await fetch('http://localhost:8080/api/decks');
       data = await response.json();
       
     } catch (error) {
@@ -122,7 +122,7 @@ function App() {
   let data;
   
   try {
-    response = await fetch('http://localhost:8080/eBooks');
+    response = await fetch('http://localhost:8080/api/eBooks');
     data = await response.json();
     
   } catch (error) {
@@ -225,7 +225,7 @@ function App() {
 
   const saveCurDeck = async deck => {//saving our currently updated deck to our database
 		try {
-			await fetch('http://localhost:8080/decks/' + deck.id, {
+			await fetch('http://localhost:8080/api/decks/' + deck.id, {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json',
@@ -241,7 +241,7 @@ function App() {
 
   const deleteDeck = async deckId =>{//delete a deck from the database
 		try {
-			await fetch('http://localhost:8080/decks/' + deckId, {
+			await fetch('http://localhost:8080/api/decks/' + deckId, {
 				method: 'DELETE',
 				headers: {
 					'Content-Type': 'application/json',
@@ -260,7 +260,7 @@ function App() {
       languageName
     )
 		try {
-			await fetch('http://localhost:8080/languages', {
+			await fetch('http://localhost:8080/api/languages', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -282,7 +282,7 @@ function App() {
       []
     )
 		try {
-			await fetch('http://localhost:8080/decks', {
+			await fetch('http://localhost:8080/api/decks', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -305,7 +305,7 @@ function App() {
           <Route path="/login" element={<Login/>}/>
           <Route element={<ProtectedRoutes/>}>
             <Route path="/" element={<Main allLanguages={allLanguages} curLanguageIndex={curLanguageIndex} setLanguage={setLanguage} addLanguage={addLanguage}/>} />
-            <Route path="/Read" element={<Read />} />
+            <Route path="/Read" element={<EBookDisplay />} />
             <Route path="/Study" element={<Study allDecks={allDecks} curLanguageIndex={curLanguageIndex} handleDeckClick={handleDeckClick} handleDeckEditClick={handleDeckEditClick} deleteDeck={deleteDeck} addDeck={addDeck}/>} />
             <Route element={<DeckChosen curDeck/>}>
               <Route path="/AddWordForm" element={<AddWordForm getWordData={addFlashCard} />} />

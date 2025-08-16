@@ -14,7 +14,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge =3600)
 @RestController
-@RequestMapping("/eBooks")
+@RequestMapping("/api/eBooks")
 public class EBookController {
 
     @Autowired
