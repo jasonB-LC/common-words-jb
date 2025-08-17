@@ -486,3 +486,10 @@ audio {
   align-items: center;
   flex-direction: row;
 }
+
+.reader-container {
+  border: 1px solid #ccc;
+  box-shadow: 2px 2px 5px var(--dark);
+  background-color: #4a4b54;
+  color:var(--dark);
+}

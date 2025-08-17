@@ -305,7 +305,7 @@ function App() {
           <Route path="/login" element={<Login/>}/>
           <Route element={<ProtectedRoutes/>}>
             <Route path="/" element={<Main allLanguages={allLanguages} curLanguageIndex={curLanguageIndex} setLanguage={setLanguage} addLanguage={addLanguage}/>} />
-            <Route path="/Read" element={<EBookDisplay />} />
+            <Route path="/Read" element={<Read />} />
             <Route path="/Study" element={<Study allDecks={allDecks} curLanguageIndex={curLanguageIndex} handleDeckClick={handleDeckClick} handleDeckEditClick={handleDeckEditClick} deleteDeck={deleteDeck} addDeck={addDeck}/>} />
             <Route element={<DeckChosen curDeck/>}>
               <Route path="/AddWordForm" element={<AddWordForm getWordData={addFlashCard} />} />

@@ -2,9 +2,10 @@ import { useState } from "react";
 import EBook from "../../classes/EBook";
 import Buffer from "../common/Buffer";
 import LinkButton from "../common/LinkButton";
+import EBookDisplay from "./EBookDisplay";
 
 const Read = () => {
-    const [curEBook, setCurEBook] = useState({})
+    const [curEBookUrl, setCurEBookUrl] = useState({})
 
     const fetchBook = async () => {//fetching all eBooks from back end
         let eBooks = [];
@@ -40,45 +41,13 @@ const Read = () => {
         setCurEBook(eBooks[0]);
     }
 
-    const addEBook = async () => {//add a new deck to the database
-    let newEBook = new EBook(
-        3,
-        1,
-        "temp text",
-        "temp title",
-        "temp creator",
-        "temp release date",
-        "temp subject",
-        4,
-        "temp whatever",
-        1
-    )
-        try {
-            await fetch('/api/eBooks', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*',
-                },
-                body: JSON.stringify(newEBook),
-            });
-        } catch (error) {
-            console.error(error.message);
-        }
-    };
-
     return (
         <div className="page-container">
             <Buffer></Buffer>
             <div className="center-content">
-            <p>
-                Read Page
-                This is some plain text with special characters like é, ü, ñ.
-            </p>
-            <p>{curEBook.text}</p>
-            <button onClick={fetchBook}>grab book</button>
-            <button onClick={addEBook}>add book</button>
-            <LinkButton linkPath={"/"} type={"button"} text={"Back"} />
+                <EBookDisplay bookUrl={'/api/download/pg20079-images-3.epub'} />
+                <button onClick={fetchBook}>grab book</button>
+                <LinkButton linkPath={"/"} type={"button"} text={"Back"} />
             </div>
             <Buffer></Buffer>
         </div>

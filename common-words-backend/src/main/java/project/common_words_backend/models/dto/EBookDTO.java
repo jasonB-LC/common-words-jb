@@ -16,6 +16,7 @@ public class EBookDTO {
     private int readingLevel;
     private String originalPublication;
     private int categoryId;
+    private int lastPage;///TODO: implement this
 
     public EBookDTO() {
     }
