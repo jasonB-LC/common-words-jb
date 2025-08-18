@@ -6,30 +6,23 @@ import java.util.List;
 
 public class EBookDTO {
     private int languageID;
-    private int userId;
-    @Column(columnDefinition = "MEDIUMTEXT")
-    private String text;
     private String title;
+    private String fileName;
     private String creator;
     private String releaseDate;
-    private String subject;
     private int readingLevel;
-    private String originalPublication;
-    private int categoryId;
+
     private int lastPage;///TODO: implement this
 
     public EBookDTO() {
     }
-    public EBookDTO(int languageID, String text, String title, String creator, String releaseDate, String subject, int readingLevel, String originalPublication, int categoryId) {
+    public EBookDTO(int languageID, String title, String fileName, String creator, String releaseDate,  int readingLevel) {
         this.languageID = languageID;
-        this.text = text;
         this.title = title;
+        this.fileName = fileName;
         this.creator = creator;
         this.releaseDate = releaseDate;
-        this.subject = subject;
         this.readingLevel = readingLevel;
-        this.originalPublication = originalPublication;
-        this.categoryId = categoryId;
     }
 
     public int getLanguageId() {
@@ -40,10 +33,6 @@ public class EBookDTO {
         this.languageID = languageID;
     }
 
-    public String getText() { return text; }
-
-    public void setText(String text)  { this.text = text; }
-
     public String getTitle() {
         return title;
     }
@@ -51,6 +40,10 @@ public class EBookDTO {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public String getFileName() {return fileName;}
+
+    public void setFileName(String fileName) {this.fileName = fileName;}
 
     public String getCreator() {
         return creator;
@@ -68,14 +61,6 @@ public class EBookDTO {
         this.releaseDate = releaseDate;
     }
 
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
     public int getReadingLevel() {
         return readingLevel;
     }
@@ -84,19 +69,4 @@ public class EBookDTO {
         this.readingLevel = readingLevel;
     }
 
-    public String getOriginalPublication() {
-        return originalPublication;
-    }
-
-    public void setOriginalPublication(String originalPublication) {
-        this.originalPublication = originalPublication;
-    }
-
-    public int getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
-    }
 }

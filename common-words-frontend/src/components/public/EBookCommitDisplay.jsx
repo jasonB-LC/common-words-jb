@@ -2,36 +2,36 @@ import React, { useState, useEffect, useRef} from 'react';
 import { Link } from 'react-router-dom';
 import { ReactReader, ReactReaderStyle } from 'react-reader';
 
-const EBookDisplay = ({bookUrl}) => {
-    const [selections, setSelections] = useState([])
+const EBookCommitDisplay = ({bookUrl}) => {
+    // const [selections, setSelections] = useState([])
     const renditionRef = useRef(null)
     const [bookMetadata, setBookMetadata] = useState(null);
 
-    useEffect(() => {
-        if (renditionRef.current) {
-            function setRenderSelection(cfiRange, contents) {
-                setSelections(
-                selections.concat({
-                    text: renditionRef.current.getRange(cfiRange).toString(),
-                    cfiRange
-                })
-                )
-                renditionRef.current.annotations.add(
-                'highlight',
-                cfiRange,
-                {},
-                null,
-                'hl',
-                { fill: 'orange', 'fill-opacity': '0.5', 'mix-blend-mode': 'multiply' }
-                )
-                contents.window.getSelection().removeAllRanges()
-            }
-            renditionRef.current.on('selected', setRenderSelection)
-            return () => {
-                renditionRef.current.off('selected', setRenderSelection)
-            }
-        }
-    }, [setSelections, selections])
+    // useEffect(() => {
+    //     if (renditionRef.current) {
+    //         function setRenderSelection(cfiRange, contents) {
+    //             setSelections(
+    //             selections.concat({
+    //                 text: renditionRef.current.getRange(cfiRange).toString(),
+    //                 cfiRange
+    //             })
+    //             )
+    //             renditionRef.current.annotations.add(
+    //             'highlight',
+    //             cfiRange,
+    //             {},
+    //             null,
+    //             'hl',
+    //             { fill: 'orange', 'fill-opacity': '0.5', 'mix-blend-mode': 'multiply' }
+    //             )
+    //             contents.window.getSelection().removeAllRanges()
+    //         }
+    //         renditionRef.current.on('selected', setRenderSelection)
+    //         return () => {
+    //             renditionRef.current.off('selected', setRenderSelection)
+    //         }
+    //     }
+    // }, [setSelections, selections])
 
     const handleGetRendition = (rendition) => {
       if (rendition && rendition.book && rendition.book.packaging && rendition.book.packaging.metadata) {
@@ -120,4 +120,4 @@ const EBookDisplay = ({bookUrl}) => {
     );  
 }
 
-export default EBookDisplay;
+export default EBookCommitDisplay;

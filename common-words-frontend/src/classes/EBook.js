@@ -1,14 +1,11 @@
 export default class EBook {
-	constructor(id, languageID, text, title, creator, releaseDate, subject, readingLevel, originalPublication, categories) {
+	constructor(id, languageID, title, fileName, creator, releaseDate,  readingLevel) {
         this.id = id;
         this.languageID = languageID;
-        this.text = text;
         this.title = title;
+        this.fileName = fileName;
         this.creator = creator;
         this.releaseDate = releaseDate;
-        this.subject = subject;
         this.readingLevel = readingLevel;
-        this.originalPublication = originalPublication;
-        this.categories = categories;
     }
 }

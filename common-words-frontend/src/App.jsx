@@ -135,14 +135,11 @@ function App() {
     let newEBook = new EBook(
       eBook.id,
       eBook.languageID,
-      eBook.text,
       eBook.title,
+      eBook.fileName,
       eBook.creator,
       eBook.releaseDate,
-      eBook.subject,
       eBook.readingLevel,
-      eBook.originalPublication,
-      eBook.categories,
     )
     eBooks.push(newEBook);
     });

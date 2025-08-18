@@ -15,31 +15,23 @@ public class EBook {
     @JoinColumn(name = "language_id")
     @JsonBackReference(value="eBook-language")
     private Language language;
-
-//    private int languageID;
-    @Column(columnDefinition = "LONGTEXT")
-    private String text;
     private String title;
+    private String fileName;
     private String creator;
     private String releaseDate;
-    private String subject;
     private int readingLevel;
-    private String originalPublication;
-    private Integer categoryId;
     public EBook() {
     }
 
-    public EBook(Language language, String text, String title, String creator, String releaseDate, String subject, int readingLevel, String originalPublication, int categoryId) {
+    public EBook(Language language, String title, String fileName, String creator, String releaseDate,  int readingLevel) {
 
         this.language = language;
-        this.text = text;
         this.title = title;
+        this.fileName = fileName;
         this.creator = creator;
         this.releaseDate = releaseDate;
-        this.subject = subject;
         this.readingLevel = readingLevel;
-        this.originalPublication = originalPublication;
-        this.categoryId = categoryId;
+
     }
 
     public int getId() {
@@ -58,13 +50,14 @@ public class EBook {
         this.language = language;
     }
 
-    public String getText() { return text; }
-
-    public void setText(String text)  { this.text = text; }
-
     public String getTitle() {
         return title;
     }
+
+
+    public String getFileName() {return fileName;}
+
+    public void setFileName(String fileName) {this.fileName = fileName;}
 
     public void setTitle(String title) {
         this.title = title;
@@ -86,14 +79,6 @@ public class EBook {
         this.releaseDate = releaseDate;
     }
 
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
     public int getReadingLevel() {
         return readingLevel;
     }
@@ -102,17 +87,4 @@ public class EBook {
         this.readingLevel = readingLevel;
     }
 
-    public String getOriginalPublication() {
-        return originalPublication;
-    }
-
-    public void setOriginalPublication(String originalPublication) {
-        this.originalPublication = originalPublication;
-    }
-
-    public int getCategoryId() { return categoryId; }
-
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
-    }
 }
