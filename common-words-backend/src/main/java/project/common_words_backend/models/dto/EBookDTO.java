@@ -11,12 +11,11 @@ public class EBookDTO {
     private String creator;
     private String releaseDate;
     private int readingLevel;
-
-    private int lastPage;///TODO: implement this
+    private String bookProgress;
 
     public EBookDTO() {
     }
-    public EBookDTO(int languageID, String title, String fileName, String creator, String releaseDate,  int readingLevel) {
+    public EBookDTO(int languageID, String title, String fileName, String creator, String releaseDate,  int readingLevel, String bookProgress) {
         this.languageID = languageID;
         this.title = title;
         this.fileName = fileName;
@@ -69,4 +68,10 @@ public class EBookDTO {
         this.readingLevel = readingLevel;
     }
 
+    public String getBookProgress() {
+        return bookProgress;
+    }
+    public void setBookProgress(String bookProgress) {
+        this.bookProgress = bookProgress;
+    }
 }

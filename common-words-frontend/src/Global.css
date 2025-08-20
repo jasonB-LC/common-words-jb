@@ -416,8 +416,13 @@ audio {
 }
 
 .buffer {
-  width: 10%;
-  height: 100%
+  height: 100%;
+  width: 30%;
+
+  @media (width < 680px){
+  height: 100%;
+  width: 5%;
+    }
 }
 
 .buffer:empty {
@@ -492,4 +497,15 @@ audio {
   box-shadow: 2px 2px 5px var(--dark);
   background-color: #4a4b54;
   color:var(--dark);
+  width: 100vh; 
+  height: 80vh;
+
+  @media (width < 850px){
+    width: 45vh; 
+  }
 }
+
+/*
+fonts to try
+Nunito Sans,sans-serif;
+*/

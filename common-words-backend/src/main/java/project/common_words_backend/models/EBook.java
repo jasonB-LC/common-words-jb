@@ -20,10 +20,11 @@ public class EBook {
     private String creator;
     private String releaseDate;
     private int readingLevel;
+    private String bookProgress;
     public EBook() {
     }
 
-    public EBook(Language language, String title, String fileName, String creator, String releaseDate,  int readingLevel) {
+    public EBook(Language language, String title, String fileName, String creator, String releaseDate, int readingLevel, String bookProgress) {
 
         this.language = language;
         this.title = title;
@@ -31,7 +32,7 @@ public class EBook {
         this.creator = creator;
         this.releaseDate = releaseDate;
         this.readingLevel = readingLevel;
-
+        this.bookProgress = bookProgress;
     }
 
     public int getId() {
@@ -87,4 +88,11 @@ public class EBook {
         this.readingLevel = readingLevel;
     }
 
+    public String getBookProgress() {
+        return bookProgress;
+    }
+
+    public void setBookProgress(String bookProgress) {
+        this.bookProgress = bookProgress;
+    }
 }

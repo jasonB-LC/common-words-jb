@@ -24,7 +24,7 @@ function App() {
   const [allLanguages, setAllLanguages] = useState([]);
   const [curLanguageIndex, setCurLanguageIndex] = useState(1);
 	const [allDecks, setAllDecks] = useState([]);
-  const [allEBooks, setAllEBooks] = useState(null);///TODO: remove this
+  const [allEBooks, setAllEBooks] = useState([]);///TODO: remove this
   //To avoid having deeply nested data, we are creating a separate state for decks. allLanguages has a reference id
   //for the decks that belong to that language.
   const [curDeck, setCurDeck] =  useState({});
@@ -46,6 +46,7 @@ function App() {
 
     }
   }, [allEBooks]);
+
   const fetchLanguages = async () => {//fetching all languages from back end
     let languages = [];
 
@@ -115,38 +116,6 @@ function App() {
 
   };
 
-  const fetchEBooks = async () => {//fetching eBook by id ///TODO: load eBook by id
-  let eBooks = [];
-
-  let response;
-  let data;
-  
-  try {
-    response = await fetch('/api/eBooks');
-    data = await response.json();
-    
-  } catch (error) {
-      console.log("error " + error);
-      setLoading(false);
-  }
-
-  if (data.length !== 0){
-    data.forEach(eBook => {
-    let newEBook = new EBook(
-      eBook.id,
-      eBook.languageID,
-      eBook.title,
-      eBook.fileName,
-      eBook.creator,
-      eBook.releaseDate,
-      eBook.readingLevel,
-    )
-    eBooks.push(newEBook);
-    });
-
-    setAllEBooks(eBooks);
-  }
-}
   const wordIsReadyForReview = (word) => {//boolean function used to populate the deck of cards that are due to be reviewed.
       let TodaysDate = Date.now();
       let timeElapsedMS = TodaysDate - word.dateOfLastReview;
@@ -173,8 +142,8 @@ function App() {
 	useEffect(() => {
 		fetchLanguages();
     fetchDecks();
-
-    if (!allLanguages.length > 0 && !allDecks.length > 0){
+    fetchEBooks();
+    if (!allLanguages.length > 0 && !allDecks.length > 0 && !allEBooks > 0){
       setLoading(false);
     }
 	}, []);
@@ -182,11 +151,13 @@ function App() {
 	useEffect(() => {
 		if (
 			allLanguages.length > 0 &&
-      allDecks.length > 0
+      allDecks.length > 0 &&
+      allEBooks.length > 0
 		) {
+      console.log("setting loading false")
 			setLoading(false);
 		}
-	}, [allLanguages, allDecks]);
+	}, [allLanguages, allDecks, allEBooks]);
 
   const refetchDecks = () => {
     fetchDecks();
@@ -293,6 +264,91 @@ function App() {
     refetchDecks();
 	};
 
+  const fetchEBooks = async () => {
+    let eBooks = [];
+
+    let response;
+    let data;
+    
+    try {
+      response = await fetch('/api/eBooks');
+      data = await response.json();
+      
+    } catch (error) {
+        console.log("error " + error);
+        setLoading(false);
+    }
+
+    if (data.length !== 0){
+      data.forEach(eBook => {
+      let newEBook = new EBook(
+        eBook.id,
+        eBook.languageID,
+        eBook.title,
+        eBook.fileName,
+        eBook.creator,
+        eBook.releaseDate,
+        eBook.readingLevel,
+        eBook.bookProgress
+      )
+      eBooks.push(newEBook);
+      });
+
+      setAllEBooks(eBooks);
+    }
+  }
+
+  const saveEBook = async ebookData => {
+    let newEBook = new EBook(
+      0,
+      ebookData.languageID,
+      ebookData.title,
+      ebookData.fileName,
+      ebookData.creator,
+      ebookData.releaseDate,
+      ebookData.readingLevel,
+      ebookData.bookProgress
+    )
+    try {
+			await fetch('/api/eBooks', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'Access-Control-Allow-Origin': '*',
+				},
+				body: JSON.stringify(newEBook),
+			});
+		} catch (error) {
+			console.error(error.message);
+		}
+    fetchEBooks();
+  }
+  
+const updateEBook = async ebookData => {
+    let newEBook = new EBook(
+      ebookData.id,
+      ebookData.languageID,
+      ebookData.title,
+      ebookData.fileName,
+      ebookData.creator,
+      ebookData.releaseDate,
+      ebookData.readingLevel,
+      ebookData.bookProgress
+    )
+    try {
+			await fetch('/api/eBooks/' + ebookData.id, {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+					'Access-Control-Allow-Origin': '*',
+				},
+				body: JSON.stringify(newEBook),
+			});
+		} catch (error) {
+			console.error(error.message);
+		}
+    fetchEBooks();
+  }
   return (
     <>
       <Router>
@@ -302,7 +358,7 @@ function App() {
           <Route path="/login" element={<Login/>}/>
           <Route element={<ProtectedRoutes/>}>
             <Route path="/" element={<Main allLanguages={allLanguages} curLanguageIndex={curLanguageIndex} setLanguage={setLanguage} addLanguage={addLanguage}/>} />
-            <Route path="/Read" element={<Read />} />
+            <Route path="/Read" element={<Read saveEBook={saveEBook} updateEBook={updateEBook} allEBooks={allEBooks}/>} />
             <Route path="/Study" element={<Study allDecks={allDecks} curLanguageIndex={curLanguageIndex} handleDeckClick={handleDeckClick} handleDeckEditClick={handleDeckEditClick} deleteDeck={deleteDeck} addDeck={addDeck}/>} />
             <Route element={<DeckChosen curDeck/>}>
               <Route path="/AddWordForm" element={<AddWordForm getWordData={addFlashCard} />} />

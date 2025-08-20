@@ -38,7 +38,7 @@ public class EBookController {
     @PostMapping(value="", consumes= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addNewEBook(@RequestBody EBookDTO eBookData){
         Language language = languageRepository.findById(eBookData.getLanguageId()).orElse(null);
-        EBook newEBook = new EBook(language, eBookData.getTitle(), eBookData.getFileName(), eBookData.getCreator(), eBookData.getReleaseDate(),  eBookData.getReadingLevel());
+        EBook newEBook = new EBook(language, eBookData.getTitle(), eBookData.getFileName(), eBookData.getCreator(), eBookData.getReleaseDate(),  eBookData.getReadingLevel(), eBookData.getBookProgress());
         eBookRepository.save(newEBook);
         return new ResponseEntity<>(newEBook, HttpStatus.CREATED);
     }
@@ -47,7 +47,7 @@ public class EBookController {
     public ResponseEntity<?> updateEBook(@PathVariable int id, @RequestBody EBookDTO eBookData){
         Language language = languageRepository.findById(eBookData.getLanguageId()).orElse(null);
 
-        EBook newEBook = new EBook(language, eBookData.getTitle(), eBookData.getFileName(), eBookData.getCreator(), eBookData.getReleaseDate(), eBookData.getReadingLevel());
+        EBook newEBook = new EBook(language, eBookData.getTitle(), eBookData.getFileName(), eBookData.getCreator(), eBookData.getReleaseDate(), eBookData.getReadingLevel(), eBookData.getBookProgress());
 
         newEBook.setId(id);
         eBookRepository.save(newEBook);

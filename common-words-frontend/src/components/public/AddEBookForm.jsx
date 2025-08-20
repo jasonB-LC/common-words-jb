@@ -1,9 +1,9 @@
-import {useState } from 'react';
+import {useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import EBookCommitDisplay from './EBookCommitDisplay';
 
-const AddEBookForm = ({getEBookData}) => {
+const AddEBookForm = ({getEBookData, back}) => {
     const {handleSubmit, formState: { errors} } = useForm();
     const [selectedFile, setSelectedFile] = useState(null);
     const navigate = useNavigate();
@@ -14,14 +14,39 @@ const AddEBookForm = ({getEBookData}) => {
         fileName: "",
         creator: "",
         releaseDate: "",
-        readingLevel: 0
+        readingLevel: 0,
+        bookProgress: ""
     })
+
+    useEffect (() => {
+        if(selectedFile){
+            saveFile();
+        }
+        
+    }, [selectedFile])
+
+    const getEBookMetadata = (metadata) => {
+        console.log(metadata)
+        setFormData({
+            languageID: 1,
+            title: metadata.title,
+            fileName: curEBookUrl,
+            creator: metadata.creator,
+            releaseDate: metadata.pubdate,
+            readingLevel: 0,
+            bookProgress: ""
+        })
+    }
+
+    const handleEBookSave = (e) => {
+        console.log(formData)
+        getEBookData(formData);
+
+    }
 
     const handleEBookChange = (e) => {
         console.log(e.target.files[0])
         setSelectedFile(e.target.files[0]);
-        const { name, value } = e.target;
-
         setFormData((prevData) => ({
             ...prevData,
             fileName: e.target.files[0].name, 
@@ -29,10 +54,16 @@ const AddEBookForm = ({getEBookData}) => {
         
     }
 
-    const sendData = async () =>{
-        //saving the new flashCard to database. 
-        //first we attempt to save soundfile, and if that is successful, we send the
-        //data object to App.jsx to sava to the database.
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
+    const saveFile = async () => {
+        console.log(selectedFile);
         const eBookFormData = new FormData();
         eBookFormData.append("file", selectedFile);
         try {
@@ -46,6 +77,7 @@ const AddEBookForm = ({getEBookData}) => {
             if (response.ok){
                 setSelectedFile(null);
                 setCurEBookUrl(formData.fileName);
+                console.log(formData.fileName);
                 navigate("/Read");
             }
         } catch (error) {
@@ -53,11 +85,24 @@ const AddEBookForm = ({getEBookData}) => {
         }
     }
 
-    const discardEntry = () =>{
-        getEBookData("");
-        navigate("/Read");
-    }
-    
+    const additionalFormFields = (
+        <>
+            <div className="form-row">
+                <label>Title:</label>
+                <input type="text" name="title" id="title" value={formData.title} onChange={handleChange}/>
+            </div>
+            <div className="form-row">
+                <label>Author:</label>
+                <input type="text" name="creator" id="creator" value={formData.creator} onChange={handleChange}/>
+            </div>
+            <div className="form-row">
+                <button type="submit" onClick={handleEBookSave}>save book?</button>
+            </div>
+        </>
+
+        
+    )
+
     return (
         <div className="AddWordForm">
             <form onSubmit={handleSubmit((data) => {
@@ -65,16 +110,16 @@ const AddEBookForm = ({getEBookData}) => {
             })}>
                 <div className="addWordColumn">
                     <div className="form-row">
-                        <label>Soundfile:</label>
+                        <label>eBook:</label>
                         <input type="file" name="eBookPath" id="eBookPath" onChange={handleEBookChange}/>
                     </div>
                     <div className="form-row">
-                        <button type="submit" onClick={sendData}>commit</button>
-                        <button onClick={discardEntry}>back</button>
+                        <button onClick={back}>back</button>
                     </div>
+                    {formData.title && additionalFormFields}
                 </div>
             </form>
-            {curEBookUrl && <EBookCommitDisplay bookUrl={'/api/download/' + curEBookUrl} />}
+            {curEBookUrl && <EBookCommitDisplay selectedUrl={curEBookUrl} getEBookMetadata={getEBookMetadata} />}
             
         </div>
 
