@@ -1,6 +1,6 @@
 import {getRandomNum} from '../common/utils.js';
 import {useState, useEffect}from 'react';
-import Card from '../common/Card.jsx';
+import Card from '../admin/flashcard-decks/Card.jsx';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router';
 

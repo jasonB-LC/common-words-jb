@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-const AddItemButton = ({text, handleNewListItem, sendBackEditingStatus}) => {
+const AddDeckButton = ({text, handleNewListItem, sendBackEditingStatus}) => {
     const [isEditing, setIsEditing] = useState(false);
     const [itemName, setItemName] = useState("");
 
@@ -44,4 +44,4 @@ const AddItemButton = ({text, handleNewListItem, sendBackEditingStatus}) => {
     );
 }
 
-export default AddItemButton;
+export default AddDeckButton;

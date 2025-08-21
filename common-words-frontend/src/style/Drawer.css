@@ -82,13 +82,11 @@
 }
 
 .drawer-button {
-  background-image: url('../public/bars-solid-full.svg');
+  background-image: url('/bars-solid-full.svg');
   background-color: rgb(255, 253, 243);
   background-size: contain;
   background-repeat: no-repeat;
   height: 2.0em;
-
-
 }
 
 .drawer-button:hover  {

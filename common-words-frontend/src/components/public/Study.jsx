@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 import TraversalButton from '../common/TraversalButton';
 import {useState, useEffect }from 'react';
-import DeckOptionsDropdown from '../common/DeckOptionsDropdown';
+import DeckOptionsDropdown from '../admin/flashcard-decks/DeckOptionsDropdown';
 import { useNavigate } from 'react-router';
 import DeletePopUp from '../common/DeletePopUp';
-import AddItemButton from '../common/AddItemButton';
+import AddDeckButton from '../admin/flashcard-decks/AddDeckButton';
 import LinkButton from '../common/LinkButton';
 import Buffer from '../common/Buffer';
 
@@ -74,7 +74,7 @@ const Study = ({allDecks, curLanguageIndex, handleDeckClick, handleDeckEditClick
         <div className="page-container">
             <Buffer></Buffer>
             <div className="center-content">
-                <AddItemButton text="start new deck" handleNewListItem={addDeck} sendBackEditingStatus={setEditing}/>
+                <AddDeckButton text="start new deck" handleNewListItem={addDeck} sendBackEditingStatus={setEditing}/>
                 {/* <div>{!isEditing && decksJSX}</div> */}
                 <div>{!isEditing && 
                     <>

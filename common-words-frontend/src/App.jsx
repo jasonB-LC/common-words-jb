@@ -12,11 +12,11 @@ import Login from "./components/admin/Login";
 import Header from "./components/public/Header";
 import Footer from "./components/public/Footer";
 import Quiz from "./components/public/Quiz";
-import AddWordForm from "./components/public/AddWordForm";
-import DeckEditList from "./components/public/DeckEditList";
+import AddWordForm from "./components/admin/flashcard-decks/AddWordForm";
+import DeckEditList from "./components/admin/flashcard-decks/DeckEditList";
 import DeckChosen from "./components/admin/DeckChosen";
 import Read from "./components/public/Read";
-import EBookDisplay from "./components/public/EBookDisplay";
+
 
 function App() {
   const oneDayMS = 86400000;

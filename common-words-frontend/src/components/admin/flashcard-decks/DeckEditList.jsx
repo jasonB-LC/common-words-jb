@@ -1,8 +1,8 @@
 import {useEffect, useMemo, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import EditForm from './EditForm';
-import DeletePopUp from '../common/DeletePopUp';
-import Buffer from '../common/Buffer';
+import DeletePopUp from '../../common/DeletePopUp';
+import Buffer from '../../common/Buffer';
 
 const DeckEditList = ({deck, returnNewDeck, updateFlashCard}) => {
     const navigate = useNavigate();

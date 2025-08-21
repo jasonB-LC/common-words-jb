@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import EBook from "../../classes/EBook";
 import Buffer from "../common/Buffer";
 import LinkButton from "../common/LinkButton";
-import EBookDisplay from "./EBookDisplay";
-import AddEBookForm from "./AddEBookForm.jsx";
-import Drawer from "./Drawer.jsx";
+import EBookDisplay from "../admin/ebooks/EBookDisplay.jsx";
+import AddEBookForm from "../admin/ebooks/AddEBookForm.jsx";
+import Drawer from "../common/Drawer.jsx";
 
 
 const Read = ({saveEBook, updateEBook, allEBooks}) => {
