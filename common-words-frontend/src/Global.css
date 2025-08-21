@@ -20,6 +20,8 @@ body {
   text-align: center;
   font-size: 1.2em;
   font-family:"Lato";
+  	padding: 0;
+	margin: 0;
 }
 
 .main {
@@ -492,6 +494,15 @@ audio {
   flex-direction: row;
 }
 
+.form-row label {
+  width: 80px; /* Fixed width for labels for consistent alignment */
+  text-align: right;
+  margin-right: 10px;
+}
+.form-column {
+  display: flex;
+  flex-direction: column;
+}
 .reader-container {
   border: 1px solid #ccc;
   box-shadow: 2px 2px 5px var(--dark);
@@ -505,6 +516,18 @@ audio {
   }
 }
 
+.drawer-button {
+  display:flex;
+  background-image: url('/bars-solid-full.svg');
+  background-color: rgb(255, 253, 243);
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 2.0em;
+  flex-direction: row;
+  justify-content:flex-start;
+  border-radius: 5px 5px;
+  margin: 0px;
+}
 /*
 fonts to try
 Nunito Sans,sans-serif;

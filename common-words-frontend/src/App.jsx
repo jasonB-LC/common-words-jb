@@ -223,7 +223,7 @@ function App() {
   }
   
   const addLanguage = async languageName => {//add a new deck to the database
-    let newLanguage = new Deck(
+    let newLanguage = new Language(
       0,
       languageName
     )
@@ -242,11 +242,11 @@ function App() {
     refetchLanguages();
 	};
   
-  const addDeck = async deckName => {//add a new deck to the database
+  const addDeck = async (deckName, languageIndex) => {//add a new deck to the database
     let newDeck = new Deck(
       0,
       deckName,
-      curLanguageIndex,
+      languageIndex,
       []
     )
 		try {
@@ -359,7 +359,7 @@ const updateEBook = async ebookData => {
           <Route element={<ProtectedRoutes/>}>
             <Route path="/" element={<Main allLanguages={allLanguages} curLanguageIndex={curLanguageIndex} setLanguage={setLanguage} addLanguage={addLanguage}/>} />
             <Route path="/Read" element={<Read saveEBook={saveEBook} updateEBook={updateEBook} allEBooks={allEBooks}/>} />
-            <Route path="/Study" element={<Study allDecks={allDecks} curLanguageIndex={curLanguageIndex} handleDeckClick={handleDeckClick} handleDeckEditClick={handleDeckEditClick} deleteDeck={deleteDeck} addDeck={addDeck}/>} />
+            <Route path="/Study" element={<Study allDecks={allDecks} curLanguageIndex={curLanguageIndex} handleDeckClick={handleDeckClick} handleDeckEditClick={handleDeckEditClick} deleteDeck={deleteDeck} addDeck={addDeck} saveNewLanguage={addLanguage} curLanguages={allLanguages}/>} />
             <Route element={<DeckChosen curDeck/>}>
               <Route path="/AddWordForm" element={<AddWordForm getWordData={addFlashCard} />} />
               <Route path="/EditList" element={<DeckEditList deck={curDeck} returnNewDeck={saveCurDeck} updateFlashCard={updateFlashCard}/>} />

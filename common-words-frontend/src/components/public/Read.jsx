@@ -93,15 +93,14 @@ const Read = ({saveEBook, updateEBook, allEBooks}) => {
 
     return (
         <>
-            <div className="page-container">
-                
-                <Drawer menuIsOpen={menuOpen} openMenu={openMenu} closeMenu={closeMenu}>
-                    <div className="library-heading">Library</div>
-                    <ul className="drawer-list">
-                        {eBooksJSX}
-                    </ul>
+            <Drawer menuIsOpen={menuOpen} openMenu={openMenu} closeMenu={closeMenu}>
+                <div className="library-heading">Library</div>
+                <ul className="drawer-list">
+                    {eBooksJSX}
+                </ul>
                 </Drawer>
-                
+            <div className="page-container">
+                <Buffer></Buffer>
                 <div className="center-content">
                     {isAddingEBook ? <AddEBookForm getEBookData={getEBookData} back={backFromAddBook}/> 
                         : <EBookDisplay bookUrl={curEBook.fileName} addBook={handleAddBook} location={curEBook.bookProgress} locationChanged={locationChanged}/> 

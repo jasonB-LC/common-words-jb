@@ -8,7 +8,7 @@ import AddDeckButton from '../admin/flashcard-decks/AddDeckButton';
 import LinkButton from '../common/LinkButton';
 import Buffer from '../common/Buffer';
 
-const Study = ({allDecks, curLanguageIndex, handleDeckClick, handleDeckEditClick, deleteDeck, addDeck}) => {
+const Study = ({allDecks, curLanguageIndex, handleDeckClick, handleDeckEditClick, deleteDeck, addDeck, saveNewLanguage, curLanguages}) => {
     const [showingPopUp, setShowingPopUp] = useState({showing: false, name: "", id: ""});
     const oneDayMS = 86400000;
     const [isEditing, setEditing] = useState(false);
@@ -74,7 +74,7 @@ const Study = ({allDecks, curLanguageIndex, handleDeckClick, handleDeckEditClick
         <div className="page-container">
             <Buffer></Buffer>
             <div className="center-content">
-                <AddDeckButton text="start new deck" handleNewListItem={addDeck} sendBackEditingStatus={setEditing}/>
+                <AddDeckButton text="start new deck" handleNewListItem={addDeck} sendBackEditingStatus={setEditing} saveNewLanguage={saveNewLanguage} curLanguages={curLanguages}/>
                 {/* <div>{!isEditing && decksJSX}</div> */}
                 <div>{!isEditing && 
                     <>

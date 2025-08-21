@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../../style/Drawer.css';
+import '../../style/drawer.css';
 
 const Drawer = ({ children, menuIsOpen, openMenu, closeMenu}) => {
   const [isOpen, setIsOpen] = useState(true);
