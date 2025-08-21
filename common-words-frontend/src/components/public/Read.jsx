@@ -92,10 +92,10 @@ const Read = ({saveEBook, updateEBook, allEBooks}) => {
     }
 
     return (
-        <><button onClick={openMenu}>x</button>
+        <>
             <div className="page-container">
                 
-                <Drawer menuIsOpen={menuOpen} closeMenu={closeMenu}>
+                <Drawer menuIsOpen={menuOpen} openMenu={openMenu} closeMenu={closeMenu}>
                     <div className="library-heading">Library</div>
                     <ul className="drawer-list">
                         {eBooksJSX}

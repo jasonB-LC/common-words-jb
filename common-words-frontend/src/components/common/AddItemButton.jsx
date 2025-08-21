@@ -33,8 +33,10 @@ const AddItemButton = ({text, handleNewListItem, sendBackEditingStatus}) => {
         <span >
             {isEditing 
                 ? <span>
+                        <div>Give your deck a name: </div>
                         <button className="add-button" onClick={goBack}>back</button>
-                        <button className="add-button" onClick={saveDeckAndReturn}>save</button> <input type="text" onChange={handleChange}></input>
+                        <button className="add-button" onClick={saveDeckAndReturn}>save</button> 
+                        <input type="text" onChange={handleChange}></input>
                     </span>
                 : <span><button className="add-button" onClick={setEditingTrue}>+</button> {text}</span>}
                  

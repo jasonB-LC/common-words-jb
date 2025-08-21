@@ -47,7 +47,11 @@
   padding: 2px;
   margin: 2px;
   cursor: pointer;
-  font-size: 0.7em;;
+  font-size: 0.7em;
+  position: fixed;
+  top: 0;
+  left: 2%; /* Hidden by default, adjust width as needed */
+  width: 5%;
 }
 
 .drawer-content {
@@ -75,4 +79,25 @@
 
 .drawer-list > li > button:hover {
   background-color: rgb(238, 234, 216);
+}
+
+.drawer-button {
+  background-image: url('../public/bars-solid-full.svg');
+  background-color: rgb(255, 253, 243);
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 2.0em;
+
+
+}
+
+.drawer-button:hover  {
+  top: 0;
+  background-color: rgb(212, 212, 212);
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 2.0em;
+  flex-direction:column;
+  justify-content:flex-start;
+  align-items: flex-start;
 }

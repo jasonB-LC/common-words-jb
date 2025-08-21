@@ -70,17 +70,18 @@ const Study = ({allDecks, curLanguageIndex, handleDeckClick, handleDeckEditClick
         }
     })
 
-    const deckEditing = (
-        <div>{!showingPopUp.showing && "Give your deck a name: "}</div>
-    );
-
     return (
         <div className="page-container">
             <Buffer></Buffer>
             <div className="center-content">
-            <AddItemButton text="start new deck" handleNewListItem={addDeck} sendBackEditingStatus={setEditing}/>
-                <div>{isEditing ? deckEditing : decksJSX}</div>
-                <div>{!isEditing && <LinkButton linkPath={"/"} type={"button"} text={"Back"} />}</div>
+                <AddItemButton text="start new deck" handleNewListItem={addDeck} sendBackEditingStatus={setEditing}/>
+                {/* <div>{!isEditing && decksJSX}</div> */}
+                <div>{!isEditing && 
+                    <>
+                        {decksJSX}
+                        <LinkButton linkPath={"/"} type={"button"} text={"Back"} />
+                    </>}
+                </div>
                 {showingPopUp.showing && <DeletePopUp objectName={showingPopUp.name} eventId={showingPopUp.id} deletionRef={deleteChosen} abortRef={showPopUpFalse}/>}
             </div>
             <Buffer></Buffer>
