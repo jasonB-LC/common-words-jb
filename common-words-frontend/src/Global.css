@@ -512,7 +512,12 @@ audio {
   height: 80vh;
 
   @media (width < 850px){
-    width: 45vh; 
+    width: 95vmin; 
+  }
+
+  @media (height < 850px){
+    height: 85vmin; 
+    width: 95vmax;
   }
 }
 

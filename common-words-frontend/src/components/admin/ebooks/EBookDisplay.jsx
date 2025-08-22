@@ -6,7 +6,6 @@ const EBookDisplay = ({bookUrl, addBook, location, locationChanged}) => {
     const [selections, setSelections] = useState([])
     const renditionRef = useRef(null)
     const [bookMetadata, setBookMetadata] = useState(null);
-
     
     // useEffect(() => {
     //     if (renditionRef.current) {

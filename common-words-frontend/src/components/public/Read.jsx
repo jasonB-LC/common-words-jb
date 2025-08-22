@@ -10,9 +10,15 @@ import Drawer from "../common/Drawer.jsx";
 const Read = ({saveEBook, updateEBook, allEBooks}) => {
     const [isAddingEBook, setAddingEBook] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
-    const [firstRenderDone, setFirstRenderDone] = useState(false);
+    // const [firstRenderDone, setFirstRenderDone] = useState(false);
     const [location, setLocation] = useState(null);
     const [curEBook, setCurEBook] = useState(new EBook());
+    const [numOfEBooks, setNumOfEBooks] = useState(0);
+
+    useEffect(() => {
+        setNumOfEBooks(allEBooks.length)
+        console.log(allEBooks.length)
+    }, [])
 
     useEffect(() => {
         console.log(location);
@@ -21,19 +27,26 @@ const Read = ({saveEBook, updateEBook, allEBooks}) => {
     useEffect(() => {
         if(curEBook){
             updateEBook(curEBook)
+            console.log("curEBook useEffect")
         }
     }, [curEBook])
 
+    useEffect(() => {
+        if (allEBooks.length > numOfEBooks) {
+            setCurEBook(allEBooks[allEBooks.length - 1]);
+            setNumOfEBooks(allEBooks.length);
+        }
+    },[allEBooks])
     const locationChanged = epubcifi => {
         // Since this function is also called on initial rendering, we are using custom state
         // logic to check if this is the initial render.
         // If you block this function from running (i.e not letting it change the page on the first render) your app crashes.
 
-        if (!firstRenderDone) {
-            setLocation(localStorage.getItem('book-progress')) // getItem returns null if the item is not found.
-            setFirstRenderDone(true)
-            return
-        }
+        // if (!firstRenderDone) {
+        //     setLocation(localStorage.getItem('book-progress')) // getItem returns null if the item is not found.
+        //     setFirstRenderDone(true)
+        //     return
+        // }
 
         // This is the code that runs everytime the page changes, after the initial render.
         // Saving the current epubcifi on storage...
@@ -68,16 +81,7 @@ const Read = ({saveEBook, updateEBook, allEBooks}) => {
     }
 
     const getEBookData = (formData) => {
-        setCurEBook(new EBook(
-            0,
-            formData.languageID,
-            formData.title,
-            formData.fileName,
-            formData.creator,
-            formData.releaseDate,
-            formData.readingLevel,
-            formData.bookProgress
-        ))
+        console.log("getEBookData")
         setAddingEBook(false);
         saveEBook(formData);
     }

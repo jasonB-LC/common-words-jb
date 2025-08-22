@@ -300,6 +300,10 @@ function App() {
   }
 
   const saveEBook = async ebookData => {
+    let bookProgress = ebookData.bookProgress;
+    if (!ebookData.bookProgress){
+      bookProgress = "epubcfi(/6/2!/4/1:0)";
+    }
     let newEBook = new EBook(
       0,
       ebookData.languageID,
@@ -308,7 +312,7 @@ function App() {
       ebookData.creator,
       ebookData.releaseDate,
       ebookData.readingLevel,
-      ebookData.bookProgress
+      bookProgress
     )
     try {
 			await fetch('/api/eBooks', {
@@ -326,6 +330,10 @@ function App() {
   }
   
 const updateEBook = async ebookData => {
+    let bookProgress = ebookData.bookProgress;
+    if (!ebookData.bookProgress){
+      bookProgress = "epubcfi(/6/2!/4/1:0)";
+    }
     let newEBook = new EBook(
       ebookData.id,
       ebookData.languageID,
@@ -334,7 +342,7 @@ const updateEBook = async ebookData => {
       ebookData.creator,
       ebookData.releaseDate,
       ebookData.readingLevel,
-      ebookData.bookProgress
+      bookProgress
     )
     try {
 			await fetch('/api/eBooks/' + ebookData.id, {

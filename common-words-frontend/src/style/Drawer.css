@@ -7,17 +7,26 @@
 .drawer {
   position: fixed;
   top: 0;
-  left: -33%; /* Hidden by default, adjust width as needed */
-  width: 33%; /* Drawer width */
+  left: -25vw; /* Hidden by default, adjust width as needed */
+  width: 25vw; /* Drawer width */
   height: 100%;
   background-color: #f0f0f0;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
   transition: left 0.3s ease-in-out; /* Smooth transition for opening/closing */
   z-index: 100; /* Ensure drawer is above other content */
-  @media (width < 720px){
-    left: -45%;
-    width: 45%; 
-    }
+  @media (width > 1500px){
+    left: -20vw;
+    width: 20vw; 
+  }
+  @media (width < 750px){
+    left: -40vw;
+    width: 40vw; 
+  }
+  @media (width < 450px){
+    left: -60vw;
+    width: 60vw; 
+  }
+  
 }
 
 .drawer.open {
