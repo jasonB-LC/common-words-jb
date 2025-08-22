@@ -16,6 +16,7 @@ import AddWordForm from "./components/admin/flashcard-decks/AddWordForm";
 import DeckEditList from "./components/admin/flashcard-decks/DeckEditList";
 import DeckChosen from "./components/admin/DeckChosen";
 import Read from "./components/public/Read";
+import NavBar from "./components/public/NavBar";
 
 
 function App() {

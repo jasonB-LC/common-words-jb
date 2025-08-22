@@ -7,8 +7,8 @@ const Header = () => {
 				<div className="title">Common Words</div>
 				<div>
 					<StyledLink destination="/">{"Home"}</StyledLink>
-					<StyledLink destination="/resources">{"Resources"}</StyledLink>
-					<StyledLink destination="/about">{"About"}</StyledLink>
+					<StyledLink destination="/Read">{"Read"}</StyledLink>
+					<StyledLink destination="/Study">{"Study"}</StyledLink>
 				</div>
 			</div> 
 		</header>

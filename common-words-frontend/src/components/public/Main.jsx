@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Buffer from "../common/Buffer";
-import AddLanguageForm from "../common/AddLanguageForm";
 
 const Main = () => {
     return (
+    <>
         <div className="page-container">
             <Buffer></Buffer>
             <div className="center-content">
@@ -23,6 +23,8 @@ const Main = () => {
             </div>
             <Buffer></Buffer>
         </div>
+    </>
+
     );
 }
 

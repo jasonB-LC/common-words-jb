@@ -54,20 +54,33 @@ const Study = ({allDecks, curLanguageIndex, handleDeckClick, handleDeckEditClick
         }
     })
   }
-    const decksJSX = allDecks.map(deck => {
-    if (parseInt(deck.languageId) === parseInt(curLanguageIndex)){//We only want the decks from our currently selected language
-        return <div key={deck.id} className="language-button-row">
-            <Link to="/Quiz">
-                <TraversalButton onClick={handleDeckClick} id={deck.id.toString()} text={deck.name}/>
-            </Link>
-            <div className="deck-info">Total: {deck.flashCards.length + " "}  
-                Due: {deck.flashCards.filter((word) => {
-                    return wordIsReadyForReview(word);
-                }).length} 
-                <DeckOptionsDropdown deckId={deck.id.toString()} onClick={handleDeckOptionsClick}/>       
+
+  const getJSXWithLangID = (langId) => {
+    return (allDecks.map(deck => {
+        if (parseInt(deck.languageId) === parseInt(langId)){//We only want the decks from our currently selected language
+            return <div key={deck.id} className="language-button-row">
+                <Link to="/Quiz">
+                    <TraversalButton onClick={handleDeckClick} id={deck.id.toString()} text={deck.name}/>
+                </Link>
+                <div className="deck-info">Total: {deck.flashCards.length + " "}  
+                    Due: {deck.flashCards.filter((word) => {
+                        return wordIsReadyForReview(word);
+                    }).length} 
+                    <DeckOptionsDropdown deckId={deck.id.toString()} onClick={handleDeckOptionsClick}/>       
+                </div>
             </div>
-        </div>
-        }
+            }
+        })
+    )
+  }
+
+    const decksJSX = curLanguages.map(language => {
+        return (
+            <div>
+                {language.name}
+                {getJSXWithLangID(language.id)}
+            </div>
+        )
     })
 
     return (

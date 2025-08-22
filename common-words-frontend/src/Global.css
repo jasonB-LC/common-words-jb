@@ -20,7 +20,7 @@ body {
   text-align: center;
   font-size: 1.2em;
   font-family:"Lato";
-  	padding: 0;
+  padding: 0;
 	margin: 0;
 }
 
@@ -523,10 +523,22 @@ audio {
   background-size: contain;
   background-repeat: no-repeat;
   height: 2.0em;
-  flex-direction: row;
+  flex-direction: column;
   justify-content:flex-start;
   border-radius: 5px 5px;
   margin: 0px;
+  padding: 20px 23px;
+}
+
+.drawer-button:hover  {
+  top: 0;
+  background-color: rgb(212, 212, 212);
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 2.0em;
+  flex-direction:column;
+  justify-content:flex-start;
+  align-items: flex-start;
 }
 /*
 fonts to try
