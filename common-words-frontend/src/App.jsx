@@ -16,7 +16,7 @@ import AddWordForm from "./components/admin/flashcard-decks/AddWordForm";
 import DeckEditList from "./components/admin/flashcard-decks/DeckEditList";
 import DeckChosen from "./components/admin/DeckChosen";
 import Read from "./components/public/Read";
-import NavBar from "./components/public/NavBar";
+import NavBar from "./components/public/ReaderNavBar";
 
 
 function App() {
@@ -358,6 +358,21 @@ const updateEBook = async ebookData => {
 		}
     fetchEBooks();
   }
+
+  const deleteEBook = async eBookId =>{//delete a deck from the database
+		try {
+			await fetch('/api/eBooks/' + eBookId, {
+				method: 'DELETE',
+				headers: {
+					'Content-Type': 'application/json',
+					'Access-Control-Allow-Origin': '*',
+				}
+			});
+		} catch (error) {
+			console.error(error.message);
+		}
+    fetchEBooks();
+  }
   return (
     <>
       <Router>
@@ -367,7 +382,7 @@ const updateEBook = async ebookData => {
           <Route path="/login" element={<Login/>}/>
           <Route element={<ProtectedRoutes/>}>
             <Route path="/" element={<Main allLanguages={allLanguages} curLanguageIndex={curLanguageIndex} setLanguage={setLanguage} addLanguage={addLanguage}/>} />
-            <Route path="/Read" element={<Read saveEBook={saveEBook} updateEBook={updateEBook} allEBooks={allEBooks}/>} />
+            <Route path="/Read" element={<Read saveEBook={saveEBook} updateEBook={updateEBook} allEBooks={allEBooks} deleteEBook={deleteEBook}/>} />
             <Route path="/Study" element={<Study allDecks={allDecks} curLanguageIndex={curLanguageIndex} handleDeckClick={handleDeckClick} handleDeckEditClick={handleDeckEditClick} deleteDeck={deleteDeck} addDeck={addDeck} saveNewLanguage={addLanguage} curLanguages={allLanguages}/>} />
             <Route element={<DeckChosen curDeck/>}>
               <Route path="/AddWordForm" element={<AddWordForm getWordData={addFlashCard} />} />

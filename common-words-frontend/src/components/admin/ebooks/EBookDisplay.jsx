@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef} from 'react';
 import { Link } from 'react-router-dom';
 import { ReactReader, ReactReaderStyle } from 'react-reader';
 
-const EBookDisplay = ({bookUrl, addBook, location, locationChanged}) => {
+const EBookDisplay = ({bookUrl, location, locationChanged}) => {
     const [selections, setSelections] = useState([])
     const renditionRef = useRef(null)
     const [bookMetadata, setBookMetadata] = useState(null);
@@ -78,17 +78,17 @@ const EBookDisplay = ({bookUrl, addBook, location, locationChanged}) => {
     return (
       <>
           
-            <button onClick={addBook}>add book</button>
+            
             {bookUrl && 
               <>
-                {reader}
                 {bookMetadata && (
-                  <div>
-                    <h3>Book Details:</h3>
-                    <p>Title: {bookMetadata.title}</p>
-                    <p>Author: {bookMetadata.creator}</p>
+                  <div className="reader-meta">
+                    <div className='reader-meta-title'>{bookMetadata.title}</div>
+                    <div className='reader-meta-author'>{bookMetadata.creator}</div>
                   </div>
                 )}
+                {reader}
+
               </>
             }
 

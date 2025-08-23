@@ -104,7 +104,9 @@ const AddEBookForm = ({getEBookData, back}) => {
     )
 
     return (
-        <div className="AddWordForm">
+        <>
+        {<div className="drawer-overlay" onClick={back}></div>}
+        <div className="add-eBook-form">
             <form onSubmit={handleSubmit((data) => {
                 console.log(data)
             })}>
@@ -122,7 +124,7 @@ const AddEBookForm = ({getEBookData, back}) => {
             {curEBookUrl && <EBookCommitDisplay selectedUrl={curEBookUrl} getEBookMetadata={getEBookMetadata} />}
             
         </div>
-
+        </>
     );
 }
 

@@ -8,6 +8,7 @@
   --mid: #004e81;
   --highlight: #EFA00B;
   --highlight-lighter: #ffb52c;
+  --highlight-darker: #9b4b00ff;
   --delete: #fe2727;
   --delete-hover: #b10000;
   --prominent: #009133;
@@ -88,10 +89,12 @@ button:hover {
 .add-button {
   padding: 5px 10px;
   font-size: 1em;
+
 }
 
 .deletion-pop-up{
     position: fixed;
+    z-index: 100;
     background-color: var(--light);
     outline-style: solid;
     outline-color: var(--mid);
@@ -396,6 +399,12 @@ audio {
   align-items: center;
 }
 
+.add-eBook-form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
 .addLanguage {
   color:  var(--highlight);
   background-color: var(--dark);
@@ -480,6 +489,7 @@ audio {
 }
 
 .deck-options {
+  display: flex;
   color:var(--dark);
   background-color: var(--dar);
   border-radius: 5px;
@@ -549,3 +559,85 @@ audio {
 fonts to try
 Nunito Sans,sans-serif;
 */
+.reader-meta {
+  display:flex;
+  flex-direction: column;
+  margin: 0px 0px 0px 0px;
+  flex-wrap: nowrap;
+}
+
+.reader-meta-title {
+  display:flex;
+  padding: 0px 0px;
+  margin: 0px 0px 0px 0px;
+  font-size: 1em;
+  font-weight:bold;
+  text-align:center;
+  align-self:center;
+}
+
+.reader-meta-author {
+  display:flex;
+  padding: 0px 0px;
+  margin: 0px 0px 0px 0px;
+  font-size: 0.8em;
+  text-align:center;
+  align-self:center;
+
+}
+.reader-header {
+  display:flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.add-book{
+  color: var(--dark);
+  background-color: #ffd383;
+  margin: 2px 2px 2px 2px;
+  padding: 0px 0px;
+  font-size: 0.8em;
+  border-radius: 3px;
+  padding: 4px;
+  text-align: left;
+  align-self: left;
+}
+
+.add-book:hover {
+  background-color: #ffb13c;
+  color: var(--dark);
+}
+hr.solid-divider {
+  border: none; /* Remove default border */
+  border-top: 2px solid var(--highlight-darker); /* Create a 2px solid dark gray line */
+  margin: 0px 0px; /* Add some vertical spacing */
+}
+
+hr.solid-divider-decks {
+  border: none; /* Remove default border */
+  border-top: 2px solid var(--dark-pale); /* Create a 2px solid dark gray line */
+  margin: 0px 0px 0px 0px; /* Add some vertical spacing */
+}
+
+.list-book {
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.delete-book {
+  display:flex;
+  font-size: 0.6em;
+  padding: 10px 15px;
+  margin: 8px;
+  background-color: var(--delete);
+  align-self: right;
+}
+
+.delete-book:hover {
+  background-color: var(--delete-hover);
+}
+
+.language-category-jsx {
+  margin: 25px 0px 0px 0px;
+}

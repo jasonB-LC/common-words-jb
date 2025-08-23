@@ -1,6 +1,6 @@
 import StyledLink from '../common/StyledLink';
 
-const NavBar = () => {
+const ReaderNavBar = () => {
 	return (
         <div className="topnav">
             <StyledLink destination="/">{"Home"}</StyledLink>
@@ -11,4 +11,4 @@ const NavBar = () => {
 	);
 };
 
-export default NavBar;
+export default ReaderNavBar;

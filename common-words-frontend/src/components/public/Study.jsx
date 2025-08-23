@@ -56,10 +56,12 @@ const Study = ({allDecks, curLanguageIndex, handleDeckClick, handleDeckEditClick
   }
 
   const getJSXWithLangID = (langId) => {
-    return (allDecks.map(deck => {
+    let deckFound = false;
+    let decks = allDecks.map(deck => {
         if (parseInt(deck.languageId) === parseInt(langId)){//We only want the decks from our currently selected language
+            deckFound = true;
             return <div key={deck.id} className="language-button-row">
-                <Link to="/Quiz">
+                <Link className={"deck-button"} to="/Quiz">
                     <TraversalButton onClick={handleDeckClick} id={deck.id.toString()} text={deck.name}/>
                 </Link>
                 <div className="deck-info">Total: {deck.flashCards.length + " "}  
@@ -71,14 +73,20 @@ const Study = ({allDecks, curLanguageIndex, handleDeckClick, handleDeckEditClick
             </div>
             }
         })
-    )
+    if (!deckFound){
+        decks = [];
+    }
+    return (decks)
   }
 
     const decksJSX = curLanguages.map(language => {
+        const decks = getJSXWithLangID(language.id);
+        console.log
         return (
-            <div>
+            <div className="language-category-jsx">
                 {language.name}
-                {getJSXWithLangID(language.id)}
+                <hr className='solid-divider-decks'></hr>
+                {decks.length == 0 ? "No decks" : decks}
             </div>
         )
     })
@@ -89,11 +97,11 @@ const Study = ({allDecks, curLanguageIndex, handleDeckClick, handleDeckEditClick
             <div className="center-content">
                 <AddDeckButton text="start new deck" handleNewListItem={addDeck} sendBackEditingStatus={setEditing} saveNewLanguage={saveNewLanguage} curLanguages={curLanguages}/>
                 {/* <div>{!isEditing && decksJSX}</div> */}
-                <div>{!isEditing && 
+                <div>
                     <>
                         {decksJSX}
                         <LinkButton linkPath={"/"} type={"button"} text={"Back"} />
-                    </>}
+                    </>
                 </div>
                 {showingPopUp.showing && <DeletePopUp objectName={showingPopUp.name} eventId={showingPopUp.id} deletionRef={deleteChosen} abortRef={showPopUpFalse}/>}
             </div>

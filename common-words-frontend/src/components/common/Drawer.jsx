@@ -11,7 +11,7 @@ const Drawer = ({ children, menuIsOpen, openMenu, closeMenu}) => {
   return (
     <>
       <button className="drawer-button" onClick={openMenu}></button>
-      <div className="drawer-container" style={{width: "30%"}}>
+      <div className="drawer-container" >
         {/* Overlay to close drawer when clicked outside */}
         {menuIsOpen && <div className="drawer-overlay" onClick={toggleDrawer}></div>}
 

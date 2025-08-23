@@ -24,6 +24,7 @@
     "react-native-reanimated": "^4.0.2",
     "react-reader": "^2.0.13",
     "react-router-dom": "^7.6.1",
+    "react-toastify": "^11.0.5",
     "use-immer": "^0.11.0"
   },
   "devDependencies": {
