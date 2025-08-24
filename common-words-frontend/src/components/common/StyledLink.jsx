@@ -1,8 +1,8 @@
 import {Link} from 'react-router';
 
-const StyledLink = ({children, destination}) => {
+const StyledLink = ({children, styleClass, destination}) => {
     return (
-        <Link to={destination}>
+        <Link className={styleClass} to={destination}>
             <span className='link'>{children}</span>
         </Link>
     )

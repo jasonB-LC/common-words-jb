@@ -49,7 +49,7 @@ const EBookCommitDisplay = ({selectedUrl, getEBookMetadata}) => {
         }
     }
     const reader = (
-      <div className='reader-container' style={{ width: '80vh', height: '100vh' }}>
+      <div className='reader-container' style={{ visibility: "hidden", width: '40vh', height: '50vh' }}>
         <ReactReader
           url={'/api/download/' + selectedUrl}
           epubInitOptions={{

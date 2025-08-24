@@ -5,9 +5,10 @@ import LinkButton from "../common/LinkButton";
 import EBookDisplay from "../admin/ebooks/EBookDisplay.jsx";
 import AddEBookForm from "../admin/ebooks/AddEBookForm.jsx";
 import Drawer from "../common/Drawer.jsx";
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
+import { Zoom } from 'react-toastify';
 const Read = ({saveEBook, updateEBook, allEBooks, deleteEBook}) => {
     const [isAddingEBook, setAddingEBook] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
@@ -17,7 +18,7 @@ const Read = ({saveEBook, updateEBook, allEBooks, deleteEBook}) => {
     const [numOfEBooks, setNumOfEBooks] = useState(0);
     const [firstRender, setFirstRender] = useState(true);
     const [deletingBook, setDeletingBook] = useState(false);
-
+    const [bookMetadata, setBookMetadata] = useState(null);
     useEffect(() => {
         setNumOfEBooks(allEBooks.length)
         let previousBookId = localStorage.getItem('currentEBookId');
@@ -53,7 +54,8 @@ const Read = ({saveEBook, updateEBook, allEBooks, deleteEBook}) => {
             setCurEBook(allEBooks[allEBooks.length - 1]);
             setNumOfEBooks(allEBooks.length);
             
-            toast.success("Saved " + allEBooks[allEBooks.length - 1].title);
+            toast(<div>Saved { allEBooks[allEBooks.length - 1].title}</div>, { autoClose: 2000});
+
 
         }
     },[allEBooks])
@@ -108,6 +110,7 @@ const Read = ({saveEBook, updateEBook, allEBooks, deleteEBook}) => {
     const handleAddBook = () => {
         setAddingEBook(true);
         setDeletingBook(false);
+        setMenuOpen(false);
     }
     const handleDeletingBook = () => {
         setDeletingBook(!deletingBook);
@@ -144,6 +147,7 @@ const Read = ({saveEBook, updateEBook, allEBooks, deleteEBook}) => {
     return (
         <>
             <div className="reader-header">
+
                 <Drawer menuIsOpen={menuOpen} openMenu={openMenu} closeMenu={closeMenu}>
                     <div className="drawer-top-buttons">
                         <button className="add-book" onClick={handleAddBook}>add book</button>
@@ -155,14 +159,21 @@ const Read = ({saveEBook, updateEBook, allEBooks, deleteEBook}) => {
                         {eBooksJSX}
                     </ul>
                 </Drawer>
+                {bookMetadata && (
+                  <div className="reader-meta">
+                    <div className='reader-meta-title'>{bookMetadata.title}</div>
+                    <div className='reader-meta-author'>{bookMetadata.creator}</div>
+                  </div>
+                )}
+                <button></button>
             </div>
             
             <div className="page-container">
-                <ToastContainer />
+                <ToastContainer transition={Zoom}/>
                 <Buffer></Buffer>
                 <div className="center-content">
                     {isAddingEBook ? <AddEBookForm getEBookData={getEBookData} back={backFromAddBook}/> 
-                        : <EBookDisplay bookUrl={curEBook.fileName} location={curEBook.bookProgress} locationChanged={locationChanged}/> 
+                        : <EBookDisplay bookUrl={curEBook.fileName} location={curEBook.bookProgress} locationChanged={locationChanged} setBookMetadata={setBookMetadata}/> 
                     }
                 </div>
                 <Buffer></Buffer>

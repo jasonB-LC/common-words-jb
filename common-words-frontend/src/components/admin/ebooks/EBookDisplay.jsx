@@ -2,36 +2,37 @@ import React, { useState, useEffect, useRef} from 'react';
 import { Link } from 'react-router-dom';
 import { ReactReader, ReactReaderStyle } from 'react-reader';
 
-const EBookDisplay = ({bookUrl, location, locationChanged}) => {
+const EBookDisplay = ({bookUrl, location, locationChanged, setBookMetadata}) => {
     const [selections, setSelections] = useState([])
     const renditionRef = useRef(null)
-    const [bookMetadata, setBookMetadata] = useState(null);
-    
-    // useEffect(() => {
-    //     if (renditionRef.current) {
-    //         function setRenderSelection(cfiRange, contents) {
-    //             setSelections(
-    //             selections.concat({
-    //                 text: renditionRef.current.getRange(cfiRange).toString(),
-    //                 cfiRange
-    //             })
-    //             )
-    //             renditionRef.current.annotations.add(
-    //             'highlight',
-    //             cfiRange,
-    //             {},
-    //             null,
-    //             'hl',
-    //             { fill: 'orange', 'fill-opacity': '0.5', 'mix-blend-mode': 'multiply' }
-    //             )
-    //             contents.window.getSelection().removeAllRanges()
-    //         }
-    //         renditionRef.current.on('selected', setRenderSelection)
-    //         return () => {
-    //             renditionRef.current.off('selected', setRenderSelection)
-    //         }
-    //     }
-    // }, [setSelections, selections])
+    // const [bookMetadata, setBookMetadata] = useState(null);
+
+    useEffect(() => {
+        if (renditionRef.current) {
+          console.log("heeeeeeeeere");
+            function setRenderSelection(cfiRange, contents) {
+                setSelections(
+                selections.concat({
+                    text: renditionRef.current.getRange(cfiRange).toString(),
+                    cfiRange
+                })
+                )
+                renditionRef.current.annotations.add(
+                'highlight',
+                cfiRange,
+                {},
+                null,
+                // 'hl',
+                // { fill: 'orange', 'fill-opacity': '0.5', 'mix-blend-mode': 'multiply' }
+                )
+                contents.window.getSelection().removeAllRanges()
+            }
+            renditionRef.current.on('selected', setRenderSelection)
+            return () => {
+                renditionRef.current.off('selected', setRenderSelection)
+            }
+        }
+    }, [setSelections, selections])
 
     const handleGetRendition = (rendition) => {
       if (rendition && rendition.book && rendition.book.packaging && rendition.book.packaging.metadata) {
@@ -59,11 +60,11 @@ const EBookDisplay = ({bookUrl, location, locationChanged}) => {
           getRendition={rendition => {
               handleGetRendition(rendition)
               renditionRef.current = rendition
-              renditionRef.current.themes.default({
-              '::selection': {
-              background: 'orange'
-          }
-          })
+          //     renditionRef.current.themes.default({
+          //     '::selection': {
+          //     background: 'orange'
+          // }
+          // })
           setSelections([])
         }}
           // getRendition={rendition => {
@@ -81,18 +82,11 @@ const EBookDisplay = ({bookUrl, location, locationChanged}) => {
             
             {bookUrl && 
               <>
-                {bookMetadata && (
-                  <div className="reader-meta">
-                    <div className='reader-meta-title'>{bookMetadata.title}</div>
-                    <div className='reader-meta-author'>{bookMetadata.creator}</div>
-                  </div>
-                )}
                 {reader}
-
               </>
             }
 
-          {/* <div
+          <div
             style={{
             position: 'absolute',
             bottom: '1rem',
@@ -118,7 +112,7 @@ const EBookDisplay = ({bookUrl, location, locationChanged}) => {
                   >x</button>
                 </li>
               ))}
-            </ul></div> */}
+            </ul></div>
       </>
     );  
 }

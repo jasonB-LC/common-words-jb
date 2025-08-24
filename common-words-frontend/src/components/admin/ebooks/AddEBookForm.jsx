@@ -107,18 +107,20 @@ const AddEBookForm = ({getEBookData, back}) => {
         <>
         {<div className="drawer-overlay" onClick={back}></div>}
         <div className="add-eBook-form">
+            <div className="form-row-button"><button onClick={back}>back</button></div>
             <form onSubmit={handleSubmit((data) => {
                 console.log(data)
             })}>
-                <div className="addWordColumn">
+                <div>
+
+                    <div>Upload ePub file:</div>
                     <div className="form-row">
                         <label>eBook:</label>
                         <input type="file" name="eBookPath" id="eBookPath" onChange={handleEBookChange}/>
                     </div>
-                    <div className="form-row">
-                        <button onClick={back}>back</button>
-                    </div>
+                    {selectedFile && <div>{!curEBookUrl && "loading..." }</div>}
                     {formData.title && additionalFormFields}
+
                 </div>
             </form>
             {curEBookUrl && <EBookCommitDisplay selectedUrl={curEBookUrl} getEBookMetadata={getEBookMetadata} />}
