@@ -11,21 +11,28 @@ const EBookDisplay = ({bookUrl, location, locationChanged, setBookMetadata}) => 
         if (renditionRef.current) {
           console.log("heeeeeeeeere");
             function setRenderSelection(cfiRange, contents) {
-                setSelections(
-                selections.concat({
-                    text: renditionRef.current.getRange(cfiRange).toString(),
-                    cfiRange
-                })
-                )
-                renditionRef.current.annotations.add(
-                'highlight',
-                cfiRange,
-                {},
-                null,
-                // 'hl',
-                // { fill: 'orange', 'fill-opacity': '0.5', 'mix-blend-mode': 'multiply' }
-                )
-                contents.window.getSelection().removeAllRanges()
+              let vocabStash = [localStorage.getItem('vocabStash')];
+              if (!vocabStash) {
+                vocabStash = [];
+              }
+              console.log("vocabStash: " + vocabStash);
+              vocabStash.push(renditionRef.current.getRange(cfiRange).toString())
+              localStorage.setItem('vocabStash', vocabStash);
+              setSelections(
+              selections.concat({
+                  text: renditionRef.current.getRange(cfiRange).toString(),
+                  cfiRange
+              })
+              )
+              renditionRef.current.annotations.add(
+              'highlight',
+              cfiRange,
+              {},
+              null,
+              // 'hl',
+              // { fill: 'orange', 'fill-opacity': '0.5', 'mix-blend-mode': 'multiply' }
+              )
+              contents.window.getSelection().removeAllRanges()
             }
             renditionRef.current.on('selected', setRenderSelection)
             return () => {

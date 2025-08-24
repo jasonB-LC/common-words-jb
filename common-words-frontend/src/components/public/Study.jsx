@@ -95,7 +95,10 @@ const Study = ({allDecks, curLanguageIndex, handleDeckClick, handleDeckEditClick
         <div className="page-container">
             <Buffer></Buffer>
             <div className="center-content">
-                <AddDeckButton text="start new deck" handleNewListItem={addDeck} sendBackEditingStatus={setEditing} saveNewLanguage={saveNewLanguage} curLanguages={curLanguages}/>
+                <div className='form-row'>
+                    <AddDeckButton text="start new deck" handleNewListItem={addDeck} sendBackEditingStatus={setEditing} saveNewLanguage={saveNewLanguage} curLanguages={curLanguages}/>
+                    <button></button>
+                </div>
                 {/* <div>{!isEditing && decksJSX}</div> */}
                 <div>
                     <>

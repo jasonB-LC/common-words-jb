@@ -17,6 +17,7 @@ import DeckEditList from "./components/admin/flashcard-decks/DeckEditList";
 import DeckChosen from "./components/admin/DeckChosen";
 import Read from "./components/public/Read";
 import NavBar from "./components/public/ReaderNavBar";
+import CreateFromStash from "./components/admin/flashcard-decks/CreateFromStash";
 
 
 function App() {
@@ -386,6 +387,7 @@ const updateEBook = async ebookData => {
             <Route path="/Study" element={<Study allDecks={allDecks} curLanguageIndex={curLanguageIndex} handleDeckClick={handleDeckClick} handleDeckEditClick={handleDeckEditClick} deleteDeck={deleteDeck} addDeck={addDeck} saveNewLanguage={addLanguage} curLanguages={allLanguages}/>} />
             <Route element={<DeckChosen curDeck/>}>
               <Route path="/AddWordForm" element={<AddWordForm getWordData={addFlashCard} />} />
+              <Route path="/CreateFromStash" element={<CreateFromStash getWordData={addFlashCard}/> } />
               <Route path="/EditList" element={<DeckEditList deck={curDeck} returnNewDeck={saveCurDeck} updateFlashCard={updateFlashCard}/>} />
               <Route path="/Quiz" element={<Quiz wholeDeck={curDeck} dueDeck={curDue} refetchDecks={refetchDecks}/>} />
             </Route>
