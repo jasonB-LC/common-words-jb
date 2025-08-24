@@ -179,6 +179,14 @@ function App() {
     saveCurDeck(newCurDeck);
   }
 
+  const addFlashCardToDeck = (flashCard, targetDeck) => {
+    console.log("in add flash card: ")
+    console.log(targetDeck)
+    const updatedFlashCards = [...targetDeck.flashCards, flashCard];
+    const newCurDeck = new Deck(targetDeck.id, targetDeck.name, targetDeck.languageId, updatedFlashCards)
+    saveCurDeck(newCurDeck);
+  }
+
   const updateFlashCard = (updatedFlashCard) => {
     const updatedFlashCards = curDeck.flashCards.map((flashCard) =>{
       if (parseInt(flashCard.id) === parseInt(updatedFlashCard.id)){
@@ -387,7 +395,7 @@ const updateEBook = async ebookData => {
             <Route path="/Study" element={<Study allDecks={allDecks} curLanguageIndex={curLanguageIndex} handleDeckClick={handleDeckClick} handleDeckEditClick={handleDeckEditClick} deleteDeck={deleteDeck} addDeck={addDeck} saveNewLanguage={addLanguage} curLanguages={allLanguages}/>} />
             <Route element={<DeckChosen curDeck/>}>
               <Route path="/AddWordForm" element={<AddWordForm getWordData={addFlashCard} />} />
-              <Route path="/CreateFromStash" element={<CreateFromStash getWordData={addFlashCard}/> } />
+              <Route path="/CreateFromStash" element={<CreateFromStash getWordData={addFlashCardToDeck} curLanguages={allLanguages} curDecks={allDecks}/> } />
               <Route path="/EditList" element={<DeckEditList deck={curDeck} returnNewDeck={saveCurDeck} updateFlashCard={updateFlashCard}/>} />
               <Route path="/Quiz" element={<Quiz wholeDeck={curDeck} dueDeck={curDue} refetchDecks={refetchDecks}/>} />
             </Route>

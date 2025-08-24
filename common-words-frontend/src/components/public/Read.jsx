@@ -19,6 +19,19 @@ const Read = ({saveEBook, updateEBook, allEBooks, deleteEBook}) => {
     const [firstRender, setFirstRender] = useState(true);
     const [deletingBook, setDeletingBook] = useState(false);
     const [bookMetadata, setBookMetadata] = useState(null);
+    const [curHighlightedText, setCurHighlightedText] = useState("")
+    const [vocabStash, setVocabStash] = useState([]);
+    useEffect(()=> {
+      if(localStorage.getItem('vocabStash')){
+        setVocabStash(localStorage.getItem('vocabStash'))
+      }
+    }, [])
+    useEffect(()=>{
+        if (curHighlightedText) {
+            localStorage.setItem('vocabStash', vocabStash);
+        }
+    }, [vocabStash])
+
     useEffect(() => {
         setNumOfEBooks(allEBooks.length)
         let previousBookId = localStorage.getItem('currentEBookId');
@@ -143,11 +156,12 @@ const Read = ({saveEBook, updateEBook, allEBooks, deleteEBook}) => {
     const backFromAddBook = () => {
         setAddingEBook(false);
     }
-
+    const handleStashClick = () => {
+        setVocabStash([...vocabStash, curHighlightedText]);
+    }
     return (
         <>
             <div className="reader-header">
-
                 <Drawer menuIsOpen={menuOpen} openMenu={openMenu} closeMenu={closeMenu}>
                     <div className="drawer-top-buttons">
                         <button className="add-book" onClick={handleAddBook}>add book</button>
@@ -165,7 +179,7 @@ const Read = ({saveEBook, updateEBook, allEBooks, deleteEBook}) => {
                     <div className='reader-meta-author'>{bookMetadata.creator}</div>
                   </div>
                 )}
-                <button></button>
+                <button className="stash-button" onClick={handleStashClick}></button>
             </div>
             
             <div className="page-container">
@@ -173,7 +187,7 @@ const Read = ({saveEBook, updateEBook, allEBooks, deleteEBook}) => {
                 <Buffer></Buffer>
                 <div className="center-content">
                     {isAddingEBook ? <AddEBookForm getEBookData={getEBookData} back={backFromAddBook}/> 
-                        : <EBookDisplay bookUrl={curEBook.fileName} location={curEBook.bookProgress} locationChanged={locationChanged} setBookMetadata={setBookMetadata}/> 
+                        : <EBookDisplay bookUrl={curEBook.fileName} location={curEBook.bookProgress} locationChanged={locationChanged} setBookMetadata={setBookMetadata} setCurHighlightedText={setCurHighlightedText}/> 
                     }
                 </div>
                 <Buffer></Buffer>

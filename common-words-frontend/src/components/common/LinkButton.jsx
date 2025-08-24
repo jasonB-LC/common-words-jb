@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 
 
-const LinkButton = ({linkPath, type, text}) => {
+const LinkButton = ({linkPath, type, text, styleClass}) => {
     return (
         <Link to={linkPath}>
-            <button type={type}>{text}</button>
+            <button className={styleClass} type={type}>{text}</button>
         </Link>
     );
 }

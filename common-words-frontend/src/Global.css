@@ -2,7 +2,7 @@
   --dark: #272838;
   --dark-pale: #4a4b54;
   --light: #f6eedf;
-  --light-pale: #e7dbc1;
+  --light-pale: ;
   --white: #f5f6ff;
   --grey: #bcbdc5;
   --mid: #004e81;
@@ -562,16 +562,41 @@ audio {
 
 .drawer-button {
   display:flex;
-  background-image: url('/bars-solid-full.svg');
+  background-image: url('/bars-solid-blue.svg');
   background-color: rgb(255, 253, 243);
   background-size: contain;
   background-repeat: no-repeat;
   height: 2.0em;
   flex-direction: column;
   justify-content:flex-start;
-  border-radius: 5px 5px;
+  border-radius: 0px 0px 5px 0px;
   margin: 0px;
   padding: 20px 23px;
+}
+
+.stash-button {
+  display:flex;
+  background-image: url('/box-archive-blue.svg');
+  background-color: rgb(255, 253, 243);
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 2.0em;
+  flex-direction: column;
+  justify-content:flex-start;
+  border-radius: 0px 0px 0px 5px;
+  margin: 0px;
+  padding: 20px 23px;
+}
+
+.stash-button-study{
+  display:flex;
+  height: 1.5em;
+  width: 0.8em;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url('/box-archive-blue.svg');
+  border-radius: 3px;
+  flex-grow: 0;
 }
 
 .drawer-button:hover  {

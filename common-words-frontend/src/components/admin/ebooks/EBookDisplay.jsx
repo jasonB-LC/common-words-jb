@@ -2,37 +2,18 @@ import React, { useState, useEffect, useRef} from 'react';
 import { Link } from 'react-router-dom';
 import { ReactReader, ReactReaderStyle } from 'react-reader';
 
-const EBookDisplay = ({bookUrl, location, locationChanged, setBookMetadata}) => {
+const EBookDisplay = ({bookUrl, location, locationChanged, setBookMetadata, setCurHighlightedText}) => {
     const [selections, setSelections] = useState([])
     const renditionRef = useRef(null)
     // const [bookMetadata, setBookMetadata] = useState(null);
 
+    
     useEffect(() => {
         if (renditionRef.current) {
           console.log("heeeeeeeeere");
             function setRenderSelection(cfiRange, contents) {
-              let vocabStash = [localStorage.getItem('vocabStash')];
-              if (!vocabStash) {
-                vocabStash = [];
-              }
-              console.log("vocabStash: " + vocabStash);
-              vocabStash.push(renditionRef.current.getRange(cfiRange).toString())
-              localStorage.setItem('vocabStash', vocabStash);
-              setSelections(
-              selections.concat({
-                  text: renditionRef.current.getRange(cfiRange).toString(),
-                  cfiRange
-              })
-              )
-              renditionRef.current.annotations.add(
-              'highlight',
-              cfiRange,
-              {},
-              null,
-              // 'hl',
-              // { fill: 'orange', 'fill-opacity': '0.5', 'mix-blend-mode': 'multiply' }
-              )
-              contents.window.getSelection().removeAllRanges()
+              // setVocabStash((prevData) => ([...vocabStash, renditionRef.current.getRange(cfiRange).toString()]))
+              setCurHighlightedText(renditionRef.current.getRange(cfiRange).toString());
             }
             renditionRef.current.on('selected', setRenderSelection)
             return () => {
@@ -93,7 +74,7 @@ const EBookDisplay = ({bookUrl, location, locationChanged, setBookMetadata}) => 
               </>
             }
 
-          <div
+          {/* <div
             style={{
             position: 'absolute',
             bottom: '1rem',
@@ -119,7 +100,7 @@ const EBookDisplay = ({bookUrl, location, locationChanged, setBookMetadata}) => 
                   >x</button>
                 </li>
               ))}
-            </ul></div>
+            </ul></div> */}
       </>
     );  
 }

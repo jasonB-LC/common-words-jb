@@ -8,11 +8,17 @@ import AddDeckButton from '../admin/flashcard-decks/AddDeckButton';
 import LinkButton from '../common/LinkButton';
 import Buffer from '../common/Buffer';
 
-const Study = ({allDecks, curLanguageIndex, handleDeckClick, handleDeckEditClick, deleteDeck, addDeck, saveNewLanguage, curLanguages}) => {
+const Study = ({allDecks, handleDeckClick, handleDeckEditClick, deleteDeck, addDeck, saveNewLanguage, curLanguages}) => {
     const [showingPopUp, setShowingPopUp] = useState({showing: false, name: "", id: ""});
     const oneDayMS = 86400000;
     const [isEditing, setEditing] = useState(false);
     const navigate = useNavigate();
+    const [vocabStash, setVocabStash] = useState([]);
+    useEffect(()=> {
+      if(localStorage.getItem('vocabStash')){
+        setVocabStash(localStorage.getItem('vocabStash'))
+      }
+    }, [])
 
     const deleteChosen = (e) => {
         deleteDeck(showingPopUp.id)
@@ -97,7 +103,7 @@ const Study = ({allDecks, curLanguageIndex, handleDeckClick, handleDeckEditClick
             <div className="center-content">
                 <div className='form-row'>
                     <AddDeckButton text="start new deck" handleNewListItem={addDeck} sendBackEditingStatus={setEditing} saveNewLanguage={saveNewLanguage} curLanguages={curLanguages}/>
-                    <button></button>
+                    {!isEditing && <LinkButton linkPath={"/CreateFromStash"} type={"button"} text={" "} styleClass={"stash-button-study"}/>} {!isEditing && "Create from stash"}
                 </div>
                 {/* <div>{!isEditing && decksJSX}</div> */}
                 <div>

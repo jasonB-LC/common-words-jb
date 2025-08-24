@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-function Dropdown({ options, onSelect }) {
+function Dropdown({ dropdownName, options, curValue, onSelect, curLang }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
+  useEffect(() => {
+    setSelectedOption(0);
+  }, [curLang])
   const handleOptionClick = (option) => {
     setSelectedOption(option);
     onSelect(option);
@@ -21,7 +24,7 @@ function Dropdown({ options, onSelect }) {
       {isOpen && (
         <ul className="dropdown-menu">
           {options.map((option) => (
-            <li key={option.value} id={option.value} onClick={() => handleOptionClick(option)}>
+            <li key={dropdownName + option.value} value={curValue} id={option.value} onClick={() => handleOptionClick(option)}>
               {option.label}
             </li>
           ))}
